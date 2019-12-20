@@ -2,7 +2,7 @@ import React from "react";
 import About from "./About";
 function Home(props) {
   const perfectImageStyle = {
-    backgroundImage: `url(./logos/background_concept2.jpg)`,
+    backgroundImage: `url(./images/background_concept2.jpg)`,
     backgroundPosition: "center center",
     backgroundRepeat: "no-repeat",
     backgroundAttachment: "fixed",
@@ -18,16 +18,17 @@ function Home(props) {
 
           <div style={{ paddingTop: "10rem" }} className="name-and-logo">
 
-            <div className="urbanOrganicsLogo mx-auto">
-              <img src="./logos/UrbOrgLogo.png" style={{ height: "250px", width: "250px" }}></img>
+            <div className="paintHustleLogo mx-auto">
+              <img src="./logo192.png" style={{ height: "250px", width: "250px", }}></img>
             </div>
 
-            <h1 style={{ fontFamily: "Montserrat, sans-serif" }} className="">Urban Organics</h1>
+            <h1 style={{ fontFamily: "Montserrat, sans-serif" }} className="">PAINT HUSTLE</h1>
+            <h3 style={{ fontFamily: "Montserrat, sans-serif" }}>BUY, SELL, CREATE, AND TRADE</h3>
 
           </div>
 
           <div style={{ height: "auto", width: "fit-content", border: "solid lightgray 1px", background: "black", opacity: "0.5", }} onClick={() => props.handlePageChange("Store")} className="btn pb-2 pt-2 pr-4 pl-4">
-            <h2 className="text-light mb-0">GO SHOPPING</h2>
+            <h2 className="text-light mb-0">CREATE ACCOUNT</h2>
             <h2 className="text-light">------></h2>
           </div>
 
