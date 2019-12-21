@@ -6,18 +6,12 @@ const tempArray = Array(12).fill("");
 
 function StorePage() {
 
-  const [foodName, setFoodName] = useState("Food Name");
-  const [foodImage, setFoodImage] = useState("./placeHolders/286x180.svg")
-  const [foodDescription, setFoodDescription] = useState("This is the decription for the above food item.");
-  const [foodIngredients, setFoodIngredients] = useState("Bananas, nuts, flower, honey, egg.");
-  const [nutritionFacts, setNutritionFacts] = useState("Nutitrional Facts not found.");
-  const [foodPrice, setFoodPrice] = useState(9.99);
-  const [menuItemsArray, setMenuItemsArray] = useState([])
-
-
-
-
-
+  const [canvasName, setcanvasName] = useState("Canvas Name");
+  const [canvasImage, setCanvasImage] = useState("./placeHolders/286x180.svg")
+  const [canvasDescription, setCanvasDescription] = useState("This is the decription for the above canvas item.");
+  const [canvasPrice, setCanvasPrice] = useState(999);
+  const [canvasCreator, setCanvasCreator] = useState("Canvas Creator");
+  const [canvasCreatorPage, setCanvasCreatorPage] = useState("/publicUserPage")
 
 
   return (
@@ -30,7 +24,14 @@ function StorePage() {
         <div className="row">
 
           {tempArray.map(
-            () => <StoreCard foodName={foodName} foodImage={foodImage} foodIngredients={foodIngredients} foodDescription={foodDescription} nutritionFacts={nutritionFacts} foodPrice={foodPrice} />
+            () => <StoreCard
+              canvasName={canvasName}
+              canvasImage={canvasImage}
+              canvasDescription={canvasDescription}
+              canvasPrice={canvasPrice}
+              canvasCreator={canvasCreator}
+              canvasCreatorPage={canvasCreatorPage}
+            />
           )}
 
         </div>

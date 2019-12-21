@@ -7,14 +7,21 @@ function StoreCard(props) {
 
 
       <div className="card" style={{ width: "18rem", border: "solid 1px black", margin: "2rem" }}>
-        <img className="card-img-top" src={props.foodImage} alt="food item image"></img>
+        <img className="card-img-top" src={props.canvasImage} alt="canvas"></img>
         <div className="card-body">
-          <h5 className="card-title">{props.foodName}</h5>
-          <p className="card-text">{props.foodDescription}</p>
+          <h5 className="card-title">{props.canvasName}</h5>
+          <p className="card-text">{props.canvasDescription}</p>
+          <p className="card-text">Current owner:
+          <span>
+              <a href={props.canvasCreatorPage}>
+                {props.canvasCreator}
+              </a>
+            </span>
+          </p>
           <div className="row">
             <div className="col-sm-12">
-              <button className="btn btn-info text-light h1" data-toggle="modal" data-target="#storeCardModal">🔽</button>
-              <button className="btn btn-info text-light h1 float-right" href="#">${props.foodPrice} 🛒</button>
+              <div className="btn btn-info text-light h1" data-toggle="modal" data-target="#storeCardModal"><span role="img" aria-label="down arrow emoji">🔽</span></div>
+              <div className="btn btn-info text-light h1 float-right" href="#">{props.canvasPrice}🍪</div>
             </div>
             <div className="col-sm-6">
             </div>
@@ -29,22 +36,32 @@ function StoreCard(props) {
         <div className="modal-dialog modal-dialog-centered modal-lg" role="document">
           <div className="modal-content">
             <div className="modal-header">
-              <h5 className="modal-title" id="modalFoodTitle">{props.foodName}</h5>
+              <h5 className="modal-title" id="modalCanvasTitle">{props.canvasName}</h5>
               <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
             <div className="modal-body">
-              <img className="pb-2" src="./placeHolders/572x360.svg" alt="bigFoodImage"></img>
+              <img className="pb-2" src="./placeHolders/572x360.svg" alt="bigCanvasImage"></img>
 
-              <p className="card-text">Description: {props.foodDescription}</p>
-              <p className="card-text">Ingredients: {props.foodIngredients}</p>
-              <p className="card-text">Nutitrional Facts: {props.nutritionFacts}</p>
+              <p className="card-text">Description: {props.canvasDescription}</p>
 
             </div>
             <div className="modal-footer">
-              <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="button" className="btn btn-primary">Save changes</button>
+              <div className="">
+                <p className="card-text">Current owner:
+                <span>
+                    <a href={props.canvasCreatorPage}>
+                      {props.canvasCreator}
+                    </a>
+                  </span>
+                </p>
+              </div>
+              <div className="">
+                <div type="button" className="btn btn-secondary" data-dismiss="modal">Close</div>
+                <div className="btn btn-info text-light h1 float-right" href="#">{props.canvasPrice}🍪</div>
+              </div>
+
             </div>
           </div>
         </div>
