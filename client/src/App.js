@@ -8,10 +8,13 @@ import React, { useState } from 'react';
 // import Grid from "@material-ui/core/Grid"
 
 // components
+import SignInForm from "./components/SignInForm";
+import SignUpForm from "./components/SignUpForm";
 
 // pages
 import Home from "./pages/Home";
 import Store from "./pages/Store";
+import Login from "./pages/Login";
 
 
 
@@ -27,9 +30,9 @@ function App() {
 		switch (currentPage) {
 			case "Home":
 				return <Home currentPage={currentPage}
-					handlePageChange={() => handlePageChange("Store")} />;
-			case "Store":
-				return <Store currentPage={currentPage}
+					handlePageChange={() => handlePageChange("Login")} />;
+			case "Login":
+				return <Login currentPage={currentPage}
 					handlePageChange={() => handlePageChange("Home")} />
 
 			default:
@@ -41,9 +44,6 @@ function App() {
 
 	return (
 		<div>
-
-
-
 
 
 			{renderPage()}

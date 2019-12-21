@@ -21,7 +21,7 @@ function StoreCard(props) {
           <div className="row">
             <div className="col-sm-12">
               <div className="btn btn-info text-light h1" data-toggle="modal" data-target="#storeCardModal"><span role="img" aria-label="down arrow emoji">🔽</span></div>
-              <div className="btn btn-info text-light h1 float-right" href="#">{props.canvasPrice}🍪</div>
+              <div className="btn btn-info text-light h1 float-right" href="#">{props.canvasPrice}<span role="img" aria-label="canvasCurrency">🍪</span></div>
             </div>
             <div className="col-sm-6">
             </div>
@@ -59,7 +59,7 @@ function StoreCard(props) {
               </div>
               <div className="">
                 <div type="button" className="btn btn-secondary" data-dismiss="modal">Close</div>
-                <div className="btn btn-info text-light h1 float-right" href="#">{props.canvasPrice}🍪</div>
+                <div className="btn btn-info text-light h1 float-right" href="#">{props.canvasPrice}<span role="img" aria-label="canvasCurrency">🍪</span></div>
               </div>
 
             </div>

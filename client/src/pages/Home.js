@@ -1,5 +1,5 @@
 import React from "react";
-function Home(props) {
+function HomePage(props) {
   const perfectImageStyle = {
     backgroundImage: `url(./images/background_concept2.jpg)`,
     backgroundPosition: "center center",
@@ -37,4 +37,4 @@ function Home(props) {
   );
 }
 
-export default Home;
+export default HomePage;
