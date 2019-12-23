@@ -7,12 +7,17 @@ const CanvasSchema = new Schema(
       ref: 'User',
       index: true,
     },
+    artist: {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+      index: true,
+    },
     visibility: {
       type: String,
       default: 'private',
       lowercase: true,
       trim: true,
-      enum: ['public', 'private'],
+      enum: ['public', 'unlisted', 'private'],
     },
     image: {
       type: String,
@@ -40,11 +45,13 @@ const CanvasSchema = new Schema(
 
 CanvasSchema.methods.isOwnedBy = function(user) {
   if (user == null) return false;
+  const ownerId = this.owner._id ? this.owner._id : this.owner;
   switch (typeof user) {
     case 'string':
-      return user === this.owner;
+      return user === ownerId.toString();
     case 'object':
-      if (user._id) return user._id === this.owner;
+      const userId = user._id ? user._id : user;
+      return ownerId.equals(userId);
     default:
       return false;
   }

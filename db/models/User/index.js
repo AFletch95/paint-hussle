@@ -83,6 +83,12 @@ UserSchema.virtual('canvases', {
   foreignField: 'owner',
 });
 
+UserSchema.virtual('works', {
+  ref: 'Canvas',
+  localField: '_id',
+  foreignField: 'artist',
+});
+
 UserSchema.virtual('auctions', {
   ref: 'Auction',
   localField: '_id',
