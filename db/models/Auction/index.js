@@ -32,17 +32,4 @@ const AuctionSchema = new Schema(
   },
 );
 
-AuctionSchema.pre('find', async function() {
-  this.populate('canvas').populate('canvas.owner');
-});
-
-AuctionSchema.pre('findOne', async function() {
-  this.populate({
-    path: 'canvas',
-    populate: {
-      path: 'owner',
-    },
-  });
-});
-
 module.exports = AuctionSchema;
