@@ -34,8 +34,7 @@ const UserSchema = new Schema(
       required: true,
       select: false,
       set: function(v) {
-        if (this.name) return this.name.set(v);
-        return (this.name = v);
+        return this.name ? this.name.set(v) : (this.name = v);
       },
     },
     email: {
@@ -43,16 +42,14 @@ const UserSchema = new Schema(
       required: true,
       select: false,
       set: function(v) {
-        if (this.email) return this.email.set(v);
-        return (this.email = v);
+        return this.email ? this.email.set(v) : (this.email = v);
       },
     },
     phone: {
       type: PhoneSchema,
       select: false,
       set: function(v) {
-        if (this.phone) return this.phone.set(v);
-        return (this.phone = v);
+        return this.phone ? this.phone.set(v) : (this.phone = v);
       },
     },
     bio: {
@@ -76,13 +73,20 @@ const UserSchema = new Schema(
   },
   {
     timestamps: true,
+    toJSON: { virtuals: true },
   },
 );
 
 UserSchema.virtual('canvases', {
   ref: 'Canvas',
-  localField: 'owner',
-  foreignField: '_id',
+  localField: '_id',
+  foreignField: 'owner',
+});
+
+UserSchema.virtual('auctions', {
+  ref: 'Auction',
+  localField: '_id',
+  foreignField: 'seller',
 });
 
 UserSchema.methods.checkPassword = function(plaintext) {
@@ -94,7 +98,7 @@ UserSchema.methods.mask = function() {
   if (this.phone) this.email.mask();
 };
 
-UserSchema.pre('validate', async function() {});
+UserSchema.pre('find', async function() {});
 
 UserSchema.pre('save', async function() {
   if (this.isModified('password')) {

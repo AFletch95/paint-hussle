@@ -6,6 +6,10 @@ const AuctionSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: 'Canvas',
     },
+    seller: {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+    },
     price: {
       starting: {
         type: Number,
@@ -16,24 +20,17 @@ const AuctionSchema = new Schema(
     },
     anonymous: {
       type: Boolean,
+      default: false,
     },
-
     duration: {
       type: Number,
     },
   },
   {
+    timestamps: true,
     toJSON: { virtuals: true },
   },
 );
-
-AuctionSchema.virtual('seller', {
-  ref: 'Canvas',
-  localField: 'canvas',
-  foreignField: '_id',
-  justOne: true,
-  select: 'owner',
-});
 
 AuctionSchema.pre('find', async function() {
   this.populate('canvas').populate('canvas.owner');

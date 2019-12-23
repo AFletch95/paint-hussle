@@ -11,7 +11,6 @@ router.use('/canvases', verifyToken, getUser({ select: '_id', populate: 'canvase
 
 router.get('/', verifyToken, getUser({ select: '+name +email +phone' }), async (req, res) => {
   const { user } = req;
-  console.log(user);
   user.mask();
   res.status(200).json({
     status: 200,

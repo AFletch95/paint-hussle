@@ -9,7 +9,6 @@ const CanvasSchema = new Schema(
     },
     visibility: {
       type: String,
-      required: true,
       default: 'private',
       lowercase: true,
       trim: true,
@@ -32,14 +31,9 @@ const CanvasSchema = new Schema(
       trim: true,
       max: 1024,
     },
-    createdAt: {
-      type: Date,
-    },
-    updatedAt: {
-      type: Date,
-    },
   },
   {
+    collection: 'canvases',
     timestamps: true,
   },
 );

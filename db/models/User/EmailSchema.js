@@ -20,7 +20,6 @@ const EmailSchema = new Schema(
     },
     visibility: {
       type: String,
-      required: true,
       default: 'private',
       select: false,
       lowercase: true,
