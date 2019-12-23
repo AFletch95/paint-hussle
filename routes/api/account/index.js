@@ -9,6 +9,7 @@ router.use('/logout', verifyToken, require('./logout'));
 
 router.use('/canvases', verifyToken, require('./canvases'));
 router.use('/auctions', verifyToken, require('./auctions'));
+router.use('/bids', verifyToken, require('./bids'));
 
 router.get('/', verifyToken, getUser({ select: '+name +email +phone' }), async (req, res) => {
   const { user } = req;
