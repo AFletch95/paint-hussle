@@ -1,82 +1,102 @@
-const { Schema, model } = require('mongoose');
-
-const validator = require('validator');
-
-const strongPassword = new RegExp(/^(?!.*\s)(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#%&+=|^$*-]).{8,}/g);
+const { Schema } = require('mongoose');
 
 const bcrypt = require('bcrypt');
 
-const UserSchema = new Schema({
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-    trim: true,
-    validate: {
-      validator: v => validator.isEmail(v),
-      message: props => `${props.value} is not a valid email`,
+const strongPassword = new RegExp(/^(?!.*\s)(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#%&+=|^$*-]).{8,}/g);
+
+const NameSchema = require('./NameSchema.js');
+const EmailSchema = require('./EmailSchema.js');
+const PhoneSchema = require('./PhoneSchema.js');
+
+const UserSchema = new Schema(
+  {
+    username: {
+      type: String,
+      required: true,
+      unique: true,
+      trim: true,
+      minlength: 3,
     },
-  },
-  emailVerified: {
-    type: Boolean,
-    default: false,
-  },
-  password: {
-    type: String,
-    required: true,
-    validate: {
-      validator: function(v) {
-        if (!this.isModified('password')) return true;
-        return strongPassword.test(v);
+    password: {
+      type: String,
+      required: true,
+      select: false,
+      validate: {
+        validator: function(v) {
+          if (!this.isModified('password')) return true;
+          return strongPassword.test(v);
+        },
+        message: 'not a strong password',
       },
-      message: 'not a strong password',
     },
-  },
-  name: {
-    first: {
-      type: String,
+    name: {
+      type: NameSchema,
       required: true,
+      select: false,
+      set: function(v) {
+        if (this.name) return this.name.set(v);
+        return (this.name = v);
+      },
+    },
+    email: {
+      type: EmailSchema,
+      required: true,
+      select: false,
+      set: function(v) {
+        if (this.email) return this.email.set(v);
+        return (this.email = v);
+      },
+    },
+    phone: {
+      type: PhoneSchema,
+      select: false,
+      set: function(v) {
+        if (this.phone) return this.phone.set(v);
+        return (this.phone = v);
+      },
+    },
+    bio: {
+      type: String,
+      default: '',
       trim: true,
     },
-    last: {
+    image: {
       type: String,
-      required: true,
+      default: '',
       trim: true,
     },
-  },
-  phone: {
-    type: String,
-    validate: {
-      validator: v => validator.isMobilePhone(v),
-      message: props => `${props.value} is not a valid phone number`,
+    createdAt: {
+      type: Date,
+      select: false,
     },
-    trim: true,
+    updatedAt: {
+      type: Date,
+      select: false,
+    },
   },
-});
-
-UserSchema.virtual('emailMasked').get(function() {
-  const match = /(..)(.+)(@.+\..+)/.exec(email);
-  return match[1] + '*'.repeat(match[2].length) + match[3];
-});
-
-UserSchema.virtual('fullName').get(function() {
-  return `${this.name.first} ${this.name.last}`;
-});
+  {
+    timestamps: true,
+  },
+);
 
 UserSchema.virtual('canvases', {
   ref: 'Canvas',
-  localField: '_id',
-  foreignField: 'owner',
-  match: { visibility: 'public' },
+  localField: 'owner',
+  foreignField: '_id',
 });
 
 UserSchema.methods.checkPassword = function(plaintext) {
   return bcrypt.compare(plaintext, this.password);
 };
 
+UserSchema.methods.mask = function() {
+  if (this.email) this.email.mask();
+  if (this.phone) this.email.mask();
+};
+
 UserSchema.pre('validate', async function() {});
 
-UserSchema.post('validate', async function() {
+UserSchema.pre('save', async function() {
   if (this.isModified('password')) {
     const saltRounds = 10;
     this.password = await bcrypt.hash(this.password, saltRounds);

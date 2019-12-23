@@ -1,37 +1,48 @@
 const { Schema } = require('mongoose');
 
-const CanvasSchema = new Schema({
-  owner: {
-    type: Schema.Types.ObjectId,
-    ref: 'User',
-    index: true,
+const CanvasSchema = new Schema(
+  {
+    owner: {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+      index: true,
+    },
+    visibility: {
+      type: String,
+      required: true,
+      default: 'private',
+      lowercase: true,
+      trim: true,
+      enum: ['public', 'private'],
+    },
+    image: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    title: {
+      type: String,
+      required: true,
+      trim: true,
+      max: 256,
+    },
+    description: {
+      type: String,
+      required: true,
+      trim: true,
+      max: 1024,
+    },
+    createdAt: {
+      type: Date,
+    },
+    updatedAt: {
+      type: Date,
+    },
   },
-  visibility: {
-    type: String,
-    required: true,
-    default: 'private',
-    lowercase: true,
-    trim: true,
-    enum: ['public', 'private'],
+  {
+    timestamps: true,
   },
-  image: {
-    type: String,
-    required: true,
-    trim: true,
-  },
-  title: {
-    type: String,
-    required: true,
-    trim: true,
-    max: 256,
-  },
-  description: {
-    type: String,
-    required: true,
-    trim: true,
-    max: 1024,
-  },
-});
+);
 
 CanvasSchema.methods.isOwnedBy = function(user) {
   if (user == null) return false;

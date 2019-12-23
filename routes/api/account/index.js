@@ -1,28 +1,35 @@
 const { Router } = require('express');
 const router = Router();
 
-const { verifyToken } = require("../../../middleware/auth");
+const { verifyToken } = require('../../../middleware/auth');
+const { getUser } = require('../../../middleware/orm');
 
-router.use("/login", require("./login"));
-router.use("/logout", verifyToken, require("./logout"));
+router.use('/login', require('./login'));
+router.use('/logout', verifyToken, require('./logout'));
 
-router.use("/create", require("./create"));
+router.use('/canvases', verifyToken, getUser({ select: '_id', populate: 'canvases' }), require('../account/canvases'));
 
-router.use("/addresses", verifyToken, require("./addresses"));
+router.get('/', verifyToken, getUser({ select: '+name +email +phone' }), async (req, res) => {
+  const { user } = req;
+  console.log(user);
+  user.mask();
+  res.status(200).json({
+    status: 200,
+    statusText: 'OK',
+    result: { user },
+  });
+});
 
-router.use("/cart", verifyToken, require("./cart"));
-
-router.get("/", verifyToken, (req, res) => {
-  const { id } = req.authToken;
-  req.app.get('db').User.findById(id)
-    .then((user) => {
-      console.log(user.fullName);
-      res.status(200).json({
-        status: 200,
-        statusText: 'OK'
-      })
-    })
-})
-
+router.put('/', verifyToken, getUser({ select: '+name +email +phone' }), async (req, res) => {
+  const { user, body } = req;
+  user.set(body);
+  const updated = await user.save();
+  updated.mask();
+  res.status(200).json({
+    status: 200,
+    statusText: 'OK',
+    result: { user: updated },
+  });
+});
 
 module.exports = router;

@@ -1,32 +1,51 @@
-const { Schema } = require('mongoose');
+const { Schema, model } = require('mongoose');
 
-const AuctionSchema = new Schema({
-  canvas: {
-    type: Schema.Types.ObjectId,
-    ref: 'canvas',
-  },
-  price: {
-    starting: {
+const AuctionSchema = new Schema(
+  {
+    canvas: {
+      type: Schema.Types.ObjectId,
+      ref: 'Canvas',
+    },
+    price: {
+      starting: {
+        type: Number,
+      },
+      current: {
+        type: Number,
+      },
+    },
+    anonymous: {
+      type: Boolean,
+    },
+
+    duration: {
       type: Number,
     },
-    current: {
-      type: Number,
-    },
   },
-  anonymous: {
-    type: Boolean,
+  {
+    toJSON: { virtuals: true },
   },
-
-  duration: {
-    type: Number,
-  },
-});
+);
 
 AuctionSchema.virtual('seller', {
   ref: 'Canvas',
   localField: 'canvas',
   foreignField: '_id',
+  justOne: true,
   select: 'owner',
+});
+
+AuctionSchema.pre('find', async function() {
+  this.populate('canvas').populate('canvas.owner');
+});
+
+AuctionSchema.pre('findOne', async function() {
+  this.populate({
+    path: 'canvas',
+    populate: {
+      path: 'owner',
+    },
+  });
 });
 
 module.exports = AuctionSchema;
