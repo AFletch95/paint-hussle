@@ -4,7 +4,7 @@ const router = Router();
 router.use(
   '/:id',
   (req, res, next) => {
-    req.canvas = { id: req.params.id };
+    req.auction = { id: req.params.id };
     next();
   },
   require('./-id'),
@@ -14,7 +14,7 @@ router.get('/', async (req, res) => {
   const db = req.app.get('db');
   const { filters } = req.body;
 
-  const canvases = db.Canvas.find({
+  const auctions = db.Auction.find({
     visibility: 'public',
   });
 
@@ -22,7 +22,7 @@ router.get('/', async (req, res) => {
     status: 200,
     statusText: 'OK',
     result: {
-      canvases,
+      auctions,
     },
   });
 });

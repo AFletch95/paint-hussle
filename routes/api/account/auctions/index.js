@@ -5,7 +5,14 @@ const { getUser } = require('../../../../middleware/orm');
 
 router.get(
   '/',
-  getUser({ select: '_id', populate: { path: 'auctions', select: '+price.starting', populate: 'highestBid' } }),
+  getUser({
+    select: '_id',
+    populate: {
+      path: 'auctions',
+      select: '+price.starting',
+      populate: ['highestBid', 'canvas'],
+    },
+  }),
   (req, res) => {
     res.status(200).json({
       status: 200,
