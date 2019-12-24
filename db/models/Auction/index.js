@@ -20,10 +20,11 @@ const AuctionSchema = new Schema(
     isAnonymous: {
       type: Boolean,
       default: false,
+      select: false,
     },
     visibility: {
       type: String,
-      default: 'private',
+      default: 'public',
       select: false,
       lowercase: true,
       trim: true,
@@ -54,6 +55,7 @@ AuctionSchema.virtual('bids', {
   foreignField: 'auction',
   options: {
     sort: { amount: 1 },
+    limit: 200,
   },
 });
 

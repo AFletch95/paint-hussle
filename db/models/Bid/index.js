@@ -22,6 +22,7 @@ const PriceSchema = new Schema(
     },
   },
   {
+    id: false,
     timestamps: true,
   },
 );

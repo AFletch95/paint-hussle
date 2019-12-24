@@ -5,6 +5,7 @@ const CanvasSchema = new Schema(
     owner: {
       type: Schema.Types.ObjectId,
       ref: 'User',
+      required: true,
       index: true,
     },
     artist: {
@@ -38,6 +39,7 @@ const CanvasSchema = new Schema(
     },
   },
   {
+    id: false,
     collection: 'canvases',
     timestamps: true,
   },
