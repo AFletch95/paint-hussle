@@ -1,0 +1,30 @@
+const { Router } = require('express');
+const router = Router();
+
+router.use(
+  '/:id',
+  (req, res, next) => {
+    req.canvas = { id: req.params.id };
+    next();
+  },
+  require('./-id'),
+);
+
+router.get('/', async (req, res) => {
+  const db = req.app.get('db');
+  const { filters } = req.body;
+
+  const canvases = db.Canvas.find({
+    visibility: 'public',
+  });
+
+  res.status(200).json({
+    status: 200,
+    statusText: 'OK',
+    result: {
+      canvases,
+    },
+  });
+});
+
+module.exports = router;

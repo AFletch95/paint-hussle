@@ -1,9 +1,8 @@
 const { Router } = require('express');
 const router = Router();
 
-const { verifyToken } = require('../../middleware/auth');
-
 router.use('/account', require('./account'));
-router.use('/products', require('./products'));
+router.use('/accounts', require('./accounts'));
+router.use('/canvases', require('./canvases'));
 
 module.exports = router;
