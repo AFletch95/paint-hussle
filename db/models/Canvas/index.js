@@ -1,4 +1,4 @@
-const { Schema } = require('mongoose');
+const { Schema, model } = require('mongoose');
 
 const CanvasSchema = new Schema(
   {
@@ -59,4 +59,4 @@ CanvasSchema.methods.isOwnedBy = function(user) {
   }
 };
 
-module.exports = CanvasSchema;
+module.exports = model('Canvas', CanvasSchema);

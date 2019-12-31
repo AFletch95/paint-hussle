@@ -1,4 +1,4 @@
-const { Schema } = require('mongoose');
+const { Schema, model } = require('mongoose');
 
 const bcrypt = require('bcrypt');
 
@@ -114,4 +114,4 @@ UserSchema.pre('save', async function() {
   }
 });
 
-module.exports = UserSchema;
+module.exports = model('User', UserSchema);

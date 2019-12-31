@@ -9,4 +9,8 @@ const MONGODB_CONFIG = {
 };
 mongoose.connect(MONGODB_URI, MONGODB_CONFIG);
 
-module.exports = require('./models');
+const models = require('./models');
+
+require('./systems').init(models);
+
+module.exports = models;
