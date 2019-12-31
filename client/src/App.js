@@ -15,6 +15,7 @@ import SignUpForm from "./components/SignUpForm";
 import Home from "./pages/Home";
 import Store from "./pages/Store";
 import Login from "./pages/Login";
+import Account from './pages/AccountPage';
 
 
 
@@ -45,8 +46,8 @@ function App() {
 	return (
 		<div>
 
-
-			{renderPage()}
+			<Account />
+			{/* {renderPage()} */}
 
 
 
