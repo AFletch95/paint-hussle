@@ -33,6 +33,7 @@ router.post('/', getUser({ select: '_id' }), async (req, res) => {
     } = req.body;
 
     const canvas = await db.Canvas.findById(canvasId).select('owner visibility');
+    if (!canvas) throw 'Bad Request';
     if (!canvas.isOwnedBy(req.user)) throw 'Unauthorized';
     if (canvas.visibility === 'private') throw 'Bad Request';
 
