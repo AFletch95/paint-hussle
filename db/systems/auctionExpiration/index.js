@@ -5,8 +5,10 @@ module.exports = {
   init: ({ Auction, Canvas }, period = DEFAULT_EXPIRATION_CHECK_PERIOD) => {
     if (intervalHandle) clearInterval(intervalHandle);
     intervalHandle = setInterval(async () => {
-      const expiredQuery = { isActive: true, expiresAt: { $lt: new Date() } };
-      const auctions = await Auction.find(expiredQuery).populate('highestBid');
+      const auctions = await Auction.find({ isActive: true })
+        .where('expiresAt')
+        .lt(new Date())
+        .populate('highestBid');
 
       if (auctions.length === 0) return console.log('No expired auctions');
 

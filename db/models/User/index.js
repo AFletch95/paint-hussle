@@ -1,6 +1,7 @@
 const { Schema, model } = require('mongoose');
 
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 const strongPassword = new RegExp(/^(?!.*\s)(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#%&+=|^$*-]).{8,}/g);
 
@@ -102,7 +103,18 @@ UserSchema.methods.checkPassword = function(plaintext) {
 
 UserSchema.methods.mask = function() {
   if (this.email) this.email.mask();
-  if (this.phone) this.email.mask();
+  if (this.phone) this.phone.mask();
+};
+
+UserSchema.methods.createAuthToken = function() {
+  const payload = {
+    id: this._id,
+  };
+  const signConfig = {
+    algorithm: 'HS256',
+    expiresIn: '48h',
+  };
+  return jwt.sign(payload, process.env.PRIVATE_AUTH_KEY, signConfig);
 };
 
 UserSchema.pre('find', async function() {});
