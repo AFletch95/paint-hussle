@@ -23,7 +23,7 @@ const SignUpForm = () => {
         last: lName
       },
       email,
-      dateOfBirth: new Date(dateOfBirth)
+      dateOfBirth: dateOfBirth.getTime()
     };
     console.log(userData)
     database.createNewUser(userData)
