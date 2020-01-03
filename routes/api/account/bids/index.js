@@ -22,7 +22,12 @@ router.post('/', getUser({ select: '_id' }), async (req, res) => {
     // TODO if user doesn't have enough money throw Error
     if (auction.price.current >= amount) throw Error();
 
-    const bid = new db.Bid({ auction, bidder: req.user, isAnonymous, amount });
+    const bid = new db.Bid({
+      auction,
+      bidder: req.user,
+      isAnonymous,
+      amount,
+    });
     auction.price.set({ current: amount });
 
     const result = await Promise.all([bid.save(), auction.save()]);

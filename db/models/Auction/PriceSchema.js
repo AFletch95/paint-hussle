@@ -5,7 +5,6 @@ const PriceSchema = new Schema(
     starting: {
       type: Number,
       required: true,
-      select: false,
       min: 0,
     },
     current: {

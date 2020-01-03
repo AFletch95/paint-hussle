@@ -1,11 +1,15 @@
 const { Schema, model } = require('mongoose');
 
-const MIN_DURATION = 1000 * 60 * 5;
+const MIN_DURATION = 5 * 60 * 1000;
 
 const PriceSchema = require('./PriceSchema.js');
 
 const AuctionSchema = new Schema(
   {
+    isActive: {
+      type: Boolean,
+      default: true,
+    },
     canvas: {
       type: Schema.Types.ObjectId,
       ref: 'Canvas',
@@ -16,11 +20,6 @@ const AuctionSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: 'User',
       required: true,
-    },
-    isAnonymous: {
-      type: Boolean,
-      default: false,
-      select: false,
     },
     visibility: {
       type: String,
@@ -41,6 +40,16 @@ const AuctionSchema = new Schema(
       type: Number,
       default: MIN_DURATION,
       min: MIN_DURATION,
+    },
+    createdAt: {
+      type: Date,
+      default: Date.now,
+    },
+    expiresAt: {
+      type: Date,
+      default: function() {
+        return new Date(this.createdAt.getTime() + this.duration);
+      },
     },
   },
   {
@@ -73,7 +82,11 @@ AuctionSchema.virtual('canBuyOut').get(function() {
   return this.price && this.price.buyout ? true : false;
 });
 AuctionSchema.virtual('isExpired').get(function() {
-  return new Date() - this.createdAt > this.duration;
+  return Date.now() > this.expiresAt.getTime();
 });
 
-module.exports = AuctionSchema;
+AuctionSchema.methods.anonymize = function() {
+  if (this.isAnonymous) delete this.seller;
+};
+
+module.exports = model('Auction', AuctionSchema);

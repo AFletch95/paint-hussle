@@ -1,6 +1,6 @@
 const { Schema, model } = require('mongoose');
 
-const PriceSchema = new Schema(
+const BidSchema = new Schema(
   {
     auction: {
       type: Schema.Types.ObjectId,
@@ -27,4 +27,4 @@ const PriceSchema = new Schema(
   },
 );
 
-module.exports = PriceSchema;
+module.exports = model('Bid', BidSchema);
