@@ -1,21 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
 import database from "../../utils/API";
 
 const SignUpForm = () => {
 
-  const createUser = (username, password, first, last, email, DOB) => {
+  const [fName, setFName] = useState("")
+  const [lName, setLName] = useState("")
+  const [username, setUsername] = useState("")
+  const [password, setPassword] = useState("")
+  const [email, setEmail] = useState("")
+  const [dateOfBirth, setDateOfBirth] = useState("")
 
-    let name = {
-      first,
-      last,
-    };
+  const createUser = () => {
 
     let userData = {
       username,
       password,
-      name,
+      name: {
+        first: fName,
+        last: lName
+      },
       email,
-      // dateOfBirth: DOB,
+      dateOfBirth,
     };
     database.createNewUser(userData)
       .then(res => console.log(res.json()))
@@ -24,30 +29,40 @@ const SignUpForm = () => {
 
   return (
     <form style={{ maxWidth: "25rem" }} className="mx-auto">
+      <div className="form-group text-center">
+        <label htmlFor="birthdateBar">Birthday</label>
+        <br />
+        <input type="date" id="date" value={dateOfBirth} onChange={setDateOfBirth}></input>
+      </div>
+
       <div className="form-row" >
         <div className="col">
           <label htmlFor="userFirstName">First Name</label>
-          <input className="form-control" id="userFirstName" type="text" aria-describedby="First Name" placeholder="First Name" />
+          <input className="form-control" value={fName} onChange={(event) => setFName(event.target.value)} id="userFirstName" type="text" aria-describedby="First Name" placeholder="First Name" />
         </div>
         <div className="col">
           <label htmlFor="userLastName">Last Name</label>
-          <input className="form-control" id="userLastName" type="text" aria-describedby="Last Name" placeholder="Last Name" />
+          <input className="form-control" value={lName} onChange={(event) => setLName(event.target.value)} id="userLastName" type="text" aria-describedby="Last Name" placeholder="Last Name" />
         </div>
       </div>
       <div className="form-group">
+        <label htmlFor="usernameSignUp">Username</label>
+        <input className="form-control" value={username} onChange={(event) => setUsername(event.target.value)} id="usernameSignUp" type="text" />
+      </div>
+      <div className="form-group">
         <label htmlFor="userEmailSignUp">Email</label>
-        <input className="form-control" id="userEmailSignUp" type="email"></input>
+        <input className="form-control" value={email} onChange={(event) => setEmail(event.target.value)} id="userEmailSignUp" type="email"></input>
       </div>
       <div className="form-group">
         <label htmlFor="userPasswordSignUp">Password</label>
-        <input className="form-control" id="userPasswordSignUp" type="password"></input>
+        <input className="form-control" value={password} onChange={(event) => setPassword(event.target.value)} id="userPasswordSignUp" type="password"></input>
         <div className="form-check">
           <input type="checkbox" className="form-check-input" id="showPasswordCheckBox" />
           <label className="form-check-label" htmlFor="showPasswordCheckBox">Show Password</label>
         </div>
       </div>
       <div className="text-center">
-        <div className="btn btn-success mb-4 " type="submit" onClick={createUser}>Create Account</div>
+        <div className="btn btn-success mb-4 " type="submit" onClick={() => createUser()}>Create Account</div>
       </div>
     </form>
   )
