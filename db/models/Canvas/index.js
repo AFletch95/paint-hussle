@@ -47,13 +47,13 @@ const CanvasSchema = new Schema(
 
 CanvasSchema.methods.isOwnedBy = function(user) {
   if (user == null) return false;
-  const ownerId = this.owner._id ? this.owner._id : this.owner;
+  const owner = this.owner._id ? this.owner._id : this.owner;
   switch (typeof user) {
     case 'string':
       return user === ownerId.toString();
     case 'object':
-      const userId = user._id ? user._id : user;
-      return ownerId.equals(userId);
+      if (user instanceof Schema.Types.ObjectId) return owner.equals(userId);
+      else return ownerId.equals(user._id);
     default:
       return false;
   }

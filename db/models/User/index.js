@@ -53,6 +53,14 @@ const UserSchema = new Schema(
         return this.phone ? this.phone.set(v) : (this.phone = v);
       },
     },
+    dateOfBirth: {
+      type: Date,
+      required: true,
+      select: false,
+      set: function(v) {
+        return v.getTime() < Date.now();
+      },
+    },
     bio: {
       type: String,
       default: '',
