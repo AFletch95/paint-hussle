@@ -34,11 +34,17 @@ function App() {
 					handlePageChange={() => handlePageChange("Login")} />;
 			case "Login":
 				return <Login currentPage={currentPage}
-					handlePageChange={() => handlePageChange("Home")} />
+					handlePageChange={() => handlePageChange("Account")} />
+			case "Store":
+				return <Store currentPage={currentPage}
+					handlePageChange={() => handlePageChange("Account")} />
+			case "Account":
+				return <Account currentPage={currentPage}
+					handlePageChange={() => handlePageChange("Store")} />
 
 			default:
 				return <Home currentPage={currentPage}
-					handlePageChange={() => handlePageChange("Store")} />;
+					handlePageChange={() => handlePageChange("login")} />;
 		}
 	}
 
@@ -46,8 +52,8 @@ function App() {
 	return (
 		<div>
 
-			<Account />
-			{/* {renderPage()} */}
+
+			{renderPage()}
 
 
 
