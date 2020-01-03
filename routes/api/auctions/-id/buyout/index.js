@@ -1,11 +1,13 @@
 const { Router } = require('express');
 const router = Router();
 
-router.get('/', async (req, res) => {
+router.post('/', async (req, res) => {
   const db = req.app.get('db');
-  const { id } = req.user;
-  const user = await db.User.findById(id);
-  if (!user) {
+  const { id } = req.auction;
+  const auction = await db.Auction.findById(id)
+    .where('visibility')
+    .ne('private');
+  if (!canvas) {
     return res.status(404).json({
       status: 404,
       statusText: 'Not Found',
@@ -14,7 +16,7 @@ router.get('/', async (req, res) => {
   res.status(200).json({
     status: 200,
     statusText: 'OK',
-    result: { user },
+    result: { auction },
   });
 });
 

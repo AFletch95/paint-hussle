@@ -1,9 +1,4 @@
-const { Router } = require('express');
-const router = Router();
-
-const path = require('path');
-
-router.use('*', (req, res) => {
+module.exports = (req, res) => {
   res.status(404);
   if (req.method === 'GET' && req.accepts('html')) {
     console.log('HTML 404');
@@ -22,6 +17,4 @@ router.use('*', (req, res) => {
   }
   console.log('TXT 404');
   res.type('txt').send('Not found');
-});
-
-module.exports = router;
+};
