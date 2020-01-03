@@ -4,7 +4,7 @@ const router = Router();
 router.post('/', async (req, res) => {
   const db = req.app.get('db');
   try {
-    const { username, password, name, email, phone, bio, image } = req.body;
+    let { username, password, name, email, phone, bio, image } = req.body;
     if (typeof email === 'string') email = { address: email };
     const newUser = new db.User({
       username,

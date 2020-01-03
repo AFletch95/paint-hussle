@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import database from "../../utils/API";
+import DatePicker from "react-datepicker";
+
+import "react-datepicker/dist/react-datepicker.css";
 
 const SignUpForm = () => {
 
@@ -20,8 +23,9 @@ const SignUpForm = () => {
         last: lName
       },
       email,
-      dateOfBirth,
+      dateOfBirth: new Date(dateOfBirth)
     };
+    console.log(userData)
     database.createNewUser(userData)
       .then(res => console.log(res.json()))
       .catch(err => console.error("CREATE NEW USER ERROR", err))
@@ -30,9 +34,9 @@ const SignUpForm = () => {
   return (
     <form style={{ maxWidth: "25rem" }} className="mx-auto">
       <div className="form-group text-center">
-        <label htmlFor="birthdateBar">Birthday</label>
+        <label htmlFor="dateOfBirthBar">Date of Birth</label>
         <br />
-        <input type="date" id="date" value={dateOfBirth} onChange={setDateOfBirth}></input>
+        <DatePicker selected={dateOfBirth} onChange={setDateOfBirth} id="dateOfBirthBar" />
       </div>
 
       <div className="form-row" >
@@ -62,7 +66,7 @@ const SignUpForm = () => {
         </div>
       </div>
       <div className="text-center">
-        <div className="btn btn-success mb-4 " type="submit" onClick={() => createUser()}>Create Account</div>
+        <div className="btn btn-success mb-4 " type="submit" onClick={createUser}>Create Account</div>
       </div>
     </form>
   )
