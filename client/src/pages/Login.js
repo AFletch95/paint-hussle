@@ -18,13 +18,6 @@ const LoginPage = () => {
           <p style={{ fontSize: "1rem", fontWeight: "200", color: "blue" }}>Create Account</p>
           <hr />
         </div>
-
-        <div className="text-center">
-          <BirthdateBar />
-        </div>
-
-        <hr />
-
         <SignUpForm />
       </div>
 
