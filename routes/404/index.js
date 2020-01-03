@@ -1,15 +1,15 @@
 const path = require('path');
 
 module.exports = (req, res) => {
+  res.status(404);
   if (req.method === 'GET' && req.accepts('html')) {
     console.log('HTML 404');
     try {
-      return res.status(200).sendFile(path.join(__dirname, '../../client/build/index.html'));
+      return res.sendFile(path.join(__dirname, '../../client/build/index.html'));
     } catch (err) {
       console.log(err);
     }
   }
-  res.status(404);
   if (req.accepts('json')) {
     console.log('JSON 404');
     return res.send({
