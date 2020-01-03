@@ -29,7 +29,7 @@ const SignUpForm = () => {
     };
     database
       .createNewUser(userData)
-      .then(res => console.log(res)
+      .then(res => console.log(res))
       .catch(err => console.error('CREATE NEW USER ERROR', err));
   };
 
