@@ -1,8 +1,11 @@
-const { Schema } = require('mongoose');
+const { Schema, model } = require('mongoose');
 
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 const strongPassword = new RegExp(/^(?!.*\s)(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#%&+=|^$*-]).{8,}/g);
+
+const MIN_AGE = 13 * 365.2422 * 24 * 60 * 60 * 1000;
 
 const NameSchema = require('./NameSchema.js');
 const EmailSchema = require('./EmailSchema.js');
@@ -50,6 +53,14 @@ const UserSchema = new Schema(
       select: false,
       set: function(v) {
         return this.phone ? this.phone.set(v) : (this.phone = v);
+      },
+    },
+    dateOfBirth: {
+      type: Date,
+      required: true,
+      select: false,
+      set: function(v) {
+        return v.getTime() <= Date.now() - MIN_AGE;
       },
     },
     bio: {
@@ -102,7 +113,18 @@ UserSchema.methods.checkPassword = function(plaintext) {
 
 UserSchema.methods.mask = function() {
   if (this.email) this.email.mask();
-  if (this.phone) this.email.mask();
+  if (this.phone) this.phone.mask();
+};
+
+UserSchema.methods.createAuthToken = function() {
+  const payload = {
+    id: this._id,
+  };
+  const signConfig = {
+    algorithm: 'HS256',
+    expiresIn: '48h',
+  };
+  return jwt.sign(payload, process.env.PRIVATE_AUTH_KEY, signConfig);
 };
 
 UserSchema.pre('find', async function() {});
@@ -114,4 +136,4 @@ UserSchema.pre('save', async function() {
   }
 });
 
-module.exports = UserSchema;
+module.exports = model('User', UserSchema);

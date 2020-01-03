@@ -1,10 +1,6 @@
 const { Router } = require('express');
 const router = Router();
 
-router.use('/canvases', require('./canvases'));
-router.use('/auctions', require('./auctions'));
-router.use('/bids', require('./bids'));
-
 router.get('/', async (req, res) => {
   const db = req.app.get('db');
   const { id } = req.user;

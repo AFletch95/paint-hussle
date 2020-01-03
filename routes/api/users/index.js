@@ -1,20 +1,20 @@
 const { Router } = require('express');
 const router = Router();
 
-router.use(
-  '/:id',
-  (req, res, next) => {
-    req.user = { id: req.params.id };
-    next();
-  },
-  require('./-id'),
-);
-
 router.post('/', async (req, res) => {
   const db = req.app.get('db');
   try {
-    console.log(req.body);
-    const newUser = new db.User(req.body);
+    const { username, password, name, email, phone, bio, image } = req.body;
+    if (typeof email === 'string') email = { address: email };
+    const newUser = new db.User({
+      username,
+      password,
+      name,
+      email,
+      phone,
+      bio,
+      image,
+    });
     const result = await newUser.save();
     console.log(result);
 
