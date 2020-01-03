@@ -12,7 +12,7 @@ const SignUpForm = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
-  const [dateOfBirth, setDateOfBirth] = useState(new Date(Date.now() - MIN_AGE).toLocaleDateString());
+  const [dateOfBirth, setDateOfBirth] = useState(new Date(Date.now() - MIN_AGE));
 
   const createUser = () => {
     if (!fName || !lName) return;
