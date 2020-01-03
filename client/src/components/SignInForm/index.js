@@ -6,11 +6,13 @@ const SignInForm = () => {
   const [password, setPassword] = useState('');
 
   const userLogin = () => {
+    console.log('Login');
     if (!identifier || !password) return;
-    let userData = {
+    const userData = {
       identifier,
       password,
     };
+    console.log(userData);
     database
       .userLogin(userData)
       .then(res => console.log(res))
@@ -48,7 +50,7 @@ const SignInForm = () => {
         </label>
       </div>
       <div className="text-center">
-        <div type="submit" className="btn btn-success" onSubmit={userLogin}>
+        <div type="submit" className="btn btn-success" onClick={userLogin}>
           Login
         </div>
         <br />

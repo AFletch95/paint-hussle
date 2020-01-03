@@ -106,7 +106,7 @@ const SignUpForm = () => {
         </div>
       </div>
       <div className="text-center">
-        <div className="btn btn-success mb-4 " type="submit" onSubmit={createUser}>
+        <div className="btn btn-success mb-4 " type="submit" onClick={createUser}>
           Create Account
         </div>
       </div>
