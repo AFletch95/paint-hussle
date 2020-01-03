@@ -7,13 +7,12 @@ router.post('/', async (req, res) => {
     const { username, password, name, dateOfBirth, phone, bio, image } = req.body;
     let { email } = req.body;
     if (typeof email === 'string') email = { address: email };
-    console.log(dateOfBirth, dateOfBirth instanceof Date);
     const newUser = new db.User({
       username,
       password,
       name,
       email,
-      dateOfBirth: new Date(dateOfBirth),
+      dateOfBirth,
       phone,
       bio,
       image,
