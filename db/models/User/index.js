@@ -5,6 +5,8 @@ const jwt = require('jsonwebtoken');
 
 const strongPassword = new RegExp(/^(?!.*\s)(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#%&+=|^$*-]).{8,}/g);
 
+const MIN_AGE = 13 * 365.2422 * 24 * 60 * 60 * 1000;
+
 const NameSchema = require('./NameSchema.js');
 const EmailSchema = require('./EmailSchema.js');
 const PhoneSchema = require('./PhoneSchema.js');
@@ -58,7 +60,7 @@ const UserSchema = new Schema(
       required: true,
       select: false,
       set: function(v) {
-        return v.getTime() < Date.now();
+        return v.getTime() <= Date.now() - MIN_AGE;
       },
     },
     bio: {
