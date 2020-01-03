@@ -1,8 +1,8 @@
 const { Router } = require('express');
 const router = Router();
 
-const { verifyToken } = require('../../middleware/auth');
-const { getUser } = require('../../middleware/orm');
+const { verifyToken } = require('../middleware/auth');
+const { getUser } = require('../middleware/orm');
 
 function parseParams(name) {
   return (req, res, next) => {
@@ -20,7 +20,13 @@ router.use('/api/account/logout', verifyToken, require('./api/account/logout'));
 
 router.use('/api/auctions', require('./api/auctions'));
 router.use('/api/auctions/:id', parseParams('auction'), require('./api/auctions/-id'));
-router.use('/api/auctions/:id/buyout', parseParams('auction'), require('./api/auctions/-id/buyout'));
+router.use(
+  '/api/auctions/:id/buyout',
+  parseParams('auction'),
+  verifyToken,
+  getUser({ select: '_id' }),
+  require('./api/auctions/-id/buyout'),
+);
 
 router.use('/api/canvases', require('./api/canvases'));
 router.use('/api/canvases/:id', parseParams('canvas'), require('./api/canvases/-id'));
