@@ -15,6 +15,7 @@ import SignUpForm from "./components/SignUpForm";
 import Home from "./pages/Home";
 import Store from "./pages/Store";
 import Login from "./pages/Login";
+import Account from './pages/AccountPage';
 
 
 
@@ -33,11 +34,17 @@ function App() {
 					handlePageChange={() => handlePageChange("Login")} />;
 			case "Login":
 				return <Login currentPage={currentPage}
-					handlePageChange={() => handlePageChange("Home")} />
+					handlePageChange={() => handlePageChange("Account")} />
+			case "Store":
+				return <Store currentPage={currentPage}
+					handlePageChange={() => handlePageChange("Account")} />
+			case "Account":
+				return <Account currentPage={currentPage}
+					handlePageChange={() => handlePageChange("Store")} />
 
 			default:
 				return <Home currentPage={currentPage}
-					handlePageChange={() => handlePageChange("Store")} />;
+					handlePageChange={() => handlePageChange("login")} />;
 		}
 	}
 
