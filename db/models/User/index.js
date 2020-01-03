@@ -59,8 +59,11 @@ const UserSchema = new Schema(
       type: Date,
       required: true,
       select: false,
-      set: function(v) {
-        return v.getTime() <= Date.now() - MIN_AGE;
+      validate: {
+        validator: function(v) {
+          return v.getTime() <= Date.now() - MIN_AGE;
+        },
+        message: 'not old enough based on date of birth',
       },
     },
     bio: {
