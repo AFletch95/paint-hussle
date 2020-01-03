@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import database from '../../utils/API';
 
 const SignInForm = () => {
@@ -7,7 +7,7 @@ const SignInForm = () => {
 
   const userLogin = () => {
     let userData = {
-      indentifier,
+      identifier,
       password,
     };
 
