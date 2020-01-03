@@ -4,13 +4,15 @@ const router = Router();
 router.post('/', async (req, res) => {
   const db = req.app.get('db');
   try {
-    let { username, password, name, email, phone, bio, image } = req.body;
+    const { username, password, name, dateOfBirth, phone, bio, image } = req.body;
+    let { email } = req.body;
     if (typeof email === 'string') email = { address: email };
     const newUser = new db.User({
       username,
       password,
       name,
       email,
+      dateOfBirth,
       phone,
       bio,
       image,
