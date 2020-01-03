@@ -4,13 +4,15 @@ import DatePicker from 'react-datepicker';
 
 import 'react-datepicker/dist/react-datepicker.css';
 
+const MIN_AGE = 13 * 365.2422 * 24 * 60 * 60 * 1000;
+
 const SignUpForm = () => {
   const [fName, setFName] = useState('');
   const [lName, setLName] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
-  const [dateOfBirth, setDateOfBirth] = useState('');
+  const [dateOfBirth, setDateOfBirth] = useState(new Date(Date.now() - MIN_AGE).toLocaleDateString());
 
   const createUser = () => {
     if (!fName || !lName) return;
