@@ -13,7 +13,7 @@ const SignInForm = () => {
 
     database
       .userLogin(userData)
-      .then(res => console.log(res.json()))
+      .then(res => console.log(res))
       .catch(err => console.error('USER LOGIN ERROR', err));
   };
 
