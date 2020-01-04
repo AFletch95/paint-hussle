@@ -14,7 +14,10 @@ export default {
   getAccountInfo() {
     return axios.get("/api/account/")
   },
-}
+
+  getUserCanvases() {
+    return axios.get("/api/")
+  }
 
 
 }
