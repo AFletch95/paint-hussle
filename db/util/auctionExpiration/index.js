@@ -10,7 +10,7 @@ module.exports = {
         .lt(new Date())
         .populate('highestBid');
 
-      if (auctions.length === 0) return console.log('No expired auctions');
+      if (auctions.length === 0) return;
 
       const updates = auctions.map(async auction => {
         auction.isActive = false;

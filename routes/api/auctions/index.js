@@ -4,7 +4,7 @@ const router = Router();
 router.get('/', async (req, res) => {
   const db = req.app.get('db');
 
-  const auctions = db.Auction.find({
+  const auctions = await db.Auction.find({
     visibility: 'public',
   });
 
