@@ -15,7 +15,7 @@ function Footer() {
       className="navbar text-light" >
 
       <a className="text-dark h3 text-left"
-        href="/" > Urban Organics </a>
+        href="/" >  PAINT HUSTLE </a>
 
       <ul className="text-center list-inline pt-2" >
         <li className="list-inline-item" > Created by: </li>

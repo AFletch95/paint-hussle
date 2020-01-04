@@ -1,9 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import database from '../../utils/API';
 
 const SignInForm = () => {
   const [identifier, setIdentifier] = useState('');
   const [password, setPassword] = useState('');
+  const [rememberMe, setRememberMe] = useState(false);
+
+  const handleFormSubmit = () => {
+    localStorage.setItem("rememberMe", rememberMe);
+    localStorage.setItem("identifier", rememberMe ? identifier : "")
+  }
+
+  const handleRememberMe = () => {
+    setRememberMe(!rememberMe)
+  }
+
+  useEffect(() => {
+    let remember = localStorage.getItem("rememberMe") === "true"
+    setIdentifier(remember ? localStorage.getItem("user") : "")
+
+  })
 
   const userLogin = () => {
     console.log('Login');
@@ -44,13 +60,13 @@ const SignInForm = () => {
         ></input>
       </div>
       <div className="form-check">
-        <input type="checkbox" className="form-check-input" id="rememberMeCheckBox" />
+        <input type="checkbox" onChange={handleRememberMe} className="form-check-input" id="rememberMeCheckBox" />
         <label className="form-check-label" htmlFor="rememberMeCheckBox">
           Remember Me
         </label>
       </div>
       <div className="text-center">
-        <div type="submit" className="btn btn-success" onClick={userLogin}>
+        <div type="submit" className="btn btn-success" onClick={userLogin, handleFormSubmit}>
           Login
         </div>
         <br />

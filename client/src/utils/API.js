@@ -11,7 +11,13 @@ export default {
     return axios.post("/api/account/login", userData)
   },
 
+  getAccountInfo() {
+    return axios.get("/api/account/")
+  },
 
+  getUserCanvases() {
+    return axios.get("/api/")
+  }
 
 
 }
