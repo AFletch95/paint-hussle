@@ -6,7 +6,7 @@ router.get('/', async (req, res) => {
 
   const auctions = await db.Auction.find({
     visibility: 'public',
-  });
+  }).populate('canvas seller highestBid');
 
   res.status(200).json({
     status: 200,

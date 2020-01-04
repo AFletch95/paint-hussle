@@ -1,5 +1,3 @@
-
-
 // react
 import React, { useState } from 'react';
 import {
@@ -23,8 +21,6 @@ import Marketplace from "./pages/Store";
 
 import AccountPage from "./pages/AccountPage";
 import HomePage from './pages/Home';
-
-
 
 function App() {
 
