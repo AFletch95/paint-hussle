@@ -2,58 +2,59 @@
 
 // react
 import React, { useState } from 'react';
+import {
+	BrowserRouter as Router,
+	Switch,
+	Route,
+	Link
+} from "react-router-dom";
 // material ui
 // import CssBaseline from "@material-ui/core/CssBaseline"
 // import { MuiThemeProvider } from "@material-ui/core/styles"
 // import Grid from "@material-ui/core/Grid"
 
 // components
-import SignInForm from "./components/SignInForm";
-import SignUpForm from "./components/SignUpForm";
+import Navbar from "./components/NavBarPaintHustle"
 
 // pages
 import Home from "./pages/Home";
-import Store from "./pages/Store";
-import Login from "./pages/Login";
-import Account from './pages/AccountPage';
+import LoginPage from './pages/Login';
+import Marketplace from "./pages/Store";
+
+import AccountPage from "./pages/AccountPage";
+import HomePage from './pages/Home';
 
 
 
 function App() {
 
-	const [currentPage, setCurrentPage] = useState("Home");
-
-	function handlePageChange(page) {
-		setCurrentPage(page)
-	}
-
-	function renderPage() {
-		switch (currentPage) {
-			case "Home":
-				return <Home currentPage={currentPage}
-					handlePageChange={() => handlePageChange("Login")} />;
-			case "Login":
-				return <Login currentPage={currentPage}
-					handlePageChange={() => handlePageChange("Account")} />
-			case "Store":
-				return <Store currentPage={currentPage}
-					handlePageChange={() => handlePageChange("Account")} />
-			case "Account":
-				return <Account currentPage={currentPage}
-					handlePageChange={() => handlePageChange("Store")} />
-
-			default:
-				return <Home currentPage={currentPage}
-					handlePageChange={() => handlePageChange("login")} />;
-		}
-	}
 
 
 	return (
 		<div>
+			{/* 
+			<Navbar currentPage={currentPage} handlePageChange={handlePageChange} />
+			{renderPage()} */}
 
-
-			{renderPage()}
+			<Router>
+				<Switch>
+					<Route path="/marketplace">
+						<Navbar />
+						<Marketplace />
+					</Route>
+					<Route path="/account">
+						<Navbar />
+						<AccountPage />
+					</Route>
+					<Route path="/login">
+						<Navbar />
+						<LoginPage />
+					</Route>
+					<Route path="/" >
+						<HomePage />
+					</Route>
+				</Switch>
+			</Router>
 
 
 

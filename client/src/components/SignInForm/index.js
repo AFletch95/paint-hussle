@@ -17,9 +17,9 @@ const SignInForm = () => {
 
   useEffect(() => {
     let remember = localStorage.getItem("rememberMe") === "true"
-    setIdentifier(remember ? localStorage.getItem("user") : "")
+    setIdentifier(remember ? localStorage.getItem("identifier") : "")
 
-  })
+  }, [])
 
   const userLogin = () => {
     console.log('Login');
@@ -60,7 +60,7 @@ const SignInForm = () => {
         ></input>
       </div>
       <div className="form-check">
-        <input type="checkbox" onChange={handleRememberMe} className="form-check-input" id="rememberMeCheckBox" />
+        <input type="checkbox" checked={rememberMe ? "true" : "false"} onChange={handleRememberMe} className="form-check-input" id="rememberMeCheckBox" />
         <label className="form-check-label" htmlFor="rememberMeCheckBox">
           Remember Me
         </label>

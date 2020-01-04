@@ -5,11 +5,7 @@ const AccountPage = (props) => {
   return (
     <div style={{ background: "lightgray", height: "100vh" }}>
       {/* new navbar */}
-      <div className="navbar navbar-light bg-light mb-5">
-        <a className="navbar-brand h1 mb-0" href="/">Paint-Hustle</a>
-        <a className="nav-item text-dark" href={props.username ? ("/myaccount/" + props.username) : ("/signin")}>{props.username || "Sign in / Sign Up"}</a>
-        <a className="nav-item text-dark" href="/market">Marketplace</a>
-      </div>
+
       <div className="container-fluid">
         {/* AccountPage */}
         <div>

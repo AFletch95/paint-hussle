@@ -25,12 +25,12 @@ function HomePage(props) {
             <h3 style={{ fontFamily: "Montserrat, sans-serif" }}>BUY, SELL, CREATE, AND TRADE</h3>
 
           </div>
-
-          <div style={{ height: "auto", width: "fit-content", border: "solid lightgray 1px", background: "black", opacity: "0.5", }} onClick={() => props.handlePageChange("Store")} className="btn pb-2 pt-2 pr-4 pl-4">
-            <h2 className="text-light mb-0">CREATE ACCOUNT</h2>
-            <h2 className="text-light">------></h2>
-          </div>
-
+          <a href="/login"><span>
+            <div style={{ height: "auto", width: "fit-content", border: "solid lightgray 1px", background: "black", opacity: "0.5", }} className="btn pb-2 pt-2 pr-4 pl-4">
+              <h2 className="text-light mb-0">CREATE ACCOUNT</h2>
+              <h2 className="text-light">------></h2>
+            </div>
+          </span></a>
         </div>
       </div>
     </div>
