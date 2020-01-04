@@ -1,28 +1,45 @@
-import React from "react";
-import BirthdateBar from "../components/BirthdateBar"
-import SigninForm from "../components/SignInForm"
-import SignUpForm from "../components/SignUpForm";
+import React, { useState } from 'react';
+import SigninForm from '../components/SignInForm';
+import SignUpForm from '../components/SignUpForm';
 
 const LoginPage = () => {
+  const [currentForm, setCurrentForm] = useState('login');
 
-  return (
-    <div>
+  const divStyle = { width: '30rem', background: 'rgba(0,0,0,0.5)' };
 
-      <div id="login" className="mx-auto mt-5"
-        style={{ width: "30rem", background: "rgba(0,0,0,0.5)" }}>
-        <h2 className="text-center pt-3">Sign In</h2>
-        <hr />
-        <SigninForm />
-
-        <div className="text-center mt-5">
-          <p style={{ fontSize: "1rem", fontWeight: "200", color: "blue" }}>Create Account</p>
-          <hr />
-        </div>
-        <SignUpForm />
-      </div>
-
-    </div>
-  )
-}
+  function renderForm() {
+    switch (currentForm) {
+      case 'login':
+        return (
+          <div id="login" className="mx-auto my-5" style={divStyle}>
+            <h2 className="text-center pt-3">Sign In</h2>
+            <hr />
+            <SigninForm />
+            <hr className="mb-0" />
+            <div className="text-center py-4">
+              <div type="submit" className="btn btn-success rounded" onClick={() => setCurrentForm('create')}>
+                Create Account
+              </div>
+            </div>
+          </div>
+        );
+      case 'create':
+        return (
+          <div id="create" className="mx-auto mt-5" style={divStyle}>
+            <h2 className="text-center pt-3">Create Account</h2>
+            <hr className="mb-0 pb-0" />
+            <div className="text-center py-4">
+              <SignUpForm />
+              <br />
+              <a href="#" onClick={() => setCurrentForm('login')}>
+                Sign-in
+              </a>
+            </div>
+          </div>
+        );
+    }
+  }
+  return <div>{renderForm()}</div>;
+};
 
 export default LoginPage;
