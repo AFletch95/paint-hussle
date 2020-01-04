@@ -13,6 +13,12 @@ app.set('db', require('./db'));
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('./client/build'));
+  app.use((req, res, next) => {
+    if (req.header('x-forwarded-Proto') !== 'https') {
+      return res.redirect(`https://${req.header('host')}${req.url}`);
+    }
+    next();
+  });
 }
 
 app.use(bodyParser.json());

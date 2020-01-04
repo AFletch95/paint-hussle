@@ -7,7 +7,7 @@ router.get('/', async (req, res) => {
   const auction = await db.Auction.findById(id)
     .where('visibility')
     .ne('private');
-  if (!canvas) {
+  if (!auction) {
     return res.status(404).json({
       status: 404,
       statusText: 'Not Found',

@@ -27,13 +27,11 @@ const CanvasSchema = new Schema(
     },
     title: {
       type: String,
-      required: true,
       trim: true,
       max: 256,
     },
     description: {
       type: String,
-      required: true,
       trim: true,
       max: 1024,
     },
