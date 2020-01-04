@@ -1,117 +1,173 @@
 import React, { useState } from 'react';
 import database from '../../utils/API';
-import DatePicker from 'react-datepicker';
 
+import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
-const MIN_AGE = 13 * 365.2422 * 24 * 60 * 60 * 1000;
+const MIN_AGE_MILL = 13 * 365.2422 * 24 * 60 * 60 * 1000;
 
 const SignUpForm = () => {
-  const [fName, setFName] = useState('');
-  const [lName, setLName] = useState('');
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [email, setEmail] = useState('');
-  const [dateOfBirth, setDateOfBirth] = useState(new Date(Date.now() - MIN_AGE));
+  const MIN_AGE_DATE = new Date(Date.now() - MIN_AGE_MILL);
+
+  const [creationState, setCreationState] = useState('dob');
+
+  const [userData, setUserData] = useState({
+    dateOfBirth: MIN_AGE_DATE,
+    username: '',
+    password: '',
+    name: {
+      first: '',
+      last: '',
+    },
+  });
+
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleChange = e => {
+    setUserData({
+      ...userData,
+      [e.target.name]: e.target.value,
+    });
+  };
 
   const createUser = () => {
-    if (!fName || !lName) return;
-    if (!username || !password) return;
-    if (!email || !dateOfBirth) return;
+    if (!userData.dateOfBirth) return alert('No date of birth');
+    if (userData.dateOfBirth.getTime() > MIN_AGE_DATE.getTime()) return alert('Must be at least 13 years old');
+    if (!userData.username) return alert('No username');
+    if (!userData.passowrd) return alert('No password');
+    if (!userData.email) return alert('No email');
+    if (!userData.name || !userData.name.first || !userData.name.last) return alert('No name');
 
-    let userData = {
-      username,
-      password,
-      name: {
-        first: fName,
-        last: lName,
-      },
-      email,
-      dateOfBirth,
-    };
     database
       .createNewUser(userData)
-      .then(res => console.log(res))
+      .then(res => {
+        if (res.statusText === 'OK') setUserData({});
+        console.log(res);
+      })
       .catch(err => console.error('CREATE NEW USER ERROR', err));
   };
 
-  return (
-    <form style={{ maxWidth: '25rem' }} className="mx-auto">
-      <div className="form-group text-center">
-        <label htmlFor="dateOfBirthBar">Date of Birth</label>
-        <br />
-        <DatePicker selected={dateOfBirth} onChange={setDateOfBirth} id="dateOfBirthBar" />
-      </div>
+  function render() {
+    switch (creationState) {
+      case 'dob':
+        return (
+          <form className="text-center mx-auto my-0" style={{ maxWidth: '25rem' }}>
+            <div className="form-group">
+              <label htmlFor="dateOfBirthBar">Date of Birth</label>
+              <br />
+              <DatePicker
+                id="dateOfBirthBar"
+                selected={userData.dateOfBirth}
+                onChange={value => {
+                  setUserData({
+                    ...userData,
+                    dateOfBirth: value,
+                  });
+                }}
+              />
+              <br />
+            </div>
+            <div
+              type="submit"
+              className="btn btn-success"
+              onClick={() => {
+                if (!userData.dateOfBirth) return alert('No date of birth');
+                if (userData.dateOfBirth.getTime() > MIN_AGE_DATE.getTime())
+                  return alert('Must be at least 13 years old');
+                setCreationState('full');
+              }}
+            >
+              Continue
+            </div>
+          </form>
+        );
+      case 'full':
+        return (
+          <form className="text-left mx-auto my-0" style={{ maxWidth: '25rem' }}>
+            <div className="form-group form-row">
+              <div className="col">
+                <label htmlFor="userFirstName">First Name</label>
+                <input
+                  id="userFirstName"
+                  className="form-control"
+                  name="name.first"
+                  value={userData.name.first}
+                  onChange={handleChange}
+                  type="text"
+                  aria-describedby="First Name"
+                  placeholder="First Name"
+                />
+              </div>
+              <div className="col">
+                <label htmlFor="userLastName">Last Name</label>
+                <input
+                  id="userLastName"
+                  className="form-control"
+                  name="name.last"
+                  value={userData.name.last}
+                  onChange={handleChange}
+                  type="text"
+                  aria-describedby="Last Name"
+                  placeholder="Last Name"
+                />
+              </div>
+            </div>
+            <div className="form-group">
+              <label htmlFor="usernameSignUp">Username</label>
+              <input
+                id="username"
+                className="form-control"
+                name="username"
+                value={userData.username}
+                onChange={handleChange}
+                type="text"
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="userEmailSignUp">Email</label>
+              <input
+                id="userEmailSignUp"
+                className="form-control"
+                name="email"
+                value={userData.email}
+                onChange={handleChange}
+                type="email"
+              ></input>
+            </div>
+            <div className="form-group">
+              <label htmlFor="userPasswordSignUp">Password</label>
+              <input
+                id="userPasswordSignUp"
+                className="form-control"
+                name="password"
+                value={userData.password}
+                onChange={handleChange}
+                type={showPassword ? 'text' : 'password'}
+              ></input>
+              <div className="form-check">
+                <input
+                  id="showPasswordCheckBox"
+                  type="checkbox"
+                  className="form-check-input"
+                  checked={showPassword}
+                  onChange={e => setShowPassword(!showPassword)}
+                />
+                <label className="form-check-label" htmlFor="showPasswordCheckBox">
+                  Show Password
+                </label>
+              </div>
+            </div>
+            <div className="text-center">
+              <div className="btn btn-success " type="submit" onClick={createUser}>
+                Create Account
+              </div>
+            </div>
+          </form>
+        );
+    }
+  }
 
-      <div className="form-row">
-        <div className="col">
-          <label htmlFor="userFirstName">First Name</label>
-          <input
-            className="form-control"
-            value={fName}
-            onChange={event => setFName(event.target.value)}
-            id="userFirstName"
-            type="text"
-            aria-describedby="First Name"
-            placeholder="First Name"
-          />
-        </div>
-        <div className="col">
-          <label htmlFor="userLastName">Last Name</label>
-          <input
-            className="form-control"
-            value={lName}
-            onChange={event => setLName(event.target.value)}
-            id="userLastName"
-            type="text"
-            aria-describedby="Last Name"
-            placeholder="Last Name"
-          />
-        </div>
-      </div>
-      <div className="form-group">
-        <label htmlFor="usernameSignUp">Username</label>
-        <input
-          className="form-control"
-          value={username}
-          onChange={event => setUsername(event.target.value)}
-          id="usernameSignUp"
-          type="text"
-        />
-      </div>
-      <div className="form-group">
-        <label htmlFor="userEmailSignUp">Email</label>
-        <input
-          className="form-control"
-          value={email}
-          onChange={event => setEmail(event.target.value)}
-          id="userEmailSignUp"
-          type="email"
-        ></input>
-      </div>
-      <div className="form-group">
-        <label htmlFor="userPasswordSignUp">Password</label>
-        <input
-          className="form-control"
-          value={password}
-          onChange={event => setPassword(event.target.value)}
-          id="userPasswordSignUp"
-          type="password"
-        ></input>
-        <div className="form-check">
-          <input type="checkbox" className="form-check-input" id="showPasswordCheckBox" />
-          <label className="form-check-label" htmlFor="showPasswordCheckBox">
-            Show Password
-          </label>
-        </div>
-      </div>
-      <div className="text-center">
-        <div className="btn btn-success mb-4 " type="submit" onClick={createUser}>
-          Create Account
-        </div>
-      </div>
-    </form>
-  );
+  return <div>{render()}</div>;
 };
 
 export default SignUpForm;
