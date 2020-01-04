@@ -13,7 +13,7 @@ router.post('/', async (req, res) => {
     const { identifier, password } = req.body;
     if (!identifier || !password) throw 'Unauthorized';
 
-    const user = await db.User.findOne(getQuery(identifier)).select('password');
+    const user = await db.User.findOne(getQuery(identifier)).select('username password');
     if (!user) throw 'Unauthorized';
     const isMatch = await user.checkPassword(password);
     if (!isMatch) throw 'Unauthorized';
@@ -24,15 +24,15 @@ router.post('/', async (req, res) => {
     };
     res.cookie('authToken', user.createAuthToken(), cookieConfig);
     res.status(200).json({
-      status: 200,
-      statusText: 'OK',
+      result: {
+        user: {
+          username: user.username,
+        },
+      },
     });
   } catch (err) {
     console.log(err);
-    res.status(401).json({
-      status: 401,
-      statusText: 'Unauthorized',
-    });
+    res.status(401).json({});
   }
 });
 

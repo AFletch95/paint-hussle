@@ -8,14 +8,9 @@ router.get('/', async (req, res) => {
     .where('visibility')
     .ne('private');
   if (!canvas) {
-    return res.status(404).json({
-      status: 404,
-      statusText: 'Not Found',
-    });
+    return res.status(404).json({});
   }
   res.status(200).json({
-    status: 200,
-    statusText: 'OK',
     result: { canvas },
   });
 });

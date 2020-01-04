@@ -15,8 +15,6 @@ router.get(
   }),
   (req, res) => {
     res.status(200).json({
-      status: 200,
-      statusText: 'OK',
       result: { auctions: req.user.auctions || [] },
     });
   },
@@ -51,24 +49,15 @@ router.post('/', getUser({ select: '_id' }), async (req, res) => {
     const result = await auction.save();
     console.log(result);
 
-    res.status(201).json({
-      status: 201,
-      statusText: 'Created',
-    });
+    res.status(201).json({});
   } catch (err) {
     console.log(err);
     switch (err) {
       case 'Unauthorized':
-        res.status(401).json({
-          status: 401,
-          statusText: 'Unauthorized',
-        });
+        res.status(401).json({});
         break;
       default:
-        res.status(400).json({
-          status: 400,
-          statusText: 'Bad Request',
-        });
+        res.status(400).json({});
     }
   }
 });
