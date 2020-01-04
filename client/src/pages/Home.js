@@ -23,10 +23,13 @@ function HomePage(props) {
             <h3 style={{ fontFamily: "Lexend Exa, sans-serif" }}>BUY, SELL, CREATE, AND TRADE</h3>
 
           </div>
+          <a href="/login"><span>
 
-          <div onClick={() => props.handlePageChange("Store")} className="btn pb-2 pt-2 pr-4 pl-4">
-            <img src="./logos/create_account_button.png" style={{ height: "144px", width: "260px", }} alt="create account"></img>
-          </div>
+            <div className="btn pb-2 pt-2 pr-4 pl-4">
+              <img src="./logos/create_account_button.png" style={{ height: "144px", width: "260px", }} alt="create account"></img>
+            </div>
+
+          </span></a>
 
         </div>
       </div>
