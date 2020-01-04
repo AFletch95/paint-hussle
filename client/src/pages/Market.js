@@ -29,9 +29,11 @@ function StorePage() {
       </div>
       <div className="container mx-auto">
         <div className="list-group-flush">
-          {auctions.map(auction => (
-            <AuctionPanel auction={auction} canvasCreatorPage={canvasCreatorPage} />
-          ))}
+          {auctions.length > 0 ? (
+            auctions.map(auction => <AuctionPanel auction={auction} canvasCreatorPage={canvasCreatorPage} />)
+          ) : (
+            <div className="text-center">'No Auctions'</div>
+          )}
         </div>
       </div>
     </div>

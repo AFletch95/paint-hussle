@@ -15,17 +15,11 @@ router.post('/', async (req, res) => {
     .populate('canvas');
 
   if (!auction || !auction.canvas) {
-    return res.status(404).json({
-      status: 404,
-      statusText: 'Not Found',
-    });
+    return res.status(404).json({});
   }
 
   if (user._id.equals(auction.seller)) {
-    return res.status(400).json({
-      status: 400,
-      statusText: 'Bad Request',
-    });
+    return res.status(400).json({});
   }
   //TODO check if user has enough money
 
@@ -38,10 +32,7 @@ router.post('/', async (req, res) => {
   const result = await auction.save();
   console.log(result);
 
-  res.status(200).json({
-    status: 200,
-    statusText: 'OK',
-  });
+  res.status(200).json({});
 });
 
 module.exports = router;

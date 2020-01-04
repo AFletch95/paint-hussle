@@ -20,16 +20,10 @@ router.post('/', async (req, res) => {
     const result = await newUser.save();
     console.log(result);
 
-    res.status(201).json({
-      status: 201,
-      statusText: 'Created',
-    });
+    res.status(201).json({});
   } catch (err) {
     console.log(err);
-    res.status(400).json({
-      status: 400,
-      statusText: 'Bad Request',
-    });
+    res.status(400).json({});
   }
 });
 

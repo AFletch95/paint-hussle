@@ -14,15 +14,10 @@ router.get('/', async (req, res) => {
     });
   if (user) {
     res.status(200).json({
-      status: 200,
-      statusText: 'OK',
       result: { auctions: user.auctions || [] },
     });
   } else {
-    res.status(404).json({
-      status: 404,
-      statusText: 'Not Found',
-    });
+    res.status(404).json({});
   }
 });
 

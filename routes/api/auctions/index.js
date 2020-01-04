@@ -9,8 +9,6 @@ router.get('/', async (req, res) => {
   }).populate('canvas seller highestBid');
 
   res.status(200).json({
-    status: 200,
-    statusText: 'OK',
     result: {
       auctions,
     },

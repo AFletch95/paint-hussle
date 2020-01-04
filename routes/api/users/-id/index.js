@@ -6,14 +6,9 @@ router.get('/', async (req, res) => {
   const { id } = req.user;
   const user = await db.User.findById(id);
   if (!user) {
-    return res.status(404).json({
-      status: 404,
-      statusText: 'Not Found',
-    });
+    return res.status(404).json({});
   }
   res.status(200).json({
-    status: 200,
-    statusText: 'OK',
     result: { user },
   });
 });
