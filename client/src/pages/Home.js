@@ -1,7 +1,7 @@
 import React from "react";
 function HomePage(props) {
   const perfectImageStyle = {
-    backgroundImage: `url(./images/background_concept2.jpg)`,
+    backgroundImage: `url(./images/backgroundcanvas2.jpg)`,
     backgroundPosition: "center center",
     backgroundRepeat: "no-repeat",
     backgroundAttachment: "fixed",
@@ -18,19 +18,16 @@ function HomePage(props) {
           <div className="name-and-logo">
 
             <div className="paintHustleLogo mx-auto">
-              <img src="./logo192.png" style={{ height: "250px", width: "250px", }} alt="paint hustle"></img>
+              <img src="./logos/pnthustle.png" style={{ height: "600px", width: "1080px", }} alt="paint hustle"></img>
             </div>
-
-            <h1 style={{ fontFamily: "Montserrat, sans-serif" }} className="">PAINT HUSTLE</h1>
-            <h3 style={{ fontFamily: "Montserrat, sans-serif" }}>BUY, SELL, CREATE, AND TRADE</h3>
+            <h3 style={{ fontFamily: "Lexend Exa, sans-serif" }}>BUY, SELL, CREATE, AND TRADE</h3>
 
           </div>
-          <a href="/login"><span>
-            <div style={{ height: "auto", width: "fit-content", border: "solid lightgray 1px", background: "black", opacity: "0.5", }} className="btn pb-2 pt-2 pr-4 pl-4">
-              <h2 className="text-light mb-0">CREATE ACCOUNT</h2>
-              <h2 className="text-light">------></h2>
-            </div>
-          </span></a>
+
+          <div onClick={() => props.handlePageChange("Store")} className="btn pb-2 pt-2 pr-4 pl-4">
+            <img src="./logos/create_account_button.png" style={{ height: "144px", width: "260px", }} alt="create account"></img>
+          </div>
+
         </div>
       </div>
     </div>
