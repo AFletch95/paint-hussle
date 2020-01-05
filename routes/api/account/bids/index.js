@@ -5,8 +5,6 @@ const { getUser } = require('../../../../middleware/orm');
 
 router.get('/', getUser({ select: '_id', populate: 'bids' }), (req, res) => {
   res.status(200).json({
-    status: 200,
-    statusText: 'OK',
     result: { bids: req.user.bids || [] },
   });
 });
@@ -33,16 +31,10 @@ router.post('/', getUser({ select: '_id' }), async (req, res) => {
     const result = await Promise.all([bid.save(), auction.save()]);
     console.log(result);
 
-    res.status(201).json({
-      status: 201,
-      statusText: 'Created',
-    });
+    res.status(201).json({});
   } catch (err) {
     console.log(err);
-    res.status(400).json({
-      status: 400,
-      statusText: 'Bad Request',
-    });
+    res.status(400).json({});
   }
 });
 

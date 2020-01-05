@@ -5,8 +5,6 @@ router.get('/', async (req, res) => {
   const { user } = req;
   user.mask();
   res.status(200).json({
-    status: 200,
-    statusText: 'OK',
     result: { user },
   });
 });
@@ -17,8 +15,6 @@ router.put('/', async (req, res) => {
   const updated = await user.save();
   updated.mask();
   res.status(200).json({
-    status: 200,
-    statusText: 'OK',
     result: { user: updated },
   });
 });
