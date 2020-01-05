@@ -15,14 +15,15 @@ import {
 import Navbar from "./components/NavBarPaintHustle"
 
 // pages
-import Home from "./pages/Home";
 import LoginPage from './pages/Login';
-import Marketplace from "./pages/Store";
+import Marketplace from "./pages/Market";
 
 import AccountPage from "./pages/AccountPage";
 import HomePage from './pages/Home';
 
 function App() {
+
+	const [currentUsername, setCurrentUsername] = useState()
 
 
 
@@ -35,16 +36,16 @@ function App() {
 			<Router>
 				<Switch>
 					<Route path="/marketplace">
-						<Navbar />
+						<Navbar currentUsername={currentUsername} />
 						<Marketplace />
 					</Route>
 					<Route path="/account">
-						<Navbar />
+						<Navbar currentUsername={currentUsername} />
 						<AccountPage />
 					</Route>
 					<Route path="/login">
-						<Navbar />
-						<LoginPage />
+						<Navbar currentUsername={currentUsername} />
+						<LoginPage setCurrentUsername={setCurrentUsername} />
 					</Route>
 					<Route path="/" >
 						<HomePage />
