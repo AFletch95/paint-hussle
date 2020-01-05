@@ -6,10 +6,7 @@ import {
 	Route,
 	Link
 } from "react-router-dom";
-// material ui
-// import CssBaseline from "@material-ui/core/CssBaseline"
-// import { MuiThemeProvider } from "@material-ui/core/styles"
-// import Grid from "@material-ui/core/Grid"
+
 
 // components
 import Navbar from "./components/NavBarPaintHustle"
@@ -24,31 +21,27 @@ import HomePage from './pages/Home';
 function App() {
 
 	const [currentUsername, setCurrentUsername] = useState()
+	const [currentPage, setCurrentPage] = useState("Home")
 
 
 
 	return (
 		<div>
-			{/* 
-			<Navbar currentPage={currentPage} handlePageChange={handlePageChange} />
-			{renderPage()} */}
 
+			<Navbar currentUsername={currentUsername} currentPage={currentPage} />
 			<Router>
 				<Switch>
 					<Route path="/marketplace">
-						<Navbar currentUsername={currentUsername} />
-						<Marketplace />
+						<Marketplace setCurrentPage={setCurrentPage} />
 					</Route>
-					<Route path="/account">
-						<Navbar currentUsername={currentUsername} />
-						<AccountPage />
+					<Route path="/myaccount">
+						<AccountPage setCurrentPage={setCurrentPage} />
 					</Route>
 					<Route path="/login">
-						<Navbar currentUsername={currentUsername} />
-						<LoginPage setCurrentUsername={setCurrentUsername} />
+						<LoginPage setCurrentUsername={setCurrentUsername} setCurrentPage={setCurrentPage} />
 					</Route>
 					<Route path="/" >
-						<HomePage />
+						<HomePage setCurrentPage={setCurrentPage} />
 					</Route>
 				</Switch>
 			</Router>

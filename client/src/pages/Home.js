@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 function HomePage(props) {
   const perfectImageStyle = {
     backgroundImage: `url(./images/backgroundcanvas2.jpg)`,
@@ -9,6 +9,9 @@ function HomePage(props) {
     minHeight: "100vh",
   }
 
+  useEffect(() => {
+    props.setCurrentPage("Home")
+  }, [])
 
   return (
     <div>

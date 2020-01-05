@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+
+
 import database from '../../utils/API';
 
 const SignInForm = (props) => {
@@ -37,6 +39,7 @@ const SignInForm = (props) => {
           localStorage.setItem('rememberMe', rememberMe);
           localStorage.setItem('identifier', rememberMe ? userData.identifier : '');
           props.setCurrentUsername(res.data.result.user.username)
+          window.location.pathname = ("/myaccount")
         }
         console.log(res);
       })

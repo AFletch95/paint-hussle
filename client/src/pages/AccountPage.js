@@ -1,6 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
+import CanvasCarousel from "../components/CanvasCarousel";
 
 const AccountPage = (props) => {
+
+
+  useEffect(() => {
+    props.setCurrentPage("Account")
+  }, [])
+
 
   return (
     <div style={{ background: "lightgray", height: "100vh" }}>
@@ -43,59 +50,7 @@ const AccountPage = (props) => {
           </div>
         </div>
 
-        <div className="row d-flex justify-content-center mt-5">
-          <div>
-            <div className="row mx-auto d-flex justify-content-center">
-              <h3 className="text-center">MY CANVASES</h3>
-              <a className="ml-3 pt-2" href="/mycanvases">show all</a>
-            </div>
-            <div id="carousel" className="carousel slide" data-ride="carousel" style={{ height: "300px", width: "1000px" }}>
-              <div className="carousel-inner mx-auto" style={{ width: "900px" }}>
-                <div className="carousel-item active">
-                  <div className="container">
-                    <div className="row" >
-                      <div className="col" style={{ background: "red", height: "215px", margin: "5px" }}>col 1</div>
-                      <div className="col" style={{ background: "blue", height: "215px", margin: "5px" }}>col 2</div>
-                      <div className="col" style={{ background: "green", height: "215px", margin: "5px" }}>col 3</div>
-                      <div className="col" style={{ background: "purple", height: "215px", margin: "5px" }}>col 4</div>
-                    </div>
-                  </div>
-                </div>
-                <div className="carousel-item">
-                  <div className="container">
-                    <div className="row" >
-                      <div className="col" style={{ background: "blue", height: "215px", margin: "5px" }}>col 2</div>
-                      <div className="col" style={{ background: "red", height: "215px", margin: "5px" }}>col 1</div>
-                      <div className="col" style={{ background: "purple", height: "215px", margin: "5px" }}>col 4</div>
-                      <div className="col" style={{ background: "green", height: "215px", margin: "5px" }}>col 3</div>
-                    </div>
-                  </div>
-                </div>
-                <div className="carousel-item">
-                  <div className="container">
-                    <div className="row" >
-                      <div className="col" style={{ background: "green", height: "215px", margin: "5px" }}>col 3</div>
-                      <div className="col" style={{ background: "red", height: "215px", margin: "5px" }}>col 1</div>
-                      <div className="col" style={{ background: "purple", height: "215px", margin: "5px" }}>col 4</div>
-                      <div className="col" style={{ background: "blue", height: "215px", margin: "5px" }}>col 2</div>
-                    </div>
-                  </div>
-
-                </div>
-              </div>
-              <a className="carousel-control-prev" href="#carousel" role="button" data-slide="prev" style={{ background: "rgba(0,0,0,0.3)", width: "50px", height: "230px" }}>
-                <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span className="sr-only">Previous</span>
-              </a>
-              <a className="carousel-control-next" href="#carousel" role="button" data-slide="next" style={{ background: "rgba(0,0,0,0.3)", width: "50px", height: "230px" }}>
-                <span className="carousel-control-next-icon" aria-hidden="true"></span>
-                <span className="sr-only">Next</span>
-              </a>
-            </div>
-          </div>
-        </div>
-
-
+        <CanvasCarousel />
 
 
         {/* ending div */}
