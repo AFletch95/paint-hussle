@@ -26,7 +26,7 @@ function HomePage(props) {
             <h3 style={{ fontFamily: "Lexend Exa, sans-serif" }}>BUY, SELL, CREATE, AND TRADE</h3>
 
           </div>
-          <a href="/login"><span>
+          <a href={sessionStorage.getItem('currentUsername') ? '/myaccount' : "/login"}><span>
 
             <div className="btn pb-2 pt-2 pr-4 pl-4">
               <img src="./logos/create_account_button.png" style={{ height: "144px", width: "260px", }} alt="create account"></img>

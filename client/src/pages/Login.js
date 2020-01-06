@@ -5,6 +5,14 @@ import SignUpForm from '../components/SignUpForm';
 const LoginPage = (props) => {
   const [currentForm, setCurrentForm] = useState('login');
 
+  const bgStyle = {
+    backgroundImage: `url(./images/backgroundcanvas2.jpg)`,
+    backgroundPosition: "center center",
+    backgroundRepeat: "no-repeat",
+    backgroundAttachment: "fixed",
+    backgroundSize: "cover",
+    minHeight: "100vh",
+  }
   const divStyle = { width: '30rem', background: 'rgba(0,0,0,0.5)' };
 
   useEffect(() => {
@@ -15,7 +23,7 @@ const LoginPage = (props) => {
     switch (currentForm) {
       case 'login':
         return (
-          <div id="login" className="mx-auto my-5" style={divStyle}>
+          <div id="login" className="mx-auto py-5" style={divStyle}>
             <h2 className="text-center pt-3">Sign In</h2>
             <hr />
             <SigninForm setCurrentUsername={props.setCurrentUsername} />
@@ -43,7 +51,7 @@ const LoginPage = (props) => {
         );
     }
   }
-  return <div>{renderForm()}</div>;
+  return <div style={bgStyle}>{renderForm()}</div>;
 };
 
 export default LoginPage;

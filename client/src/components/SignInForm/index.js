@@ -38,7 +38,7 @@ const SignInForm = (props) => {
           console.log('Saving', rememberMe);
           localStorage.setItem('rememberMe', rememberMe);
           localStorage.setItem('identifier', rememberMe ? userData.identifier : '');
-          props.setCurrentUsername(res.data.result.user.username)
+          sessionStorage.setItem('currentUsername', res.data.result.user.username)
           window.location.pathname = ("/myaccount")
         }
         console.log(res);

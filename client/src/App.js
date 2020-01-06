@@ -35,7 +35,7 @@ function App() {
 						<Marketplace setCurrentPage={setCurrentPage} />
 					</Route>
 					<Route path="/myaccount">
-						<AccountPage setCurrentPage={setCurrentPage} />
+						<AccountPage setCurrentPage={setCurrentPage} currentUsername={currentUsername} />
 					</Route>
 					<Route path="/login">
 						<LoginPage setCurrentUsername={setCurrentUsername} setCurrentPage={setCurrentPage} />

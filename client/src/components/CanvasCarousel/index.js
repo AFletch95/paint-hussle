@@ -18,7 +18,7 @@ const CanvasCarousel = (props) => {
       <div className="row d-flex justify-content-center mt-5">
         <div>
           <div className="row mx-auto d-flex justify-content-center">
-            <h3 className="text-center"></h3>
+            <h3 className="text-center">{props.carouselName}</h3>
             <a className="ml-3 pt-2" href="/mycanvases">show all</a>
           </div>
           <div id="carousel" className="carousel slide" data-ride="carousel" style={{ height: "300px", width: "1000px" }}>
@@ -28,24 +28,23 @@ const CanvasCarousel = (props) => {
                 <div className="container">
                   <div className="row" >
                     <div className="col" style={canvasStyle}>
-                      {props.canvasImage}
+
                     </div>
 
                   </div>
                 </div>
               </div>
-
-              {/* if there are more canvases create another carousel item */}
-              {/* <div className="carousel-item">
+              {/* 
+              if there are more canvases create another carousel item 
+              <div className="carousel-item">
                 <div className="container">
                   <div className="row" >
-                    <div className="col" style={canvasStyle}>
-                      {props.canvasImage}
-                    </div>
+                    empty carousel
 
                   </div>
                 </div>
-              </div> */}
+              </div> 
+*/}
 
             </div>
             <a className="carousel-control-prev" href="#carousel" role="button" data-slide="prev" style={{ background: "rgba(0,0,0,0.3)", width: "50px", height: "230px" }}>
