@@ -43,7 +43,7 @@ const SignInForm = () => {
   };
 
   return (
-    <form style={{ maxWidth: '25rem' }} className="mx-auto">
+    <form className="mx-auto" style={{ maxWidth: '25rem' }}>
       <div className="form-group">
         <label htmlFor="userEmailSignIn">Username</label>
         <input
