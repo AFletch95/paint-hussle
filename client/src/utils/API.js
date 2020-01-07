@@ -14,9 +14,6 @@ export default {
     return axios.get('/api/account/');
   },
 
-  getUserCanvases() {
-    return axios.get('/api/');
-  },
 
   getAuctions(options) {
     return axios.get('/api/auctions/', options);

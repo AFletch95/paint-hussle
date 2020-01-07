@@ -20,7 +20,7 @@ function StorePage(props) {
         console.log(auctions);
         setAuctions(auctions);
       });
-  }, []);
+  });
   const [canvasCreatorPage, setCanvasCreatorPage] = useState('/publicUserPage');
 
   return (

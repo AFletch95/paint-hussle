@@ -11,7 +11,7 @@ function HomePage(props) {
 
   useEffect(() => {
     props.setCurrentPage("Home")
-  }, [])
+  })
 
   return (
     <div>

@@ -17,7 +17,7 @@ const LoginPage = (props) => {
 
   useEffect(() => {
     props.setCurrentPage("Login")
-  }, [])
+  })
 
   function renderForm() {
     switch (currentForm) {
@@ -37,18 +37,20 @@ const LoginPage = (props) => {
         );
       case 'create':
         return (
-          <div id="create" className="mx-auto mt-5" style={divStyle}>
+          <div id="create" className="mx-auto pt-5" style={divStyle}>
             <h2 className="text-center pt-3">Create Account</h2>
             <hr className="mb-0 pb-0" />
             <div className="text-center py-4">
               <SignUpForm setCurrentUsername={props.setCurrentUsername} />
               <br />
-              <a href="#" onClick={() => setCurrentForm('login')}>
+              <div style={{ color: "blue", textDecoration: "underline", cursor: "pointer" }} href="#" onClick={() => setCurrentForm('login')}>
                 Sign-in
-              </a>
+              </div>
             </div>
           </div>
         );
+      default:
+        break;
     }
   }
   return <div style={bgStyle}>{renderForm()}</div>;
