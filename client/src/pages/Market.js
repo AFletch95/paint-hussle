@@ -28,7 +28,7 @@ function Market() {
     });
   });
   const getAuctions = () => {
-    if (pages.total === 0) return <div className="text-center">'No Auctions'</div>;
+    if (pages.total === 0) return <div className="text-center">No Auctions</div>;
     if (!pages.map.has(pages.current)) return null;
     const auctions = pages.map.get(pages.current);
     return (
