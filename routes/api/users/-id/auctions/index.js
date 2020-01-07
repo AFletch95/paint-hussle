@@ -14,7 +14,7 @@ router.get('/', async (req, res) => {
     });
   if (user) {
     res.status(200).json({
-      result: { auctions: user.auctions || [] },
+      auctions: user.auctions || [],
     });
   } else {
     res.status(404).json({});

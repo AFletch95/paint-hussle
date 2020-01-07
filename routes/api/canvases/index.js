@@ -7,9 +7,7 @@ router.get('/', async (req, res) => {
   const canvases = db.Canvas.find({ visibility: 'public' });
 
   res.status(200).json({
-    result: {
-      canvases,
-    },
+    canvases,
   });
 });
 

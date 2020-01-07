@@ -5,7 +5,7 @@ const { getUser } = require('../../../../middleware/orm');
 
 router.get('/', getUser({ select: '_id', populate: 'canvases' }), async (req, res) => {
   res.status(200).json({
-    result: { canvases: req.user.canvases || [] },
+    canvases: req.user.canvases || [],
   });
 });
 
