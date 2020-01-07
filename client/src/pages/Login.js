@@ -1,28 +1,38 @@
-import React from "react";
-import BirthdateBar from "../components/BirthdateBar"
-import SigninForm from "../components/SignInForm"
-import SignUpForm from "../components/SignUpForm";
+import React, { Component, useState } from 'react';
+import { HashRouter as Router, Route, Link, NavLink } from 'react-router-dom';
+import SignInForm from '../components/SignInForm/index';
+import SignUpForm from '../components/SignUpForm/index';
+import Logo from '../components/Assets/pnthustle.png'
 
-const LoginPage = () => {
+import '../Login.css';
 
-  return (
-    <div>
+class App extends Component {
+  render() {
+    return (
+      <Router basename="/react-auth-ui/">
+        <div className="App">
+          <div className="App__Aside"></div>
+          <div className="App__Form">
+            <div className="PageSwitcher">
+                <NavLink to="/sign-in" activeClassName="PageSwitcher__Item--Active" className="PageSwitcher__Item">Sign In</NavLink>
+                <NavLink exact to="/" activeClassName="PageSwitcher__Item--Active" className="PageSwitcher__Item">Sign Up</NavLink>
+              </div>
 
-      <div id="login" className="mx-auto mt-5"
-        style={{ width: "30rem", background: "rgba(0,0,0,0.5)" }}>
-        <h2 className="text-center pt-3">Sign In</h2>
-        <hr />
-        <SigninForm />
-
-        <div className="text-center mt-5">
-          <p style={{ fontSize: "1rem", fontWeight: "200", color: "blue" }}>Create Account</p>
-          <hr />
+              <div className="FormTitle">
+                  <NavLink to="/sign-in" activeClassName="FormTitle__Link--Active" className="FormTitle__Link">Sign In</NavLink> or <NavLink exact to="/" activeClassName="FormTitle__Link--Active" className="FormTitle__Link">Sign Up</NavLink>
+              </div>
+              <Route exact path="/" component={SignUpForm}>
+              </Route>
+              <Route path="/sign-in" component={SignInForm}>
+              </Route>
+          </div>
+        <div className="Logo">
+          <img src={Logo} style={{ height: "480px", width: "860px"}} alt="logo"/>  
         </div>
-        <SignUpForm />
-      </div>
-
-    </div>
-  )
+        </div>
+      </Router>
+    );
+  }
 }
 
-export default LoginPage;
+export default App;

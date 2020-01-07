@@ -1,5 +1,4 @@
-import database from '../../utils/API';
-import React, { Component,useState, useEffect } from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
 class SignInForm extends Component {
@@ -31,7 +30,6 @@ class SignInForm extends Component {
         console.log('The form was submitted with the following data:');
         console.log(this.state);
     }
-    
 
     render() {
         return (
