@@ -12,10 +12,7 @@ module.exports = (req, res) => {
   }
   if (req.accepts('json')) {
     console.log('JSON 404');
-    return res.send({
-      status: 404,
-      statusText: 'Not found',
-    });
+    return res.json({});
   }
   console.log('TXT 404');
   res.type('txt').send('Not found');
