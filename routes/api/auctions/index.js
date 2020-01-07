@@ -6,21 +6,34 @@ const DEFAULT_PAGE_ENTRIES = 10;
 router.get('/', async (req, res) => {
   const db = req.app.get('db');
 
-  let { page, pageEntries } = req.body;
-  if (typeof page !== 'number') page = 0;
-  if (typeof pageEntries !== 'number') pageEntries = DEFAULT_PAGE_ENTRIES;
+  let { page, count } = req.body;
 
-  const auctions = await db.Auction.find({ visibility: 'public' })
-    .skip(page * pageEntries)
-    .limit(pageEntries)
+  const totalAuctions = await db.Auction.countDocuments({ isActive: true, visibility: 'public' });
+  if (totalAuctions === 0) {
+    return res.status(200).json({
+      page: -1,
+      totalPages: 0,
+      count: 0,
+      auctions: [],
+    });
+  }
+  if (typeof count !== 'number' || count <= 0) count = DEFAULT_PAGE_ENTRIES;
+
+  const totalPages = Math.ceil(totalAuctions / count);
+
+  if (typeof page !== 'number' || page < 0) page = 0;
+  if (page >= totalPages) page = totalPages - 1;
+
+  const auctions = await db.Auction.find({ isActive: true, visibility: 'public' })
+    .skip(page * count)
+    .limit(count)
     .populate('canvas seller highestBid');
 
   res.status(200).json({
-    result: {
-      page,
-      pageCount,
-      auctions,
-    },
+    page,
+    totalPages,
+    count,
+    auctions,
   });
 });
 
