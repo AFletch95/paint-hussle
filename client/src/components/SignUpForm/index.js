@@ -164,6 +164,8 @@ const SignUpForm = () => {
             </div>
           </form>
         );
+      default:
+        break;
     }
   }
 

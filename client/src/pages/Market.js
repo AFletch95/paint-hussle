@@ -4,9 +4,10 @@ import AuctionPanel from '../components/AuctionPanel';
 
 import database from '../utils/API';
 
-function StorePage() {
+function StorePage(props) {
   const [auctions, setAuctions] = useState([]);
   useEffect(() => {
+    props.setCurrentPage("Marketplace")
     database
       .getAuctions()
       .then(res => {
@@ -19,7 +20,7 @@ function StorePage() {
         console.log(auctions);
         setAuctions(auctions);
       });
-  }, []);
+  });
   const [canvasCreatorPage, setCanvasCreatorPage] = useState('/publicUserPage');
 
   return (
@@ -32,8 +33,8 @@ function StorePage() {
           {auctions.length > 0 ? (
             auctions.map(auction => <AuctionPanel auction={auction} canvasCreatorPage={canvasCreatorPage} />)
           ) : (
-            <div className="text-center">'No Auctions'</div>
-          )}
+              <div className="text-center">'No Auctions'</div>
+            )}
         </div>
       </div>
     </div>
