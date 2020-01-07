@@ -14,9 +14,10 @@ import Navbar from "./components/NavBarPaintHustle"
 // pages
 import LoginPage from './pages/Login';
 import Marketplace from "./pages/Market";
-
+import ShowAllCanvases from "./pages/ListUserCanvases";
 import AccountPage from "./pages/AccountPage";
 import HomePage from './pages/Home';
+import CanvasEditor from './pages/CanvasEditor';
 
 function App() {
 
@@ -39,6 +40,15 @@ function App() {
 					</Route>
 					<Route path="/login">
 						<LoginPage setCurrentUsername={setCurrentUsername} setCurrentPage={setCurrentPage} />
+					</Route>
+					<Route path="/allcanvases-onsale">
+						<ShowAllCanvases pageTitle={"My Canvases on sale"} setCurrentPage={setCurrentPage} />
+					</Route>
+					<Route path="/allcanvases">
+						<ShowAllCanvases pageTitle={"My Canvases"} setCurrentPage={setCurrentPage} />
+					</Route>
+					<Route path="/canvaseditor">
+						<CanvasEditor setCurrentPage={setCurrentPage} />
 					</Route>
 					<Route path="/" >
 						<HomePage setCurrentPage={setCurrentPage} />
