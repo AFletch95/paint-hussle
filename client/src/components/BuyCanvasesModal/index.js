@@ -8,18 +8,22 @@ const BuyCanvases = (props) => {
 
   const handlePurchaseButton = () => {
     if (props.avalibleCurrency - quantity * 50 > 0) {
-      props.setAvaliableCurrency(props.avalibleCurrency - quantity * 50)
+      props.setAvaliableCurrency(props.avalibleCurrency - quantity * 50);
+      props.setUserCanvasCount(parseInt(props.userCanvasCount) + parseInt(quantity));
+      props.setUneditedUserCanvasCount(parseInt(props.uneditedUserCanvasCount) + parseInt(quantity))
       setGreenTextFlag(false);
+      setRedTextFlag(true);
     }
     else {
       setRedTextFlag(false);
+      setGreenTextFlag(true);
     }
   }
 
   return (
-    <div>
+    <div className="mb-2" >
 
-      <a href="#" data-toggle="modal" data-target="#BuyCanvasModal">Buy Canvases</a>
+      <div className="btn btn-primary btn-sm" data-toggle="modal" data-target="#BuyCanvasModal">Buy Canvases</div>
 
       <div className="modal fade" id="BuyCanvasModal" tabIndex="-1" role="dialog" aria-labelledby="BuyCanvasModalLabel" aria-hidden="true">
         <div className="modal-dialog" role="document">
@@ -41,13 +45,12 @@ const BuyCanvases = (props) => {
                     <div className="col">
                       <p>You have {props.avalibleCurrency}<span role="img" aria-label="canvasCurrency">🍪</span> avaliable</p>
                       <p>How many canvases would you like to buy?</p>
-                      <input type="number" style={{ width: "45px" }} onChange={event => setQuantity(event.target.value)} placeholder="0" />
+                      <input type="number" min="1" style={{ width: "45px" }} onChange={event => setQuantity(event.target.value)} placeholder="1" />
                     </div>
                     <div className="col">
                       <p>CHECKOUT</p>
                       <p>{quantity} Canvases</p>
                       <hr />
-                      {console.log(quantity)}
                       <p>TOTAL: {quantity * 50}<span role="img" aria-label="canvasCurrency">🍪</span></p>
 
                       <p>{props.avalibleCurrency - quantity * 50}<span role="img" aria-label="canvasCurrency">🍪</span> After purchase</p>

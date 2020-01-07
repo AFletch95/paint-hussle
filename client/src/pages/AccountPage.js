@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import CanvasCarousel from "../components/CanvasCarousel";
-import BuyCanvases from "../components/BuyCanvases";
+import BuyCanvases from "../components/BuyCanvasesModal";
+import database from "../utils/API";
 
 const AccountPage = (props) => {
 
@@ -9,10 +10,15 @@ const AccountPage = (props) => {
   const [uneditedUserCanvasCount, setUneditedUserCanvasCount] = useState(3)
 
 
+  const getAccountInfo = () => {
+    database.getAccountInfo(sessionStorage.getItem('currentUsername'))
+      .then(res => console.log(res.json))
+  }
 
   useEffect(() => {
     props.setCurrentPage("Account")
-  }, [])
+    getAccountInfo();
+  })
 
 
   return (
@@ -44,7 +50,12 @@ const AccountPage = (props) => {
                     <div className="col text-center" style={{ paddingTop: "1rem" }}>
                       <h5 className="mb-3">Quick Links</h5>
                       <p className="mb-2"><span><a href="/market">Marketplace</a></span></p>
-                      <BuyCanvases avalibleCurrency={avalibleCurrency} setAvaliableCurrency={setAvaliableCurrency} />
+                      <BuyCanvases
+                        avalibleCurrency={avalibleCurrency} setAvaliableCurrency={setAvaliableCurrency}
+                        userCanvasCount={userCanvasCount} setUserCanvasCount={setUserCanvasCount}
+                        uneditedUserCanvasCount={uneditedUserCanvasCount} setUneditedUserCanvasCount={setUneditedUserCanvasCount}
+
+                      />
                       <p className="mb-2"><span><a href="/create">Edit a canvas</a></span></p>
                       <p className="mb-2"><span><a href="/sell">Sell a canvas</a></span></p>
                     </div>
@@ -55,8 +66,8 @@ const AccountPage = (props) => {
           </div>
         </div>
 
-        <CanvasCarousel carouselName={"My Canvases"} />
-        <CanvasCarousel carouselName={"On Sale"} />
+        <CanvasCarousel carouselName={"My Canvases"} carouselNameLink={"/allcanvases"} />
+        <CanvasCarousel carouselName={"On Sale"} carouselNameLink={"/allcanvases-onsale"} />
 
 
         {/* ending div */}
