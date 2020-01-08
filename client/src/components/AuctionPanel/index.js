@@ -1,4 +1,5 @@
 import React from 'react';
+import CanvasSVG from '../CanvasSVG';
 
 const AuctionPanel = props => {
   const { auction } = props;
@@ -6,14 +7,14 @@ const AuctionPanel = props => {
     <div className="list-group-item">
       <div className="row">
         <div className="col-md-4">
-          <img
-            className="card-img-top"
-            src={auction.canvas.image ? auction.canvas.image : './placeHolders/286x180.svg'}
-            alt="canvas"
+          <CanvasSVG
+            svgString={auction.canvas.image}
+            width={215}
+            height={215}
             data-toggle="modal"
             data-target="#canvasModal"
             style={{ cursor: 'pointer' }}
-          ></img>
+          />
         </div>
         <div className="col-md-8">
           <h5 className="card-title">{auction.canvas.title || 'Untitled'}</h5>
@@ -26,7 +27,7 @@ const AuctionPanel = props => {
           </p>
           <div className="text-right">
             <div className="btn btn-info text-light h1 float-right" href="#">
-              {auction.price.buyout}
+              {auction.price.buyout || auction.price.starting}
               <span role="img" aria-label="canvasCurrency">
                 🍪
               </span>
