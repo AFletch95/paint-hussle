@@ -14,8 +14,11 @@ export default {
     return axios.get('/api/account/');
   },
 
-
   getAuctions(options) {
     return axios.get('/api/auctions/', options);
+  },
+
+  createCanvas(canvas) {
+    return axios.post('/api/canvases/', canvas);
   },
 };

@@ -11,6 +11,9 @@ const CanvasSchema = new Schema(
     artist: {
       type: Schema.Types.ObjectId,
       ref: 'User',
+      default: function() {
+        return this.owner;
+      },
       index: true,
     },
     visibility: {
@@ -22,16 +25,20 @@ const CanvasSchema = new Schema(
     },
     image: {
       type: String,
+      default:
+        '<svg xmlns="http://www.w3.org/2000/svg" width="1" height="1" viewBox="0 0 1 1"><rect width="1" height="1" x="0" y="0" fill="#fff"></rect><g transform="translate(0, 0)"></g></svg>',
       required: true,
       trim: true,
     },
     title: {
       type: String,
+      default: '',
       trim: true,
       max: 256,
     },
     description: {
       type: String,
+      default: '',
       trim: true,
       max: 1024,
     },
