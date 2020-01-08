@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import EditButton from "../components/Buttons/EditButton";
 import CanvasSquare from "../components/CanvasSquare";
+import SellButton from "../components/Buttons/SellButton";
 const ListUserCanvases = (props) => {
 
   const canvases = props.userCanvases || new Array(15).fill("Canvas Title")
@@ -19,7 +20,7 @@ const ListUserCanvases = (props) => {
       </div>
 
       <div className="row pr-4 pl-4 pt-5 d-flex justify-content-center">
-        {canvases.map((canvas, index) => (<CanvasSquare key={index} canvasTitle={canvas} />
+        {canvases.map((canvas, index) => (<CanvasSquare key={index} canvasTitle={canvas} sellButton={<SellButton />} editButton={<EditButton />} />
         ))}
       </div>
 

@@ -1,5 +1,4 @@
 import React from "react";
-import EditButton from "../Buttons/EditButton";
 
 const CanvasSquare = (props) => {
 
@@ -11,10 +10,17 @@ const CanvasSquare = (props) => {
     border: "solid black 1px"
   }
   return (
-    <div className="canvasSquare" key={props.key}>
+    <div className="canvasSquare">
       <div className="mt-2 mr-2 ml-2 mb-0" style={squareStyle}>
         <div style={props.canvasImage}>
-          <EditButton />
+          <div style={{ paddingTop: "185px" }}>
+            <div className="float-left">
+              {props.editButton}
+            </div>
+            <div className="float-right">
+              {props.sellButton}
+            </div>
+          </div>
         </div>
       </div>
       <p className="float-right pr-4">{props.canvasTitle}</p>

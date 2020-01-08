@@ -2,12 +2,22 @@ import React, { useEffect, useState } from "react";
 import CanvasCarousel from "../components/CanvasCarousel";
 import BuyCanvases from "../components/BuyCanvasesModal";
 import database from "../utils/API";
+import EditButton from "../components/Buttons/EditButton";
+import SellButton from "../components/Buttons/SellButton";
 
 const AccountPage = (props) => {
 
   const [avalibleCurrency, setAvaliableCurrency] = useState(2000)
   const [userCanvasCount, setUserCanvasCount] = useState(3)
   const [uneditedUserCanvasCount, setUneditedUserCanvasCount] = useState(3)
+
+  const allCanvases = () => {
+    return (
+      <div>
+        <EditButton />
+      </div>
+    )
+  }
 
 
   const getAccountInfo = () => {
@@ -66,7 +76,7 @@ const AccountPage = (props) => {
           </div>
         </div>
 
-        <CanvasCarousel carouselName={"My Canvases"} carouselNameLink={"/allcanvases"} />
+        <CanvasCarousel carouselName={"My Canvases"} carouselNameLink={"/allcanvases"} createCanvasElement={allCanvases} />
         <CanvasCarousel carouselName={"On Sale"} carouselNameLink={"/allcanvases-onsale"} />
 
 
