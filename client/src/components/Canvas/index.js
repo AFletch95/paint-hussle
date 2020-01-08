@@ -4,13 +4,13 @@ import LC from 'literallycanvas';
 import './literallycanvas.css';
 
 const Canvas = props => {
-  const aspect = props.aspect || { width: 16, height: 9 };
-  const setGetSVG = props.setGetSVG || (() => {});
-
   const canvas = useRef(null);
   const [lc, setLC] = useState(null);
 
   useEffect(() => {
+    const aspect = props.aspect || { width: 16, height: 9 };
+    const setGetSVG = props.setGetSVG || (s => {});
+
     LC.setDefaultImageURLPrefix('lib/img');
     const element = canvas.current;
     const width = element.offsetWidth;
