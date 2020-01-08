@@ -15,6 +15,7 @@ router.use('/api/account/login', require('./api/account/login'));
 router.use('/api/account/auctions', verifyToken, require('./api/account/auctions'));
 router.use('/api/account/bids', verifyToken, require('./api/account/bids'));
 router.use('/api/account/canvases/:id', verifyToken, parseParams('canvas'), require('./api/account/canvases/-id'));
+router.use('/api/account/canvases', verifyToken, require('./api/account/canvases'));
 router.use('/api/account/logout', verifyToken, require('./api/account/logout'));
 router.use('/api/account', verifyToken, getUser({ select: '+name +email +phone' }), require('./api/account'));
 

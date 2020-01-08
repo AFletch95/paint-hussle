@@ -55,10 +55,10 @@ CanvasSchema.methods.isOwnedBy = function(user) {
   const owner = this.owner._id ? this.owner._id : this.owner;
   switch (typeof user) {
     case 'string':
-      return user === ownerId.toString();
+      return user === owner.toString();
     case 'object':
       if (user instanceof Schema.Types.ObjectId) return owner.equals(userId);
-      else return ownerId.equals(user._id);
+      else return owner.equals(user._id);
     default:
       return false;
   }

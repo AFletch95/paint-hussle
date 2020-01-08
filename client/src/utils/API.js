@@ -21,4 +21,12 @@ export default {
   createCanvas(canvas) {
     return axios.post('/api/canvases/', canvas);
   },
+
+  getUserCanvases() {
+    return axios.get('/api/account/canvases/');
+  },
+
+  getUserAuctions() {
+    return axios.get('/api/account/auctions/');
+  },
 };
