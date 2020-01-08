@@ -16,7 +16,8 @@ router.get('/', async (req, res) => {
 
 router.post('/', verifyToken, getUser({ select: '_id' }), async (req, res) => {
   const db = req.app.get('db');
-  const canvas = new db.Canvas({ owner: req.user, visibility: 'public' });
+  const { image, title, description } = req.body;
+  const canvas = new db.Canvas({ owner: req.user, visibility: 'public', image, title, description });
   const result = await canvas.save();
 
   res.status(200).json({
