@@ -132,6 +132,7 @@ const SignUpForm = () => {
             </div>
           </form>
         );
+
       case 'dob':
       default:
         return (
@@ -165,6 +166,7 @@ const SignUpForm = () => {
             </div>
           </form>
         );
+
     }
   }
 

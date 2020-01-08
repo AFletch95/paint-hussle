@@ -39,18 +39,21 @@ function Market() {
       </div>
     );
   };
+
   return (
     <div className="container-fluid ">
       <div className="row">
         <FilterDropdown />
       </div>
       <div className="container mx-auto">
+
         {getAuctions()}
         <Pagination
           current={pages.current}
           total={pages.total}
           setPage={page => setPages({ ...pages, current: page })}
         />
+
       </div>
     </div>
   );

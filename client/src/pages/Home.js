@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 function HomePage(props) {
   const perfectImageStyle = {
     backgroundImage: `url(./images/backgroundcanvas2.jpg)`,
@@ -9,6 +9,9 @@ function HomePage(props) {
     minHeight: "100vh",
   }
 
+  useEffect(() => {
+    props.setCurrentPage("Home")
+  })
 
   return (
     <div>
@@ -23,10 +26,13 @@ function HomePage(props) {
             <h3 style={{ fontFamily: "Lexend Exa, sans-serif" }}>BUY, SELL, CREATE, AND TRADE</h3>
 
           </div>
+          <a href={sessionStorage.getItem('currentUsername') ? '/myaccount' : "/login"}><span>
 
-          <div onClick={() => props.handlePageChange("Store")} className="btn pb-2 pt-2 pr-4 pl-4">
-            <img src="./logos/create_account_button.png" style={{ height: "144px", width: "260px", }} alt="create account"></img>
-          </div>
+            <div className="btn pb-2 pt-2 pr-4 pl-4">
+              <img src="./logos/create_account_button.png" style={{ height: "144px", width: "260px", }} alt="create account"></img>
+            </div>
+
+          </span></a>
 
         </div>
       </div>
