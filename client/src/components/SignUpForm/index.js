@@ -34,7 +34,7 @@ const SignUpForm = () => {
     if (!userData.dateOfBirth) return alert('No date of birth');
     if (userData.dateOfBirth.getTime() > MIN_AGE_DATE.getTime()) return alert('Must be at least 13 years old');
     if (!userData.username) return alert('No username');
-    if (!userData.passowrd) return alert('No password');
+    if (!userData.password) return alert('No password');
     if (!userData.email) return alert('No email');
     if (!userData.name || !userData.name.first || !userData.name.last) return alert('No name');
 
