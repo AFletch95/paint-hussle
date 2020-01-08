@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import CanvasSquare from '../components/CanvasSquare';
+import EditButton from '../components/Buttons/EditButton';
+import SellButton from '../components/Buttons/SellButton';
 
 import database from '../utils/API';
 
@@ -10,13 +12,11 @@ const ListUserCanvases = props => {
   useEffect(() => {
     database.getUserCanvases().then(result => {
       if (result.statusText === 'OK') {
+        console.log(result);
         setCanvases(result.data.canvases);
       }
     });
-    return () => {
-      cleanup;
-    };
-  }, [input]);
+  }, []);
 
   return (
     <div className="container pt-3">
@@ -40,7 +40,7 @@ const ListUserCanvases = props => {
 
       <div className="row pr-4 pl-4 pt-5 d-flex justify-content-center">
         {canvases.map((canvas, index) => (
-          <CanvasSquare key={index} canvasTitle={canvas} sellButton={<SellButton />} editButton={<EditButton />} />
+          <CanvasSquare key={index} canvas={canvas} sellButton={<SellButton />} editButton={<EditButton />} />
         ))}
       </div>
     </div>

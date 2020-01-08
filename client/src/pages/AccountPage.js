@@ -1,30 +1,35 @@
 import React, { useEffect, useState } from 'react';
 import CanvasCarousel from '../components/CanvasCarousel';
 import BuyCanvases from '../components/BuyCanvasesModal';
-import database from '../utils/API';
+import CanvasSquare from '../components/CanvasSquare';
 import EditButton from '../components/Buttons/EditButton';
 import SellButton from '../components/Buttons/SellButton';
+
+import database from '../utils/API';
 
 const AccountPage = props => {
   const [avalibleCurrency, setAvaliableCurrency] = useState(2000);
   const [userCanvasCount, setUserCanvasCount] = useState(3);
   const [uneditedUserCanvasCount, setUneditedUserCanvasCount] = useState(3);
+  const [userCanvases, setUserCanvases] = useState([]);
+  const [userAuctions, setUserAuctions] = useState([]);
 
-  const allCanvases = () => {
-    return (
-      <div>
-        <EditButton />
-      </div>
-    );
-  };
-
-  const getAccountInfo = () => {
-    database.getAccountInfo(sessionStorage.getItem('currentUsername')).then(res => console.log(res.json));
+  const allCanvases = canvas => {
+    return <CanvasSquare canvas={canvas} editButton={<EditButton />} sellButton={<SellButton />} />;
   };
 
   useEffect(() => {
     props.setCurrentPage('Account');
-    getAccountInfo();
+    database.getUserCanvases().then(result => {
+      if (result.statusText === 'OK') {
+        setUserCanvases(result.data.canvases);
+      }
+    });
+    database.getUserAuctions().then(result => {
+      if (result.statusText === 'OK') {
+        setUserAuctions(result.data.auctions);
+      }
+    });
   });
 
   return (
@@ -93,9 +98,18 @@ const AccountPage = props => {
         <CanvasCarousel
           carouselName={'My Canvases'}
           carouselNameLink={'/allcanvases'}
+          canvases={userCanvases}
           createCanvasElement={allCanvases}
         />
-        <CanvasCarousel carouselName={'On Sale'} carouselNameLink={'/allcanvases-onsale'} />
+        <CanvasCarousel
+          carouselName={'On Sale'}
+          carouselNameLink={'/allcanvases-onsale'}
+          canvases={userAuctions.map(auction => {
+            console.log(auction.canvas);
+            return auction.canvas;
+          })}
+          createCanvasElement={allCanvases}
+        />
 
         {/* ending div */}
       </div>

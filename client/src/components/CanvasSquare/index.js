@@ -1,6 +1,5 @@
-import React from "react";
-
-const CanvasSquare = (props) => {
+import React from 'react';
+import CanvasSVG from '../CanvasSVG';
 
 const CanvasSquare = props => {
   const squareStyle = {
@@ -13,18 +12,11 @@ const CanvasSquare = props => {
   return (
     <div className="canvasSquare">
       <div className="mt-2 mr-2 ml-2 mb-0" style={squareStyle}>
-        <div style={props.canvasImage}>
-          <div style={{ paddingTop: "185px" }}>
-            <div className="float-left">
-              {props.editButton}
-            </div>
-            <div className="float-right">
-              {props.sellButton}
-            </div>
-          </div>
-        </div>
+        <CanvasSVG svgString={props.canvas.image} width={215} height={215} />
+        <div className="float-left">{props.editButton}</div>
+        <div className="float-right">{props.sellButton}</div>
       </div>
-      <p className="float-right pr-4">{props.canvasTitle}</p>
+      <p className="float-right pr-4">{props.canvas.title}</p>
     </div>
   );
 };
