@@ -27,7 +27,7 @@ class App extends Component {
               </Route>
           </div>
         <div className="Logo">
-          <img src={Logo} style={{ height: "480px", width: "860px"}} alt="logo"/>  
+        <img src={Logo} style={{ height: "360px", width: "600px"}} alt="logo"/>  
         </div>
         </div>
       </Router>
