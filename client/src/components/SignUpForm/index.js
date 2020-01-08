@@ -13,12 +13,11 @@ const SignUpForm = () => {
 
   const [userData, setUserData] = useState({
     dateOfBirth: MIN_AGE_DATE,
+    email: '',
     username: '',
     password: '',
-    name: {
-      first: '',
-      last: '',
-    },
+    firstName: '',
+    lastName: '',
   });
 
   const [showPassword, setShowPassword] = useState(false);
@@ -31,18 +30,31 @@ const SignUpForm = () => {
   };
 
   const createUser = () => {
-    if (!userData.dateOfBirth) return alert('No date of birth');
-    if (userData.dateOfBirth.getTime() > MIN_AGE_DATE.getTime()) return alert('Must be at least 13 years old');
-    if (!userData.username) return alert('No username');
-    if (!userData.password) return alert('No password');
-    if (!userData.email) return alert('No email');
-    if (!userData.name || !userData.name.first || !userData.name.last) return alert('No name');
+    let newUser = {
+      dateOfBirth: userData.dateOfBirth,
+      username: userData.username,
+      password: userData.password,
+      email: userData.email,
+      name: {
+        first: userData.firstName,
+        last: userData.lastName,
+      },
+
+    }
+    if (!newUser.dateOfBirth) return alert('No date of birth');
+    if (newUser.dateOfBirth.getTime() > MIN_AGE_DATE.getTime()) return alert('Must be at least 13 years old');
+    if (!newUser.username) return alert('No username');
+    if (!newUser.password) return alert('No password');
+    if (!newUser.email) return alert('No email');
+    if (!newUser.name || !newUser.name.first || !newUser.name.last) return alert('No name');
 
     database
-      .createNewUser(userData)
+      .createNewUser(newUser)
       .then(res => {
         if (res.statusText === 'OK') setUserData({});
-        console.log(res);
+        console.log(res)
+        sessionStorage.setItem('currentUsername', newUser.username);
+        window.location.pathname = '/myaccount';
       })
       .catch(err => console.error('CREATE NEW USER ERROR', err));
   };
@@ -58,8 +70,8 @@ const SignUpForm = () => {
                 <input
                   id="userFirstName"
                   className="form-control"
-                  name="name.first"
-                  value={userData.name.first}
+                  name="firstName"
+                  value={userData.firstName}
                   onChange={handleChange}
                   type="text"
                   aria-describedby="First Name"
@@ -71,8 +83,8 @@ const SignUpForm = () => {
                 <input
                   id="userLastName"
                   className="form-control"
-                  name="name.last"
-                  value={userData.name.last}
+                  name="lastName"
+                  value={userData.lastName}
                   onChange={handleChange}
                   type="text"
                   aria-describedby="Last Name"

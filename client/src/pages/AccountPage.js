@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import CanvasCarousel from '../components/CanvasCarousel';
 import BuyCanvases from '../components/BuyCanvasesModal';
