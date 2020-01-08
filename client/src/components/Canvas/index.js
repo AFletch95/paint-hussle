@@ -8,7 +8,7 @@ const Canvas = props => {
   const [lc, setLC] = useState(null);
 
   useEffect(() => {
-    const aspect = props.aspect || { width: 1, height: 1 };
+    const aspect = props.aspect || { width: 19, height: 18 };
     const setGetSVG = props.setGetSVG || (s => {});
 
     LC.setDefaultImageURLPrefix('lib/img');

@@ -37,7 +37,7 @@ const CanvasEditor = props => {
   };
 
   const renderEditor = () => {
-    if (canvas && canvas.image) return <CanvasSVG svgString={canvas.image} width={1000} height={600} />;
+    if (canvas && canvas.image) return <CanvasSVG svgString={canvas.image} width={800} height={1000} />;
     return (
       <form className="text-left my-0">
         <div className="form-group m-3">
