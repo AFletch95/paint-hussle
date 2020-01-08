@@ -4,6 +4,8 @@ import BuyCanvases from "../components/BuyCanvasesModal";
 import database from "../utils/API";
 import EditButton from "../components/Buttons/EditButton";
 import SellButton from "../components/Buttons/SellButton";
+import CanvasSquare from "../components/CanvasSquare";
+import CanvasSVG from "../components/CanvasSVG";
 
 const AccountPage = (props) => {
 
@@ -11,9 +13,10 @@ const AccountPage = (props) => {
   const [userCanvasCount, setUserCanvasCount] = useState(3)
   const [uneditedUserCanvasCount, setUneditedUserCanvasCount] = useState(3)
 
-  const allCanvases = () => {
+  const allCanvases = (canvas) => {
     return (
       <div>
+        {/* <CanvasSVG svgString={canvas.image} width={215} height={215} /> */}
         <EditButton />
       </div>
     )
