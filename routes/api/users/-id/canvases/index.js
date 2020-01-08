@@ -14,7 +14,7 @@ router.get('/', async (req, res) => {
     });
   if (user) {
     res.status(200).json({
-      result: { canvases: user.canvases || [] },
+      canvases: user.canvases || [],
     });
   } else {
     res.status(404).json({});

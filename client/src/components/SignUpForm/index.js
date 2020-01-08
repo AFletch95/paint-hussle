@@ -49,38 +49,6 @@ const SignUpForm = () => {
 
   function render() {
     switch (creationState) {
-      case 'dob':
-        return (
-          <form className="text-center mx-auto my-0" style={{ maxWidth: '25rem' }}>
-            <div className="form-group">
-              <label htmlFor="dateOfBirthBar">Date of Birth</label>
-              <br />
-              <DatePicker
-                id="dateOfBirthBar"
-                selected={userData.dateOfBirth}
-                onChange={value => {
-                  setUserData({
-                    ...userData,
-                    dateOfBirth: value,
-                  });
-                }}
-              />
-              <br />
-            </div>
-            <div
-              type="submit"
-              className="btn btn-success"
-              onClick={() => {
-                if (!userData.dateOfBirth) return alert('No date of birth');
-                if (userData.dateOfBirth.getTime() > MIN_AGE_DATE.getTime())
-                  return alert('Must be at least 13 years old');
-                setCreationState('full');
-              }}
-            >
-              Continue
-            </div>
-          </form>
-        );
       case 'full':
         return (
           <form className="text-left mx-auto my-0" style={{ maxWidth: '25rem' }}>
@@ -164,8 +132,41 @@ const SignUpForm = () => {
             </div>
           </form>
         );
+
+      case 'dob':
       default:
-        break;
+        return (
+          <form className="text-center mx-auto my-0" style={{ maxWidth: '25rem' }}>
+            <div className="form-group">
+              <label htmlFor="dateOfBirthBar">Date of Birth</label>
+              <br />
+              <DatePicker
+                id="dateOfBirthBar"
+                selected={userData.dateOfBirth}
+                onChange={value => {
+                  setUserData({
+                    ...userData,
+                    dateOfBirth: value,
+                  });
+                }}
+              />
+              <br />
+            </div>
+            <div
+              type="submit"
+              className="btn btn-success"
+              onClick={() => {
+                if (!userData.dateOfBirth) return alert('No date of birth');
+                if (userData.dateOfBirth.getTime() > MIN_AGE_DATE.getTime())
+                  return alert('Must be at least 13 years old');
+                setCreationState('full');
+              }}
+            >
+              Continue
+            </div>
+          </form>
+        );
+
     }
   }
 

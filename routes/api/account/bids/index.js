@@ -5,7 +5,7 @@ const { getUser } = require('../../../../middleware/orm');
 
 router.get('/', getUser({ select: '_id', populate: 'bids' }), (req, res) => {
   res.status(200).json({
-    result: { bids: req.user.bids || [] },
+    bids: req.user.bids || [],
   });
 });
 

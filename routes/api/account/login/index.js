@@ -24,10 +24,8 @@ router.post('/', async (req, res) => {
     };
     res.cookie('authToken', user.createAuthToken(), cookieConfig);
     res.status(200).json({
-      result: {
-        user: {
-          username: user.username,
-        },
+      user: {
+        username: user.username,
       },
     });
   } catch (err) {

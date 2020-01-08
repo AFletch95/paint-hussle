@@ -15,7 +15,7 @@ router.get(
   }),
   (req, res) => {
     res.status(200).json({
-      result: { auctions: req.user.auctions || [] },
+      auctions: req.user.auctions || [],
     });
   },
 );
