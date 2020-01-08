@@ -40,7 +40,7 @@ const ListUserCanvases = props => {
 
       <div className="row pr-4 pl-4 pt-5 d-flex justify-content-center">
         {canvases.map((canvas, index) => (
-          <CanvasSquare key={index} canvas={canvas} />
+          <CanvasSquare key={index} canvasTitle={canvas} sellButton={<SellButton />} editButton={<EditButton />} />
         ))}
       </div>
     </div>

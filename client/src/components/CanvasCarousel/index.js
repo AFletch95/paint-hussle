@@ -1,4 +1,5 @@
 import React from "react"
+import EditButton from "../Buttons/EditButton";
 
 const CanvasCarousel = (props) => {
 
@@ -17,6 +18,7 @@ const CanvasCarousel = (props) => {
         let canvas = canvases[j + i * 4];
         items.push(
           <div className="col" style={canvasStyle} key={j}>
+
             {createCanvasElement(canvas)}
           </div>
         )

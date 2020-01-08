@@ -29,7 +29,6 @@ const SignInForm = props => {
   const userLogin = () => {
     if (!userData.identifier) return alert('No username or email');
     if (!userData.password) return alert('No password');
-    console.log(userData);
     database
       .userLogin(userData)
       .then(res => {
@@ -40,7 +39,6 @@ const SignInForm = props => {
           sessionStorage.setItem('currentUsername', res.data.user.username);
           window.location.pathname = '/myaccount';
         }
-        console.log(res);
       })
       .catch(err => console.error('USER LOGIN ERROR', err));
   };
