@@ -79,7 +79,7 @@ const AccountPage = props => {
                       />
                       <p className="mb-2">
                         <span>
-                          <a href="/create">Edit a canvas</a>
+                          <a href="/canvaseditor">Edit a canvas</a>
                         </span>
                       </p>
                       <p className="mb-2">
