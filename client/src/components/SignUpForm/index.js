@@ -6,7 +6,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 const MIN_AGE_MILL = 13 * 365.2422 * 24 * 60 * 60 * 1000;
 
-const SignUpForm = () => {
+const SignUpForm = (props) => {
   const MIN_AGE_DATE = new Date(Date.now() - MIN_AGE_MILL);
 
   const [creationState, setCreationState] = useState('dob');
@@ -53,8 +53,7 @@ const SignUpForm = () => {
       .then(res => {
         if (res.statusText === 'OK') setUserData({});
         console.log(res)
-        sessionStorage.setItem('currentUsername', newUser.username);
-        window.location.pathname = '/myaccount';
+        props.setCurrentForm("login")
       })
       .catch(err => console.error('CREATE NEW USER ERROR', err));
   };

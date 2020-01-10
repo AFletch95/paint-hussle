@@ -4,6 +4,7 @@ import {
 	BrowserRouter as Router,
 	Switch,
 	Route,
+	Redirect,
 	Link
 } from "react-router-dom";
 
@@ -32,27 +33,28 @@ function App() {
 			<Navbar currentUsername={currentUsername} currentPage={currentPage} />
 			<Router>
 				<Switch>
-					<Route path="/marketplace">
+					<Route exact path="/marketplace">
 						<Marketplace setCurrentPage={setCurrentPage} />
 					</Route>
-					<Route path="/myaccount">
+					<Route exact path="/myaccount">
 						<AccountPage setCurrentPage={setCurrentPage} currentUsername={currentUsername} />
 					</Route>
-					<Route path="/login">
+					<Route exact path="/login">
 						<LoginPage setCurrentUsername={setCurrentUsername} setCurrentPage={setCurrentPage} />
 					</Route>
-					<Route path="/allcanvases-onsale">
+					<Route exact path="/allcanvases-onsale">
 						<ShowAllCanvases pageTitle={"My Canvases on sale"} setCurrentPage={setCurrentPage} />
 					</Route>
-					<Route path="/allcanvases">
+					<Route exact path="/allcanvases">
 						<ShowAllCanvases pageTitle={"My Canvases"} setCurrentPage={setCurrentPage} />
 					</Route>
-					<Route path="/canvaseditor">
+					<Route  exact path="/canvaseditor">
 						<CanvasEditor setCurrentPage={setCurrentPage} />
 					</Route>
-					<Route path="/" >
+					<Route exact path="/" >
 						<HomePage setCurrentPage={setCurrentPage} />
 					</Route>
+					<Redirect from="/" to="/" />
 				</Switch>
 			</Router>
 

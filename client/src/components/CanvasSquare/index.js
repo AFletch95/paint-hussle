@@ -6,10 +6,10 @@ const CanvasSquare = props => {
     <div className="canvasSquare mx-3">
       <div>
         <CanvasSVG svgString={props.canvas.image} width={215} height={215} />
-        <div className="float-left">{props.editButton}</div>
-        <div className="float-right">{props.sellButton}</div>
+        <div className="float-left pl-1 pr-1">{props.editButton}</div>
+        <div className="float-left">{props.sellButton}</div>
       </div>
-      <p className="float-right pr-4">{props.canvas.title}</p>
+      <p className="float-right pr-2">{props.canvas.title}</p>
     </div>
   );
 };

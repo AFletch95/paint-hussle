@@ -12,15 +12,24 @@ const AccountPage = props => {
   const [avalibleCurrency, setAvaliableCurrency] = useState(2000);
   const [userCanvasCount, setUserCanvasCount] = useState(3);
   const [uneditedUserCanvasCount, setUneditedUserCanvasCount] = useState(3);
-  const [userCanvases, setUserCanvases] = useState([]);
+  const [loadMoreButtonDisabled, setLoadMoreButtonDisabled] = useState(true)
+  const [loadNextPage, setLoadNextPage] = useState(false)
+  const [userCanvases, setUserCanvases] = useState(new Array(12).fill("Canvas img"));
   const [userAuctions, setUserAuctions] = useState([]);
 
   const allCanvases = canvas => {
     return <CanvasSquare canvas={canvas} editButton={<EditButton />} sellButton={<SellButton />} />;
   };
 
+  const handleLoadMore = () =>{
+    setUserCanvases(userCanvases.join(new Array(3).fill("Canvas img")))
+    // setLoadNextPage(true)
+  }
+
   useEffect(() => {
     props.setCurrentPage('Account');
+    if (userCanvases >11) setLoadMoreButtonDisabled(false)
+    else setLoadMoreButtonDisabled(true)
     database.getUserCanvases().then(result => {
       if (result.statusText === 'OK') {
         setUserCanvases(result.data.canvases);
@@ -96,21 +105,25 @@ const AccountPage = props => {
           </div>
         </div>
 
-        <CanvasCarousel
-          carouselName={'My Canvases'}
-          carouselNameLink={'/allcanvases'}
-          canvases={userCanvases}
-          createCanvasElement={allCanvases}
-        />
-        <CanvasCarousel
-          carouselName={'On Sale'}
-          carouselNameLink={'/allcanvases-onsale'}
-          canvases={userAuctions.map(auction => {
-            console.log(auction.canvas);
-            return auction.canvas;
-          })}
-          createCanvasElement={allCanvases}
-        />
+          <div className="container">
+          <h3 className="text-center mt-4" >Your Canvases</h3>
+          <div className="container mx-auto mb-4" style={{width: "75vw", height: "auto", border: "solid black 1px"}}>
+            <div className="row d-flex justify-content-center">
+              {userCanvases.map(() => (<div style={{border: "dashed red 1px", height: "215px", width: "215px", margin: "1rem"}}></div>))}
+              {/* <div hidden={loadNextPage? false : true}>
+              {userCanvases.slice(12,24).map(() => (<div style={{border: "dashed red 1px", height: "215px", width: "215px", margin: "1rem"}}></div>))}
+
+              </div> */}
+            </div>
+            <div className="row d-flex justify-content-center">
+              <div className="btn btn-lg btn-primary " type="button" onClick={handleLoadMore} hidden={loadMoreButtonDisabled? false: true}>Load More</div>
+            </div>
+
+
+          </div>
+          </div>
+
+            
 
         {/* ending div */}
       </div>

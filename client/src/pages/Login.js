@@ -41,7 +41,7 @@ const LoginPage = (props) => {
             <h2 className="text-center pt-3">Create Account</h2>
             <hr className="mb-0 pb-0" />
             <div className="text-center py-4">
-              <SignUpForm setCurrentUsername={props.setCurrentUsername} />
+              <SignUpForm setCurrentUsername={props.setCurrentUsername} setCurrentForm={setCurrentForm}/>
               <br />
               <div style={{ color: "blue", textDecoration: "underline", cursor: "pointer" }} href="#" onClick={() => setCurrentForm('login')}>
                 Sign-in

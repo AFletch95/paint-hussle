@@ -21,7 +21,7 @@ function HomePage(props) {
           <div className="name-and-logo">
 
             <div className="paintHustleLogo mx-auto">
-              <img src="./logos/pnthustle.png" style={{ height: "600px", width: "1080px", }} alt="paint hustle"></img>
+              <img src="./logos/pnthustle.png" style={{ height: "450px", width: "810px", }} alt="paint hustle"></img>
             </div>
             <h3 style={{ fontFamily: "Lexend Exa, sans-serif" }}>BUY, SELL, CREATE, AND TRADE</h3>
 
