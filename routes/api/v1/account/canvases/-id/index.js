@@ -1,23 +1,23 @@
-const { Router } = require('express');
+const { Router } = require("express");
 const router = Router();
 
-const { getUser } = require('../../../../../middleware/orm');
+const { getUser } = require("../../../../../../middleware/orm");
 
-router.get('/', getUser({ select: '_id' }), async (req, res) => {
-  const db = req.app.get('db');
+router.get("/", getUser({ select: "_id" }), async (req, res) => {
+  const db = req.app.get("db");
   const { id } = req.canvas;
   const canvas = await db.Canvas.findById(id).where({ owner: req.user._id });
   if (!canvas) {
     res.status(404).json({});
   } else {
     res.status(200).json({
-      canvas,
+      canvas
     });
   }
 });
 
-router.put('/', getUser({ select: '_id' }), async (req, res) => {
-  const db = req.app.get('db');
+router.put("/", getUser({ select: "_id" }), async (req, res) => {
+  const db = req.app.get("db");
   const { id } = req.canvas;
   const canvas = await db.Canvas.findById(id).where({ owner: req.user._id });
   if (!canvas) {
@@ -31,7 +31,7 @@ router.put('/', getUser({ select: '_id' }), async (req, res) => {
   const result = await canvas.save();
 
   res.status(200).json({
-    canvas: result,
+    canvas: result
   });
 });
 

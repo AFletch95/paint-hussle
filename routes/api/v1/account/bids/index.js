@@ -1,20 +1,22 @@
-const { Router } = require('express');
+const { Router } = require("express");
 const router = Router();
 
-const { getUser } = require('../../../../middleware/orm');
+const { getUser } = require("../../../../../middleware/orm");
 
-router.get('/', getUser({ select: '_id', populate: 'bids' }), (req, res) => {
+router.get("/", getUser({ select: "_id", populate: "bids" }), (req, res) => {
   res.status(200).json({
-    bids: req.user.bids || [],
+    bids: req.user.bids || []
   });
 });
 
-router.post('/', getUser({ select: '_id' }), async (req, res) => {
-  const db = req.app.get('db');
+router.post("/", getUser({ select: "_id" }), async (req, res) => {
+  const db = req.app.get("db");
   try {
     const { auction: auctionId, isAnonymous, amount } = req.body;
 
-    const auction = await db.Auction.findById(auctionId).select('seller price duration createdAt');
+    const auction = await db.Auction.findById(auctionId).select(
+      "seller price duration createdAt"
+    );
     //if (req.user._id.equals(auction.seller)) throw Error();
     if (!auction.isExpired) throw Error();
     // TODO if user doesn't have enough money throw Error
@@ -24,7 +26,7 @@ router.post('/', getUser({ select: '_id' }), async (req, res) => {
       auction,
       bidder: req.user,
       isAnonymous,
-      amount,
+      amount
     });
     auction.price.set({ current: amount });
 
