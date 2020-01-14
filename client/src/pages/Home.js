@@ -7,7 +7,7 @@ import config from '../config';
 
 function HomePage(props) {
   const perfectImageStyle = {
-    backgroundImage: `url(./images/backgroundcanvas2.jpg)`,
+    backgroundImage: `url(./images/backgrounds/home.jpg)`,
     backgroundPosition: 'center center',
     backgroundRepeat: 'no-repeat',
     backgroundAttachment: 'fixed',
@@ -38,13 +38,13 @@ function HomePage(props) {
   return (
     <div style={perfectImageStyle}>
       <div className="container text-center p-auto">
-        <img className="img-fluid" src="./logos/pnthustle.png" alt="Paint Hustle" />
+        <img className="img-fluid" src="./images/logos/large.png" alt="Paint Hustle" />
         <h3 className="mb-5" style={{ fontSize: '3vw' }}>
           BUY SELL CREATE TRADE
         </h3>
         <div className="row">
-          <div className="col-md-4" />
-          <div className="col-md-4">
+          <div className="col-lg-4" />
+          <div className="col-lg-4">
             <div className="m-5">
               <GoogleLogin
                 clientId={config.googleAuth.clientId}
