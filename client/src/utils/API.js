@@ -2,12 +2,13 @@ import axios from 'axios';
 
 export default {
   // create user account
-  createNewUser(userData) {
-    return axios.post('/api/users/', userData);
-  },
-
-  userLogin(userData) {
-    return axios.post('/api/account/login', userData);
+  authenticate({ provider, accessToken }) {
+    switch (provider) {
+      case 'google':
+        return axios.post('/api/v1/auth/google', { access_token: accessToken });
+      default:
+        throw Error(`${provider} is not a supported auth provider`);
+    }
   },
 
   getAccountInfo() {
