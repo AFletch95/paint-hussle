@@ -1,39 +1,58 @@
-import React, { useEffect } from "react";
+import React, { useEffect } from 'react';
+import { GoogleLogin } from 'react-google-login';
+
+import api from '../utils/API';
+
 function HomePage(props) {
   const perfectImageStyle = {
     backgroundImage: `url(./images/backgroundcanvas2.jpg)`,
-    backgroundPosition: "center center",
-    backgroundRepeat: "no-repeat",
-    backgroundAttachment: "fixed",
-    backgroundSize: "cover",
-    minHeight: "100vh",
-  }
+    backgroundPosition: 'center center',
+    backgroundRepeat: 'no-repeat',
+    backgroundAttachment: 'fixed',
+    backgroundSize: 'cover',
+    minHeight: '100vh',
+  };
 
   useEffect(() => {
-    props.setCurrentPage("Home")
-  })
+    props.setCurrentPage('Home');
+  });
+
+  const googleResponse = response => {
+    console.log(response);
+    api
+      .authenticate({ provider: 'google', accessToken: response.accessToken })
+      .then(res => {
+        console.log(res);
+      });
+  };
+
+  const onFailure = error => {
+    alert(JSON.stringify(error));
+  };
 
   return (
-    <div>
-      <div style={perfectImageStyle} className="homePageImage text-center">
-        <div style={{ display: "flex", flexDirection: "column", height: "100vh", justifyContent: "space-evenly", alignItems: "center" }}>
-
-          <div className="name-and-logo">
-
-            <div className="paintHustleLogo mx-auto">
-              <img src="./logos/pnthustle.png" style={{ height: "600px", width: "1080px", }} alt="paint hustle"></img>
+    <div style={perfectImageStyle}>
+      <div className='container text-center p-auto'>
+        <img
+          className='img-fluid'
+          src='./logos/pnthustle.png'
+          alt='Paint Hustle'
+        />
+        <h3 className='mb-5' style={{ fontSize: '3vw' }}>
+          BUY SELL CREATE TRADE
+        </h3>
+        <div className='row'>
+          <div className='col-md-4' />
+          <div className='col-md-4'>
+            <div className='m-5'>
+              <GoogleLogin
+                clientId={process.env.REACT_APP_GOOGLE_AUTH_CLIENT_ID}
+                buttonText='Sign in with Google'
+                onSuccess={googleResponse}
+                onFailure={onFailure}
+              />
             </div>
-            <h3 style={{ fontFamily: "Lexend Exa, sans-serif" }}>BUY, SELL, CREATE, AND TRADE</h3>
-
           </div>
-          <a href={sessionStorage.getItem('currentUsername') ? '/myaccount' : "/login"}><span>
-
-            <div className="btn pb-2 pt-2 pr-4 pl-4">
-              <img src="./logos/create_account_button.png" style={{ height: "144px", width: "260px", }} alt="create account"></img>
-            </div>
-
-          </span></a>
-
         </div>
       </div>
     </div>
