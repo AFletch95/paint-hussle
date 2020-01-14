@@ -12,22 +12,22 @@ export default {
   },
 
   getAccountInfo() {
-    return axios.get('/api/account/');
+    return axios.get('/api/v1/account');
   },
 
   getAuctions(options) {
-    return axios.get('/api/auctions/', options);
+    return axios.get('/api/v1/auctions', options);
   },
 
   createCanvas(canvas) {
-    return axios.post('/api/canvases/', canvas);
+    return axios.post('/api/v1/canvases', canvas);
   },
 
   getUserCanvases() {
-    return axios.get('/api/account/canvases/');
+    return axios.get('/api/v1/account/canvases');
   },
 
   getUserAuctions() {
-    return axios.get('/api/account/auctions/');
+    return axios.get('/api/v1/account/auctions');
   },
 };
