@@ -31,7 +31,7 @@ function HomePage(props) {
   };
 
   return (
-    <div style={perfectImageStyle}>
+    <div>
       <div className='container text-center p-auto'>
         <img
           className='img-fluid'
