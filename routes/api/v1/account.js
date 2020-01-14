@@ -4,6 +4,15 @@ const router = Router();
 const passport = require('passport');
 
 router
+  .route('/logout')
+  .post(passport.authenticate('jwt', { session: false }), (req, res) => {
+    res
+      .cookie('authToken', undefined)
+      .status(200)
+      .end();
+  });
+
+router
   .route('/')
   .get(passport.authenticate('jwt', { session: false }), async (req, res) => {
     const { user } = req;
