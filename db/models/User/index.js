@@ -1,80 +1,33 @@
 const { Schema, model } = require('mongoose');
 
-const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const validator = require('validator');
 
-const strongPassword = new RegExp(/^(?!.*\s)(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#%&+=|^$*-]).{8,}/g);
-
-const MIN_AGE = 13 * 365.2422 * 24 * 60 * 60 * 1000;
-
-const NameSchema = require('./NameSchema.js');
-const EmailSchema = require('./EmailSchema.js');
-const PhoneSchema = require('./PhoneSchema.js');
+const AuthSchema = require('./AuthSchema.js');
 
 const UserSchema = new Schema(
   {
     username: {
       type: String,
-      required: true,
-      unique: true,
+      index: true,
       trim: true,
       minlength: 3,
     },
-    password: {
-      type: String,
-      required: true,
-      select: false,
-      validate: {
-        validator: function(v) {
-          if (!this.isModified('password')) return true;
-          return strongPassword.test(v);
-        },
-        message: 'not a strong password',
-      },
-    },
-    name: {
-      type: NameSchema,
-      required: true,
-      select: false,
-      set: function(v) {
-        return this.name ? this.name.set(v) : (this.name = v);
-      },
-    },
     email: {
-      type: EmailSchema,
+      type: String,
       required: true,
+      unique: true,
       select: false,
-      set: function(v) {
-        return this.email ? this.email.set(v) : (this.email = v);
-      },
-    },
-    phone: {
-      type: PhoneSchema,
-      select: false,
-      set: function(v) {
-        return this.phone ? this.phone.set(v) : (this.phone = v);
-      },
-    },
-    dateOfBirth: {
-      type: Date,
-      required: true,
-      select: false,
+      trim: true,
       validate: {
-        validator: function(v) {
-          return v.getTime() <= Date.now() - MIN_AGE;
-        },
-        message: 'not old enough based on date of birth',
+        validator: v => validator.isEmail(v),
+        message: props => `${props.value} is not a valid email`,
       },
     },
-    bio: {
-      type: String,
-      default: '',
-      trim: true,
-    },
-    image: {
-      type: String,
-      default: '',
-      trim: true,
+    auth: {
+      type: AuthSchema,
+      default: {},
+      select: false,
     },
     createdAt: {
       type: Date,
@@ -110,13 +63,26 @@ UserSchema.virtual('auctions', {
   foreignField: 'seller',
 });
 
-UserSchema.methods.checkPassword = function(plaintext) {
-  return bcrypt.compare(plaintext, this.password);
-};
-
-UserSchema.methods.mask = function() {
-  if (this.email) this.email.mask();
-  if (this.phone) this.phone.mask();
+UserSchema.statics.upsertGoogleUser = async function(
+  accessToken,
+  refreshToken,
+  profile,
+) {
+  const User = model('User');
+  const user = await User.findOne({ 'auth.google.id': profile.id });
+  if (!user) {
+    const newUser = new User({
+      email: profile.emails[0].value,
+      auth: {
+        google: {
+          id: profile.id,
+          token: accessToken,
+        },
+      },
+    });
+    return await newUser.save();
+  }
+  return user;
 };
 
 UserSchema.methods.createAuthToken = function() {
@@ -129,14 +95,5 @@ UserSchema.methods.createAuthToken = function() {
   };
   return jwt.sign(payload, process.env.PRIVATE_AUTH_KEY, signConfig);
 };
-
-UserSchema.pre('find', async function() {});
-
-UserSchema.pre('save', async function() {
-  if (this.isModified('password')) {
-    const saltRounds = 10;
-    this.password = await bcrypt.hash(this.password, saltRounds);
-  }
-});
 
 module.exports = model('User', UserSchema);
