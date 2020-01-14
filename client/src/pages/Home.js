@@ -17,13 +17,13 @@ function HomePage(props) {
 
   useEffect(() => {
     props.setCurrentPage('Home');
+    if (sessionStorage.getItem('userData'));
   });
 
   const googleResponse = response => {
     api.authenticate({ provider: 'google', accessToken: response.accessToken }).then(res => {
       if (res.statusText === 'OK') {
-        console.log(res);
-        sessionStorage.setItem('currentUsername', res.data.user.username);
+        sessionStorage.setItem('userData', res.data.user);
         window.location.pathname = '/myaccount';
       } else {
         //TODO notify user of login failure

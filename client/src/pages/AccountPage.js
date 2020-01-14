@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import CanvasCarousel from '../components/CanvasCarousel';
 import BuyCanvases from '../components/BuyCanvasesModal';
@@ -31,7 +30,7 @@ const AccountPage = props => {
         setUserAuctions(result.data.auctions);
       }
     });
-  });
+  }, []);
 
   return (
     <div style={{ background: 'lightgray' }}>
