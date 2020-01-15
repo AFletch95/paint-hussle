@@ -5,13 +5,12 @@ import Pagination from '../components/Pagination';
 
 import database from '../utils/API';
 
-function Market() {
+export default () => {
   const [pages, setPages] = useState({
     total: 0,
     current: -1,
     map: new Map(),
   });
-  const [canvasCreatorPage, setCanvasCreatorPage] = useState('/publicUserPage');
   useEffect(() => {
     database.getAuctions({ page: pages.current }).then(res => {
       if (res.statusText === 'OK') {
@@ -34,7 +33,7 @@ function Market() {
     return (
       <div className="list-group-flush">
         {auctions.map(auction => (
-          <AuctionPanel auction={auction} canvasCreatorPage={canvasCreatorPage} />
+          <AuctionPanel auction={auction} />
         ))}
       </div>
     );
@@ -46,17 +45,13 @@ function Market() {
         <FilterDropdown />
       </div>
       <div className="container mx-auto">
-
         {getAuctions()}
         <Pagination
           current={pages.current}
           total={pages.total}
           setPage={page => setPages({ ...pages, current: page })}
         />
-
       </div>
     </div>
   );
-}
-
-export default Market;
+};

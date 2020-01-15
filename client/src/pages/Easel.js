@@ -5,16 +5,16 @@ import CanvasSVG from '../components/CanvasSVG';
 import SVG from '../utils/SVG';
 import database from '../utils/API';
 
-const CanvasEditor = props => {
+export default props => {
   props.setCurrentPage('CanvasEditor');
 
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [getSVG, setGetSVG] = useState(null);
   const [canvas, setCanvas] = useState(null);
+  const [lc, setLC] = useState(null);
 
   const saveCanvas = () => {
-    const svgString = getSVG();
+    const svgString = lc.getSVGString();
     const svg = new DOMParser().parseFromString(svgString, 'text/html').body.firstChild;
     const scale = {
       x: 1 / Number(svg.getAttribute('width')),
@@ -55,7 +55,7 @@ const CanvasEditor = props => {
             </div>
           </div>
         </div>
-        <Canvas setGetSVG={setGetSVG} />
+        <Canvas setLC={setLC} />
         <div className="form-group m-3">
           <textarea
             id="description"
@@ -98,4 +98,3 @@ const CanvasEditor = props => {
     </div>
   );
 };
-export default CanvasEditor;

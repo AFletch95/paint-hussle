@@ -1,5 +1,4 @@
 import React, { useRef, useEffect } from 'react';
-import ReactDOM from 'react-dom';
 
 import SVG from '../../utils/SVG';
 
@@ -11,7 +10,7 @@ const CanvasSVG = props => {
     const svg = new DOMParser().parseFromString(svgString, 'text/html').body.firstChild;
     SVG.scale(svg, scale);
     div.current.appendChild(svg);
-  }, []);
+  }, [props]);
   return <div className="border border-secondary" ref={div}></div>;
 };
 export default CanvasSVG;
