@@ -3,9 +3,11 @@ import { GoogleLogin } from 'react-google-login';
 
 import api from '../utils/API';
 
+import config from '../config';
+
 function HomePage(props) {
   const perfectImageStyle = {
-    backgroundImage: `url(./images/backgroundcanvas2.jpg)`,
+    backgroundImage: `url(./images/backgrounds/home.jpg)`,
     backgroundPosition: 'center center',
     backgroundRepeat: 'no-repeat',
     backgroundAttachment: 'fixed',
@@ -15,15 +17,18 @@ function HomePage(props) {
 
   useEffect(() => {
     props.setCurrentPage('Home');
+    if (sessionStorage.getItem('userData'));
   });
 
   const googleResponse = response => {
-    console.log(response);
-    api
-      .authenticate({ provider: 'google', accessToken: response.accessToken })
-      .then(res => {
-        console.log(res);
-      });
+    api.authenticate({ provider: 'google', accessToken: response.accessToken }).then(res => {
+      if (res.statusText === 'OK') {
+        sessionStorage.setItem('userData', res.data.user);
+        window.location.pathname = '/myaccount';
+      } else {
+        //TODO notify user of login failure
+      }
+    });
   };
 
   const onFailure = error => {
@@ -31,23 +36,19 @@ function HomePage(props) {
   };
 
   return (
-    <div>
-      <div className='container text-center p-auto'>
-        <img
-          className='img-fluid'
-          src='./logos/pnthustle.png'
-          alt='Paint Hustle'
-        />
-        <h3 className='mb-5' style={{ fontSize: '3vw' }}>
+    <div style={perfectImageStyle}>
+      <div className="container text-center p-auto">
+        <img className="img-fluid" src="./images/logos/large.png" alt="Paint Hustle" />
+        <h3 className="mb-5" style={{ fontSize: '3vw' }}>
           BUY SELL CREATE TRADE
         </h3>
-        <div className='row'>
-          <div className='col-md-4' />
-          <div className='col-md-4'>
-            <div className='m-5'>
+        <div className="row">
+          <div className="col-lg-4" />
+          <div className="col-lg-4">
+            <div className="m-5">
               <GoogleLogin
-                clientId={process.env.REACT_APP_GOOGLE_AUTH_CLIENT_ID}
-                buttonText='Sign in with Google'
+                clientId={config.googleAuth.clientId}
+                buttonText="Sign in with Google"
                 onSuccess={googleResponse}
                 onFailure={onFailure}
               />
