@@ -11,6 +11,10 @@ export default {
     }
   },
 
+  userLogOut() {
+    return axios.post('api/v1/account/logout')
+  },
+
   getAccountInfo() {
     return axios.get('/api/v1/account');
   },

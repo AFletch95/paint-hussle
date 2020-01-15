@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 
 // components
-import Navbar from './components/NavBar';
+import Navbar from './components/Navbar';
 
 // pages
 import Marketplace from './pages/Market';
@@ -19,14 +19,13 @@ function App() {
   const [uneditedUserCanvasCount, setUneditedUserCanvasCount] = useState(3);
 
   const perfectImageStyle = {
-    backgroundImage: `url(./images/backgroundcanvas2.jpg)`,
+    backgroundImage: `url(./images/backgrounds/home.jpg)`,
     backgroundPosition: 'center center',
     backgroundRepeat: 'no-repeat',
     backgroundAttachment: 'fixed',
     backgroundSize: 'cover',
     minHeight: '100vh',
   };
-  const [currentPage, setCurrentPage] = useState('Home');
 
   return (
     <div style={perfectImageStyle}>
