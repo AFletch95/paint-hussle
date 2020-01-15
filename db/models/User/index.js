@@ -29,6 +29,10 @@ const UserSchema = new Schema(
       default: {},
       select: false,
     },
+    portrait: {
+      type: Schema.Types.ObjectId,
+      ref: 'Canvas',
+    },
     createdAt: {
       type: Date,
       select: false,
@@ -63,11 +67,7 @@ UserSchema.virtual('auctions', {
   foreignField: 'seller',
 });
 
-UserSchema.statics.upsertGoogleUser = async function(
-  accessToken,
-  refreshToken,
-  profile,
-) {
+UserSchema.statics.upsertGoogleUser = async function(accessToken, refreshToken, profile) {
   const User = model('User');
   const user = await User.findOne({ 'auth.google.id': profile.id });
   if (!user) {
