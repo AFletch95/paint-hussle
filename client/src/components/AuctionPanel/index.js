@@ -19,12 +19,7 @@ const AuctionPanel = props => {
         <div className="col-md-8">
           <h5 className="card-title">{auction.canvas.title || 'Untitled'}</h5>
           <p className="card-text">{auction.canvas.description || ''}</p>
-          <p className="card-text">
-            Current owner:
-            <span>
-              <a href={props.canvasCreatorPage}>{auction.seller.username}</a>
-            </span>
-          </p>
+          <p className="card-text">Current owner:{auction.seller.username}</p>
           <div className="text-right">
             <div className="btn btn-info text-light h1 float-right" href="#">
               {auction.price.buyout || auction.price.starting}

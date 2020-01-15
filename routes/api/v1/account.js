@@ -3,14 +3,12 @@ const router = Router();
 
 const passport = require('passport');
 
-router
-  .route('/logout')
-  .post(passport.authenticate('jwt', { session: false }), (req, res) => {
-    res
-      .cookie('authToken', undefined)
-      .status(200)
-      .end();
-  });
+router.route('/logout').post(passport.authenticate('jwt', { session: false }), (req, res) => {
+  res
+    .clearCookie('authToken')
+    .status(200)
+    .end();
+});
 
 router
   .route('/')
@@ -47,9 +45,7 @@ router
         price: { starting, buyout },
       } = req.body;
 
-      const canvas = await db.Canvas.findById(canvasId).select(
-        'owner visibility',
-      );
+      const canvas = await db.Canvas.findById(canvasId).select('owner visibility');
       if (!canvas) throw 'Bad Request';
       if (!canvas.isOwnedBy(req.user)) throw 'Unauthorized';
       if (canvas.visibility === 'private') throw 'Bad Request';
@@ -93,9 +89,7 @@ router
     try {
       const { auction: auctionId, isAnonymous, amount } = req.body;
 
-      const auction = await db.Auction.findById(auctionId).select(
-        'seller price duration createdAt',
-      );
+      const auction = await db.Auction.findById(auctionId).select('seller price duration createdAt');
       //if (req.user._id.equals(auction.seller)) throw Error();
       if (!auction.isExpired) throw Error();
       // TODO if user doesn't have enough money throw Error
@@ -152,12 +146,10 @@ router
     });
   });
 
-router
-  .route('/canvases')
-  .get(passport.authenticate('jwt', { session: false }), async (req, res) => {
-    res.status(200).json({
-      canvases: req.user.canvases || [],
-    });
+router.route('/canvases').get(passport.authenticate('jwt', { session: false }), async (req, res) => {
+  res.status(200).json({
+    canvases: req.user.canvases || [],
   });
+});
 
 module.exports = router;

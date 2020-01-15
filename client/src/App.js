@@ -1,22 +1,17 @@
-// react
-import React, { useState } from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 
-// components
-import Navbar from './components/Navbar';
-
-// pages
-import Marketplace from './pages/Market';
-import ShowAllCanvases from './pages/ListUserCanvases';
-import AccountPage from './pages/AccountPage';
-import HomePage from './pages/Home';
-import CanvasEditor from './pages/CanvasEditor';
+import Home from './pages/Home';
+import Account from './pages/Account';
+import Artists from './pages/Aritists';
+import AuctionHouse from './pages/AuctionHouse';
+import Easel from './pages/Easel';
+import Gallery from './pages/Gallery';
+import Leaderboard from './pages/Leaderboard';
 
 function App() {
-  const [currentPage, setCurrentPage] = useState("Home");
-  const [avalibleCurrency, setAvaliableCurrency] = useState(2000);
-  const [userCanvasCount, setUserCanvasCount] = useState(3);
-  const [uneditedUserCanvasCount, setUneditedUserCanvasCount] = useState(3);
+// components
+import Navbar from './components/Navbar';
 
   const perfectImageStyle = {
     backgroundImage: `url(./images/backgrounds/home.jpg)`,
@@ -33,34 +28,26 @@ function App() {
       <Router>
         <Switch>
           <Route exact path="/">
-            <HomePage setCurrentPage={setCurrentPage} />
+            <Home />
           </Route>
-          <Route path="/">
-            <Navbar currentPage={currentPage} />
-            <Switch>
-              <Route exact path="/marketplace">
-                <Marketplace setCurrentPage={setCurrentPage} />
-              </Route>
-              <Route exact path="/myaccount">
-                <AccountPage
-                  setCurrentPage={setCurrentPage}
-                  avalibleCurrency={avalibleCurrency}
-                  setAvalibleCurrency={setAvaliableCurrency}
-                  userCanvasCount={userCanvasCount}
-                  setUserCanvasCount={setUserCanvasCount}
-                />
-              </Route>
-              <Route exact path="/allcanvases-onsale">
-                <ShowAllCanvases pageTitle={'My Canvases on sale'} />
-              </Route>
-              <Route exact path="/allcanvases">
-                <ShowAllCanvases pageTitle={'My Canvases'} />
-              </Route>
-              <Route exact path="/canvaseditor">
-                <CanvasEditor setCurrentPage={setCurrentPage} />
-              </Route>
-              <Redirect to="/" />
-            </Switch>
+          <Route exact path="/account">
+            <Account />
+          </Route>
+          <Route exact path="/artists">
+            <Artists />
+          </Route>
+          <Route exact path="/auctionhouse">
+            <AuctionHouse />
+          </Route>
+          <Route exact path="/easel">
+            <Easel />
+          </Route>
+          <Route exact path="/gallery">
+            <Gallery />
+          </Route>
+          <Route exact path="/leaderboard">
+            <Leaderboard />
+
           </Route>
           <Redirect to="/" />
         </Switch>

@@ -1,20 +1,18 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useRef, useEffect } from 'react';
 
 import LC from 'literallycanvas';
 import './literallycanvas.css';
 
 const Canvas = props => {
   const canvas = useRef(null);
-  const [lc, setLC] = useState(null);
 
   useEffect(() => {
     const aspect = props.aspect || { width: 19, height: 18 };
-    const setGetSVG = props.setGetSVG || (s => {});
 
     LC.setDefaultImageURLPrefix('lib/img');
     const element = canvas.current;
     const width = element.offsetWidth;
-    const _lc = LC.init(element, {
+    const lc = LC.init(element, {
       imageSize: { width: width, height: (width * aspect.height) / aspect.width },
       toolbarPosition: 'top',
       backgroundColor: '#fff',
@@ -30,12 +28,11 @@ const Canvas = props => {
       ],
       minzoom: 1,
     });
-    setGetSVG(() => () => _lc.getSVGString());
-    setLC(_lc);
+    props.setLC(lc);
     return () => {
-      setGetSVG(null);
+      props.setLC(null);
     };
-  }, []);
+  }, [props, props.aspect]);
 
   return (
     <div className="container">

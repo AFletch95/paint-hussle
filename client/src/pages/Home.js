@@ -23,8 +23,7 @@ function HomePage(props) {
   const googleResponse = response => {
     api.authenticate({ provider: 'google', accessToken: response.accessToken }).then(res => {
       if (res.statusText === 'OK') {
-        sessionStorage.setItem('userData', res.data.user);
-        window.location.pathname = '/myaccount';
+        sessionStorage.setItem('user', res.data.user);
       } else {
         //TODO notify user of login failure
       }

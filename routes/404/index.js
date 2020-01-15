@@ -7,7 +7,7 @@ module.exports = (req, res) => {
     try {
       return res.sendFile(path.join(__dirname, '../../client/build/index.html'));
     } catch (err) {
-      console.log(err);
+      console.log('404 failed to serve index.html -', err);
     }
   }
   if (req.accepts('json')) {
