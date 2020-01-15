@@ -3,13 +3,6 @@ const router = Router();
 
 const passport = require('passport');
 
-router.route('/logout').post(passport.authenticate('jwt', { session: false }), (req, res) => {
-  res
-    .clearCookie('authToken')
-    .status(200)
-    .end();
-});
-
 router
   .route('/')
   .get(passport.authenticate('jwt', { session: false }), async (req, res) => {
@@ -20,7 +13,8 @@ router
   })
   .put(passport.authenticate('jwt', { session: false }), async (req, res) => {
     const { user, body } = req;
-    user.set(body);
+    const { username, portrait } = body;
+    user.set({ username, portrait });
     const updated = await user.save();
     updated.mask();
     res.status(200).json({
@@ -30,13 +24,15 @@ router
 
 router
   .route('/auctions')
-  .get(passport.authenticate('jwt', { session: false }), (req, res) => {
-    res.status(200).json({
-      auctions: req.user.auctions || [],
-    });
+  .get(passport.authenticate('jwt', { session: false }), async (req, res) => {
+    const db = req.app.get('db');
+    const { user } = req;
+    const auctions = await db.Auctions.find({ isActive: true, seller: user });
+    res.status(200).json({ auctions });
   })
   .post(passport.authenticate('jwt', { session: false }), async (req, res) => {
     const db = req.app.get('db');
+    const { user } = req;
     try {
       const {
         canvas: canvasId,
@@ -47,12 +43,12 @@ router
 
       const canvas = await db.Canvas.findById(canvasId).select('owner visibility');
       if (!canvas) throw 'Bad Request';
-      if (!canvas.isOwnedBy(req.user)) throw 'Unauthorized';
+      if (!canvas.isOwnedBy(user)) throw 'Unauthorized';
       if (canvas.visibility === 'private') throw 'Bad Request';
 
       const auction = new db.Auction({
         canvas,
-        seller: req.user,
+        seller: user,
         isAnonymous,
         duration,
         price: {
@@ -79,25 +75,27 @@ router
 
 router
   .route('/bids')
-  .get(passport.authenticate('jwt', { session: false }), (req, res) => {
-    res.status(200).json({
-      bids: req.user.bids || [],
-    });
+  .get(passport.authenticate('jwt', { session: false }), async (req, res) => {
+    const db = req.app.get('db');
+    const { user } = req;
+    const bids = await db.Bid.find({ bidder: user }).populate({ path: 'auction', match: { isActive: true } });
+    res.status(200).json({ bids: bids.filter(bid => !!bid.auction._id) });
   })
   .post(passport.authenticate('jwt', { session: false }), async (req, res) => {
     const db = req.app.get('db');
+    const { user, body } = req;
     try {
-      const { auction: auctionId, isAnonymous, amount } = req.body;
+      const { auction: auctionId, isAnonymous, amount } = body;
 
       const auction = await db.Auction.findById(auctionId).select('seller price duration createdAt');
-      //if (req.user._id.equals(auction.seller)) throw Error();
+      //if (user._id.equals(auction.seller)) throw Error();
       if (!auction.isExpired) throw Error();
       // TODO if user doesn't have enough money throw Error
       if (auction.price.current >= amount) throw Error();
 
       const bid = new db.Bid({
         auction,
-        bidder: req.user,
+        bidder: user,
         isAnonymous,
         amount,
       });
@@ -117,20 +115,20 @@ router
   .route('/canvases/:id')
   .get(passport.authenticate('jwt', { session: false }), async (req, res) => {
     const db = req.app.get('db');
-    const { id } = req.params;
-    const canvas = await db.Canvas.findById(id).where({ owner: req.user._id });
+    const { user, params } = req;
+    const { id } = params;
+    const canvas = await db.Canvas.findById(id).where({ owner: user });
     if (!canvas) {
       res.status(404).json({});
     } else {
-      res.status(200).json({
-        canvas,
-      });
+      res.status(200).json({ canvas });
     }
   })
   .put(passport.authenticate('jwt', { session: false }), async (req, res) => {
     const db = req.app.get('db');
-    const { id } = req.params;
-    const canvas = await db.Canvas.findById(id).where({ owner: req.user._id });
+    const { user, params } = req;
+    const { id } = params;
+    const canvas = await db.Canvas.findById(id).where({ owner: user });
     if (!canvas) {
       return res.status(404).json({});
     }
@@ -147,9 +145,17 @@ router
   });
 
 router.route('/canvases').get(passport.authenticate('jwt', { session: false }), async (req, res) => {
-  res.status(200).json({
-    canvases: req.user.canvases || [],
-  });
+  const db = req.app.get('db');
+  const { user } = req;
+  const canvases = await db.Canvas.find({ owner: user });
+  res.status(200).json({ canvases });
+});
+
+router.route('/logout').post(passport.authenticate('jwt', { session: false }), (req, res) => {
+  res
+    .clearCookie('authToken')
+    .status(200)
+    .end();
 });
 
 module.exports = router;
