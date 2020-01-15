@@ -10,7 +10,6 @@ const BuyCanvases = (props) => {
     if (props.avalibleCurrency - quantity * 50 > 0) {
       props.setAvaliableCurrency(props.avalibleCurrency - quantity * 50);
       props.setUserCanvasCount(parseInt(props.userCanvasCount) + parseInt(quantity));
-      props.setUneditedUserCanvasCount(parseInt(props.uneditedUserCanvasCount) + parseInt(quantity))
       setGreenTextFlag(false);
       setRedTextFlag(true);
     }

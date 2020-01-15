@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 
 // components
-import Navbar from './components/NavBar';
+import Navbar from './components/Navbar';
 
 // pages
 import Marketplace from './pages/Market';
@@ -13,10 +13,23 @@ import HomePage from './pages/Home';
 import CanvasEditor from './pages/CanvasEditor';
 
 function App() {
-  const [currentPage, setCurrentPage] = useState('Home');
+  const [currentPage, setCurrentPage] = useState("Home");
+  const [avalibleCurrency, setAvaliableCurrency] = useState(2000);
+  const [userCanvasCount, setUserCanvasCount] = useState(3);
+  const [uneditedUserCanvasCount, setUneditedUserCanvasCount] = useState(3);
+
+  const perfectImageStyle = {
+    backgroundImage: `url(./images/backgrounds/home.jpg)`,
+    backgroundPosition: 'center center',
+    backgroundRepeat: 'no-repeat',
+    backgroundAttachment: 'fixed',
+    backgroundSize: 'cover',
+    minHeight: '100vh',
+  };
 
   return (
-    <div>
+    <div style={perfectImageStyle}>
+
       <Router>
         <Switch>
           <Route exact path="/">
@@ -29,7 +42,13 @@ function App() {
                 <Marketplace setCurrentPage={setCurrentPage} />
               </Route>
               <Route exact path="/myaccount">
-                <AccountPage setCurrentPage={setCurrentPage} />
+                <AccountPage
+                  setCurrentPage={setCurrentPage}
+                  avalibleCurrency={avalibleCurrency}
+                  setAvalibleCurrency={setAvaliableCurrency}
+                  userCanvasCount={userCanvasCount}
+                  setUserCanvasCount={setUserCanvasCount}
+                />
               </Route>
               <Route exact path="/allcanvases-onsale">
                 <ShowAllCanvases pageTitle={'My Canvases on sale'} />
@@ -43,9 +62,9 @@ function App() {
               <Redirect to="/" />
             </Switch>
           </Route>
+          <Redirect to="/" />
         </Switch>
       </Router>
-      {/* <Footer /> */}
     </div>
   );
 }
