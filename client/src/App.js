@@ -10,8 +10,21 @@ import Gallery from './pages/Gallery';
 import Leaderboard from './pages/Leaderboard';
 
 function App() {
+// components
+import Navbar from './components/Navbar';
+
+  const perfectImageStyle = {
+    backgroundImage: `url(./images/backgrounds/home.jpg)`,
+    backgroundPosition: 'center center',
+    backgroundRepeat: 'no-repeat',
+    backgroundAttachment: 'fixed',
+    backgroundSize: 'cover',
+    minHeight: '100vh',
+  };
+
   return (
-    <div>
+    <div style={perfectImageStyle}>
+
       <Router>
         <Switch>
           <Route exact path="/">
@@ -34,6 +47,7 @@ function App() {
           </Route>
           <Route exact path="/leaderboard">
             <Leaderboard />
+
           </Route>
           <Redirect to="/" />
         </Switch>

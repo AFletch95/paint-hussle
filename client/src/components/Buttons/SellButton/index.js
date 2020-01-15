@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-
+import CanvasSquare from "../../CanvasSquare"
 const SellButton = () => {
 
   const [buyoutPrice, setBuyoutPrice] = useState(51)
@@ -9,7 +9,7 @@ const SellButton = () => {
   return (
     <div>
       <div>
-        <p style={{ cursor: "pointer", opacity: "0.3" }} data-toggle="modal" data-target="#exampleModal"><span role="img" aria-label="SellButton">💲</span></p>
+        <p style={{ cursor: "pointer", }} data-toggle="modal" data-target="#exampleModal"><span role="img" aria-label="SellButton">💲</span></p>
       </div>
 
       <div className="modal fade" id="exampleModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -22,17 +22,27 @@ const SellButton = () => {
               </button>
             </div>
             <div className="modal-body">
-
-              <form>
+              <div className="container">
+                <div className="row">
+                  <div className="col-4">
+                  <form>
                 <div className="form-group">
                   <label className="pr-3" htmlFor="startingPrice">Starting Price</label>
                   <input style={{ width: "75px" }} type="number" id="startingPrice" min="50" placeholder="50" onChange={event => setSellPrice(Math.ceil(event.target.value))} />
                 </div>
                 <div className="form-group">
                   <label className="pr-3" htmlFor="buyoutPrice">Buyout Price</label>
-                  <input style={{ width: "75px" }} type="number" id="buyoutPrice" min={sellPrice} placeholder="51" onChange={event => setBuyoutPrice(Math.ceil(event.target.value))} />
+                  <input style={{ width: "75px" }} type="number" id="buyoutPrice" min={sellPrice+1} placeholder="51" onChange={event => setBuyoutPrice(Math.ceil(event.target.value))} />
                 </div>
               </form>
+                  </div>
+                  <div className="col-6">
+                    <div className="mx-auto">
+                      {/* <CanvasSquare /> */}
+                    </div>
+                  </div>
+                </div>
+              </div>
 
             </div>
             <div className="modal-footer">

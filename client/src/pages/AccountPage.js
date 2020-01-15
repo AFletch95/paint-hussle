@@ -1,46 +1,41 @@
 import React, { useEffect, useState } from 'react';
-import CanvasCarousel from '../components/CanvasCarousel';
 import BuyCanvases from '../components/BuyCanvasesModal';
-import CanvasSquare from '../components/CanvasSquare';
-import EditButton from '../components/Buttons/EditButton';
-import SellButton from '../components/Buttons/SellButton';
+
+import CanvasList from "../components/CanvasList";
 
 import database from '../utils/API';
 
 const AccountPage = props => {
-  const [avalibleCurrency, setAvaliableCurrency] = useState(2000);
-  const [userCanvasCount, setUserCanvasCount] = useState(3);
-  const [uneditedUserCanvasCount, setUneditedUserCanvasCount] = useState(3);
-  const [userCanvases, setUserCanvases] = useState([]);
+
+  const [userCanvases, setUserCanvases] = useState(new Array(12).fill("Canvas img"));
   const [userAuctions, setUserAuctions] = useState([]);
 
-  const allCanvases = canvas => {
-    return <CanvasSquare canvas={canvas} editButton={<EditButton />} sellButton={<SellButton />} />;
-  };
 
   useEffect(() => {
     props.setCurrentPage('Account');
-    database.getUserCanvases().then(result => {
-      if (result.statusText === 'OK') {
-        setUserCanvases(result.data.canvases);
-      }
-    });
-    database.getUserAuctions().then(result => {
-      if (result.statusText === 'OK') {
-        setUserAuctions(result.data.auctions);
-      }
-    });
+
+    // database.getUserCanvases().then(result => {
+    //   if (result.statusText === 'OK') {
+    //     setUserCanvases(result.data.canvases);
+    //     props.setUserCanvasCount(userCanvases.length)
+    //   }
+    // });
+    // database.getUserAuctions().then(result => {
+    //   if (result.statusText === 'OK') {
+    //     setUserAuctions(result.data.auctions);
+    //   }
+    // });
   }, []);
 
   return (
-    <div style={{ background: 'lightgray' }}>
+    <div>
       {/* new navbar */}
 
       <div className="container-fluid pt-4">
         {/* AccountPage */}
         <div>
           <h3 className="text-center">My Account ~ {sessionStorage.getItem('currentUsername') || 'Account'}</h3>
-          <div className="container container-fluid" style={{ border: 'solid black 1px' }}>
+          <div className="container container-fluid rounded-top" style={{ border: 'solid black 1px', background: "rgba(255, 248, 220, 0.6)" }}>
             <div className="row pb-1 pt-1">
               {/* favorite canvas img */}
               <div className="col-xs-12 col-md-3" style={{ borderRight: 'solid black 1px' }}>
@@ -53,10 +48,9 @@ const AccountPage = props => {
                 <div className="container-fluid">
                   <div className="row">
                     <div className="col text-center" style={{ paddingTop: '1.5rem' }}>
-                      <p>Owned canvases: {userCanvasCount || '~'}</p>
-                      <p>Blank canvases: {uneditedUserCanvasCount || '~'}</p>
+                      <p>Owned canvases: {props.userCanvasCount || '~'}</p>
                       <p>
-                        Avaliable currency: {avalibleCurrency || '~'}
+                        Avaliable currency: {props.avalibleCurrency || '~'}
                         <span role="img" aria-label="canvasCurrency">
                           🍪
                         </span>
@@ -70,12 +64,10 @@ const AccountPage = props => {
                         </span>
                       </p>
                       <BuyCanvases
-                        avalibleCurrency={avalibleCurrency}
-                        setAvaliableCurrency={setAvaliableCurrency}
-                        userCanvasCount={userCanvasCount}
-                        setUserCanvasCount={setUserCanvasCount}
-                        uneditedUserCanvasCount={uneditedUserCanvasCount}
-                        setUneditedUserCanvasCount={setUneditedUserCanvasCount}
+                        avalibleCurrency={props.avalibleCurrency}
+                        setAvaliableCurrency={props.setAvaliableCurrency}
+                        userCanvasCount={props.userCanvasCount}
+                        setUserCanvasCount={props.setUserCanvasCount}
                       />
                       <p className="mb-2">
                         <span>
@@ -95,21 +87,9 @@ const AccountPage = props => {
           </div>
         </div>
 
-        <CanvasCarousel
-          carouselName={'My Canvases'}
-          carouselNameLink={'/allcanvases'}
-          canvases={userCanvases}
-          createCanvasElement={allCanvases}
-        />
-        <CanvasCarousel
-          carouselName={'On Sale'}
-          carouselNameLink={'/allcanvases-onsale'}
-          canvases={userAuctions.map(auction => {
-            console.log(auction.canvas);
-            return auction.canvas;
-          })}
-          createCanvasElement={allCanvases}
-        />
+
+        <CanvasList userCanvases={userCanvases} setUserCanvases={setUserCanvases} />
+
 
         {/* ending div */}
       </div>
