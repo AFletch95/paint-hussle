@@ -1,8 +1,10 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 
+import Navbar from './components/Navbar';
+
 import Home from './pages/Home';
-import Account from './pages/Account';
+import Account from './pages/AccountPage';
 import Artists from './pages/Aritists';
 import AuctionHouse from './pages/AuctionHouse';
 import Easel from './pages/Easel';
@@ -10,8 +12,7 @@ import Gallery from './pages/Gallery';
 import Leaderboard from './pages/Leaderboard';
 
 function App() {
-// components
-import Navbar from './components/Navbar';
+  // components
 
   const perfectImageStyle = {
     backgroundImage: `url(./images/backgrounds/home.jpg)`,
@@ -25,6 +26,7 @@ import Navbar from './components/Navbar';
   return (
     <div style={perfectImageStyle}>
 
+      <Navbar />
       <Router>
         <Switch>
           <Route exact path="/">
@@ -47,7 +49,6 @@ import Navbar from './components/Navbar';
           </Route>
           <Route exact path="/leaderboard">
             <Leaderboard />
-
           </Route>
           <Redirect to="/" />
         </Switch>

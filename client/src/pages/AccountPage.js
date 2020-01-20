@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import BuyCanvases from '../components/BuyCanvasesModal';
-
+import CanvasTabs from "../components/CanvasTabs";
 import CanvasList from "../components/CanvasList";
 
 import database from '../utils/API';
@@ -12,7 +12,6 @@ const AccountPage = props => {
 
 
   useEffect(() => {
-    props.setCurrentPage('Account');
 
     // database.getUserCanvases().then(result => {
     //   if (result.statusText === 'OK') {
@@ -60,23 +59,22 @@ const AccountPage = props => {
                       <h5 className="mb-3">Quick Links</h5>
                       <p className="mb-2">
                         <span>
-                          <a href="/market">Marketplace</a>
+                          <a href="/auctionhouse">Ausction House</a>
                         </span>
                       </p>
-                      <BuyCanvases
-                        avalibleCurrency={props.avalibleCurrency}
-                        setAvaliableCurrency={props.setAvaliableCurrency}
-                        userCanvasCount={props.userCanvasCount}
-                        setUserCanvasCount={props.setUserCanvasCount}
-                      />
                       <p className="mb-2">
                         <span>
-                          <a href="/canvaseditor">Edit a canvas</a>
+                          <a href="/easel">Canvas Editor</a>
                         </span>
                       </p>
                       <p className="mb-2">
                         <span>
                           <a href="/sell">Sell a canvas</a>
+                        </span>
+                      </p>
+                      <p className="mb-2">
+                        <span>
+                          <a href="/accountsettings">Account Settings</a>
                         </span>
                       </p>
                     </div>
@@ -87,8 +85,7 @@ const AccountPage = props => {
           </div>
         </div>
 
-
-        <CanvasList userCanvases={userCanvases} setUserCanvases={setUserCanvases} />
+        <CanvasTabs />
 
 
         {/* ending div */}

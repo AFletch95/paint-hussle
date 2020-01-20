@@ -16,7 +16,6 @@ function HomePage(props) {
   };
 
   useEffect(() => {
-    props.setCurrentPage('Home');
     if (sessionStorage.getItem('userData'));
   });
 
