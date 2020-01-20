@@ -1,19 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import BuyCanvases from '../components/BuyCanvasesModal';
 
-import CanvasList from "../components/CanvasList";
+import CanvasList from '../components/CanvasList';
 
 import database from '../utils/API';
 
 const AccountPage = props => {
-
-  const [userCanvases, setUserCanvases] = useState(new Array(12).fill("Canvas img"));
+  const [userCanvases, setUserCanvases] = useState(new Array(12).fill('Canvas img'));
   const [userAuctions, setUserAuctions] = useState([]);
 
-
   useEffect(() => {
-    props.setCurrentPage('Account');
-
     // database.getUserCanvases().then(result => {
     //   if (result.statusText === 'OK') {
     //     setUserCanvases(result.data.canvases);
@@ -35,7 +31,10 @@ const AccountPage = props => {
         {/* AccountPage */}
         <div>
           <h3 className="text-center">My Account ~ {sessionStorage.getItem('currentUsername') || 'Account'}</h3>
-          <div className="container container-fluid rounded-top" style={{ border: 'solid black 1px', background: "rgba(255, 248, 220, 0.6)" }}>
+          <div
+            className="container container-fluid rounded-top"
+            style={{ border: 'solid black 1px', background: 'rgba(255, 248, 220, 0.6)' }}
+          >
             <div className="row pb-1 pt-1">
               {/* favorite canvas img */}
               <div className="col-xs-12 col-md-3" style={{ borderRight: 'solid black 1px' }}>
@@ -87,9 +86,7 @@ const AccountPage = props => {
           </div>
         </div>
 
-
         <CanvasList userCanvases={userCanvases} setUserCanvases={setUserCanvases} />
-
 
         {/* ending div */}
       </div>
