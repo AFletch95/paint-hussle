@@ -22,6 +22,12 @@ export default {
     updateInfo({ username, portrait }) {
       return axios.put('/api/v1/account', { username, portrait });
     },
+    getCanvases() {
+      return axios.get('/api/v1/account/canvases');
+    },
+    getAuctions() {
+      return axios.get('/api/v1/account/auctions');
+    },
   },
 
   getAuctions(options) {
@@ -30,13 +36,5 @@ export default {
 
   createCanvas(canvas) {
     return axios.post('/api/v1/canvases', canvas);
-  },
-
-  getUserCanvases() {
-    return axios.get('/api/v1/account/canvases');
-  },
-
-  getUserAuctions() {
-    return axios.get('/api/v1/account/auctions');
   },
 };
