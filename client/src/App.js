@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from 'react-router-dom';
 
 import FrontPage from './pages/FrontPage';
 import AccountPage from './pages/AccountPage';
@@ -27,7 +32,7 @@ export default () => {
     if (!user) {
       const storedUser = sessionStorage.getItem('user');
       if (storedUser) setUser(storedUser);
-    } else {
+    } else if (user.username) {
       sessionStorage.setItem('user', JSON.stringify(user));
     }
   }, [user]);
@@ -36,28 +41,32 @@ export default () => {
     <div style={perfectImageStyle}>
       <Router>
         <Switch>
-          <Route exact path="/">
-            {!user ? <FrontPage setUser={setUser} /> : <AccountPage setUser={setUser} />}
+          <Route exact path='/'>
+            {!user || !user.username ? (
+              <FrontPage user={user} setUser={setUser} />
+            ) : (
+              <AccountPage user={user} setUser={setUser} />
+            )}
           </Route>
-          <Route exact path="/account">
+          <Route exact path='/account'>
             <Account />
           </Route>
-          <Route exact path="/artists">
+          <Route exact path='/artists'>
             <Artists />
           </Route>
-          <Route exact path="/auctionhouse">
+          <Route exact path='/auctionhouse'>
             <AuctionHouse />
           </Route>
-          <Route exact path="/easel">
+          <Route exact path='/easel'>
             <Easel />
           </Route>
-          <Route exact path="/gallery">
+          <Route exact path='/gallery'>
             <Gallery />
           </Route>
-          <Route exact path="/leaderboard">
+          <Route exact path='/leaderboard'>
             <Leaderboard />
           </Route>
-          <Redirect to="/" />
+          <Redirect to='/' />
         </Switch>
       </Router>
     </div>
