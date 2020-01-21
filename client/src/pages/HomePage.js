@@ -1,5 +1,9 @@
-import React, { useState, useEffect } from 'react';
-//import BuyCanvases from '../components/BuyCanvasesModal';
+import React, { useState, useCallback, useEffect } from 'react';
+
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Image from 'react-bootstrap/Image';
 
 import CanvasList from '../components/CanvasList';
 
@@ -18,7 +22,7 @@ const AccountPage = props => {
   const [totalCanvasPages, setTotalCanvasPages] = useState(0);
   const [awaitingCanvases, setAwaitingCanvases] = useState(false);
 
-  const loadCanvases = () => {
+  const loadCanvases = useCallback(() => {
     if (awaitingCanvases) return;
     if (lastLoadedCanvasPage >= totalCanvasPages) return;
     setAwaitingCanvases(true);
@@ -31,14 +35,14 @@ const AccountPage = props => {
         setAwaitingCanvases(false);
       }
     });
-  };
+  }, [canvases, lastLoadedCanvasPage, totalCanvasPages, awaitingCanvases]);
 
   const [auctions, setAuctions] = useState([]);
   const [lastLoadedAuctionPage, setLastLoadedAuctionPage] = useState(-1);
   const [totalAuctionPages, setTotalAuctionPages] = useState(0);
   const [awaitingAuctions, setAwaitingAuctions] = useState(false);
 
-  const loadAuctions = () => {
+  const loadAuctions = useCallback(() => {
     if (awaitingAuctions) return;
     if (lastLoadedAuctionPage >= totalAuctionPages) return;
     setAwaitingAuctions(true);
@@ -51,7 +55,7 @@ const AccountPage = props => {
         setAwaitingAuctions(false);
       }
     });
-  };
+  }, [auctions, lastLoadedAuctionPage, totalAuctionPages, awaitingAuctions]);
   const [initialized, setInitialized] = useState(false);
 
   useEffect(() => {
@@ -109,32 +113,29 @@ const AccountPage = props => {
     <div>
       {/* new navbar */}
 
-      <div className='container py-auto mx-auto' style={backgroundSyle}>
+      <Container className='py-auto mx-auto' style={backgroundSyle}>
         <div className='text-center mx-3'>
-          <img
+          <Image
             className='mx-auto my-4'
             src='./images/dummyProfile.png'
             alt='Profile'
             style={{ borderRadius: '3rem' }}
           />
           <h1 className='mx-auto my-4'>{user.username}</h1>
-          <div className='row mx-auto my-5'>
-            <div className='col-md-2 col-lg-3' />
-            <div className='col-md-3 col-lg-2'>
+          <Row className='mx-auto my-5'>
+            <Col md={{ span: 3, offset: 2 }} lg={{ span: 2, offset: 3 }}>
               <h3>Currency</h3>
               350🍪
-            </div>
-            <div className='col-md-2' />
-            <div className='col-md-3 col-lg-2'>
+            </Col>
+            <Col md={{ span: 3, offset: 2 }} lg={{ span: 2, offset: 2 }}>
               <h3>Currency</h3>
               350🍪
-            </div>
-            <div className='col-md-2 col-lg-3' />
-          </div>
+            </Col>
+          </Row>
         </div>
         {renderTabHeader()}
         {renderTabContent()}
-      </div>
+      </Container>
     </div>
   );
 };
