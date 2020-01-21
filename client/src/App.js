@@ -7,7 +7,7 @@ import {
 } from 'react-router-dom';
 
 import FrontPage from './pages/FrontPage';
-import AccountPage from './pages/AccountPage';
+import HomePage from './pages/HomePage';
 import Account from './pages/Account';
 import Artists from './pages/Aritists';
 import AuctionHouse from './pages/AuctionHouse';
@@ -31,22 +31,24 @@ export default () => {
     console.log('user:', user);
     if (!user) {
       const storedUser = sessionStorage.getItem('user');
-      if (storedUser) setUser(storedUser);
+      if (storedUser) setUser(JSON.parse(storedUser));
     } else if (user.username) {
       sessionStorage.setItem('user', JSON.stringify(user));
     }
   }, [user]);
+
+  const renderRoot = () => {
+    if (user && user.username)
+      return <HomePage user={user} setUser={setUser} />;
+    return <FrontPage user={user} setUser={setUser} />;
+  };
 
   return (
     <div style={perfectImageStyle}>
       <Router>
         <Switch>
           <Route exact path='/'>
-            {!user || !user.username ? (
-              <FrontPage user={user} setUser={setUser} />
-            ) : (
-              <AccountPage user={user} setUser={setUser} />
-            )}
+            {renderRoot()}
           </Route>
           <Route exact path='/account'>
             <Account />

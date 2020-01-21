@@ -4,15 +4,6 @@ import LoginPanel from '../components/LoginPanel';
 
 import api from '../utils/API';
 
-const perfectImageStyle = {
-  backgroundImage: `url(./images/backgrounds/home.jpg)`,
-  backgroundPosition: 'center center',
-  backgroundRepeat: 'no-repeat',
-  backgroundAttachment: 'fixed',
-  backgroundSize: 'cover',
-  minHeight: '100vh',
-};
-
 function HomePage(props) {
   const { user, setUser } = props;
   const [username, setUsername] = useState('');
@@ -35,7 +26,7 @@ function HomePage(props) {
     }
   };
 
-  const renderLoginError = type => {
+  const renderLoginError = () => {
     switch (loginError) {
       case 'invalid':
         return (
@@ -76,18 +67,16 @@ function HomePage(props) {
   };
 
   return (
-    <div style={perfectImageStyle}>
-      <div className='container text-center p-auto'>
-        <img
-          className='img-fluid'
-          src='./images/logos/large.png'
-          alt='Paint Hustle'
-        />
-        <h3 className='mb-5' style={{ fontSize: '3vw' }}>
-          BUY SELL CREATE TRADE
-        </h3>
-        {renderLogin()}
-      </div>
+    <div className='container text-center p-auto'>
+      <img
+        className='img-fluid'
+        src='./images/logos/large.png'
+        alt='Paint Hustle'
+      />
+      <h3 className='mb-5' style={{ fontSize: '3vw' }}>
+        BUY SELL CREATE TRADE
+      </h3>
+      {renderLogin()}
     </div>
   );
 }
