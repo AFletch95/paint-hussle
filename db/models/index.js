@@ -1,6 +1,7 @@
 module.exports = {
-  User: require('./User'),
-  Canvas: require('./Canvas'),
   Auction: require('./Auction'),
   Bid: require('./Bid'),
+  Canvas: require('./Canvas'),
+  User: require('./User'),
+  UserProxy: require('./UserProxy'),
 };
