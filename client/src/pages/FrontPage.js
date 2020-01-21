@@ -57,19 +57,21 @@ function HomePage(props) {
   const renderLogin = () => {
     if (!user) return <LoginPanel setUser={setUser} />;
     return (
-      <form className='text-center m-5' onSubmit={submitUsername}>
-        <div className='form-group'>
-          <input
-            type='text'
-            className='form-control position-static'
-            aria-describedby='username'
-            placeholder='Username'
-            value={username}
-            onChange={e => setUsername(e.target.value)}
-          />
-          {renderLoginError()}
-        </div>
-      </form>
+      <div className='d-flex justify-content-center'>
+        <form className='text-center m-5' onSubmit={submitUsername}>
+          <div className='form-group'>
+            <input
+              type='text'
+              className='form-control position-static'
+              aria-describedby='username'
+              placeholder='Username'
+              value={username}
+              onChange={e => setUsername(e.target.value)}
+            />
+            {renderLoginError()}
+          </div>
+        </form>
+      </div>
     );
   };
 
@@ -84,7 +86,7 @@ function HomePage(props) {
         <h3 className='mb-5' style={{ fontSize: '3vw' }}>
           BUY SELL CREATE TRADE
         </h3>
-        <div className='d-flex justify-content-center'>{renderLogin()}</div>
+        {renderLogin()}
       </div>
     </div>
   );

@@ -41,17 +41,19 @@ function HomePage(props) {
     }
   };
 
-  return [
-    <div className='m-5' key='googleAuth'>
-      <GoogleLogin
-        clientId={config.auth.google.clientId}
-        buttonText='Sign in with Google'
-        onSuccess={auth.google.onSuccess}
-        onFailure={auth.google.onFailure}
-      />
-      {renderAuthError('google')}
-    </div>,
-  ];
+  return (
+    <div className='d-flex justify-content-center'>
+      <div className='m-5' key='googleAuth'>
+        <GoogleLogin
+          clientId={config.auth.google.clientId}
+          buttonText='Sign in with Google'
+          onSuccess={auth.google.onSuccess}
+          onFailure={auth.google.onFailure}
+        />
+        {renderAuthError('google')}
+      </div>
+    </div>
+  );
 }
 
 export default HomePage;
