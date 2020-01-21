@@ -7,12 +7,6 @@ const AuthSchema = require('./AuthSchema.js');
 
 const UserSchema = new Schema(
   {
-    username: {
-      type: String,
-      index: true,
-      trim: true,
-      minlength: 3,
-    },
     email: {
       type: String,
       required: true,
@@ -29,6 +23,13 @@ const UserSchema = new Schema(
       default: {},
       select: false,
     },
+    username: {
+      type: String,
+    },
+    portrait: {
+      type: Schema.Types.ObjectId,
+      ref: 'Canvas',
+    },
     createdAt: {
       type: Date,
       select: false,
@@ -41,9 +42,23 @@ const UserSchema = new Schema(
   {
     id: false,
     timestamps: true,
-    toJSON: { virtuals: true },
+    toJSON: {
+      virtuals: true,
+      transform: function(doc, ret) {
+        delete ret._id;
+        delete ret.auth;
+        delete ret.updatedAt;
+        delete ret.__v;
+      },
+    },
   },
 );
+
+UserSchema.virtual('auctions', {
+  ref: 'Auction',
+  localField: '_id',
+  foreignField: 'seller',
+});
 
 UserSchema.virtual('canvases', {
   ref: 'Canvas',
@@ -57,12 +72,6 @@ UserSchema.virtual('works', {
   foreignField: 'artist',
 });
 
-UserSchema.virtual('auctions', {
-  ref: 'Auction',
-  localField: '_id',
-  foreignField: 'seller',
-});
-
 UserSchema.statics.upsertGoogleUser = async function(
   accessToken,
   refreshToken,
@@ -71,7 +80,7 @@ UserSchema.statics.upsertGoogleUser = async function(
   const User = model('User');
   const user = await User.findOne({ 'auth.google.id': profile.id });
   if (!user) {
-    const newUser = new User({
+    return await new User({
       email: profile.emails[0].value,
       auth: {
         google: {
@@ -79,8 +88,7 @@ UserSchema.statics.upsertGoogleUser = async function(
           token: accessToken,
         },
       },
-    });
-    return await newUser.save();
+    }).save();
   }
   return user;
 };
@@ -95,5 +103,15 @@ UserSchema.methods.createAuthToken = function() {
   };
   return jwt.sign(payload, process.env.PRIVATE_AUTH_KEY, signConfig);
 };
+
+UserSchema.pre('save', async function() {
+  if (this.isModified('username')) {
+    let proxy = await model('UserProxy').findOne({ user: this });
+    if (!proxy)
+      proxy = new model('UserProxy')({ user: this, username: this.username });
+    else proxy.username = this.username;
+    await proxy.save();
+  }
+});
 
 module.exports = model('User', UserSchema);

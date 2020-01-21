@@ -6,8 +6,6 @@ import SVG from '../utils/SVG';
 import database from '../utils/API';
 
 export default props => {
-  props.setCurrentPage('CanvasEditor');
-
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [canvas, setCanvas] = useState(null);

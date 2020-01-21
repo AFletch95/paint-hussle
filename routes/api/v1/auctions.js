@@ -5,21 +5,20 @@ const passport = require('passport');
 
 const DEFAULT_PAGE_ENTRIES = 10;
 
-router
-  .route('/:id/buyout')
-  .get(passport.authenticate('jwt', { session: false }), async (req, res) => {
-    const db = req.app.get('db');
-    const { id } = req.params;
-    const auction = await db.Auction.findById(id)
-      .where('visibility')
-      .ne('private');
-    if (!auction) {
-      return res.status(404).json({});
-    }
-    res.status(200).json({
-      auction,
-    });
+router.route('/:id/buyout').post(passport.authenticate('jwt', { session: false }), async (req, res) => {
+  const db = req.app.get('db');
+  const { id } = req.params;
+  const auction = await db.Auction.findById(id)
+    .where('visibility')
+    .ne('private');
+  if (!auction) {
+    return res.status(404).json({});
+  }
+  // TODO add buy out functionality
+  res.status(200).json({
+    auction,
   });
+});
 
 router.route('/:id').get(async (req, res) => {
   const db = req.app.get('db');
