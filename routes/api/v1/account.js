@@ -3,9 +3,7 @@ const router = Router();
 
 const passport = require('passport');
 
-const cookieConfig = {
-  secure: process.env.NODE_ENV === 'production' ? true : false,
-};
+const DEFAULT_PAGE_ENTRIES = 16;
 
 router
   .route('/')
@@ -37,9 +35,38 @@ router
   .route('/auctions')
   .get(passport.authenticate('jwt', { session: false }), async (req, res) => {
     const db = req.app.get('db');
-    const { user } = req;
-    const auctions = await db.Auctions.find({ isActive: true, seller: user });
-    res.status(200).json({ auctions });
+    const { user, body } = req;
+    let { page, count } = body;
+
+    const auctionCount = await db.Auction.countDocuments({
+      owner: user,
+      isActive: true,
+    });
+    if (auctionCount === 0) {
+      return res.status(200).json({
+        page: 0,
+        totalPages: 0,
+        count: 0,
+        auctions: [],
+      });
+    }
+
+    if (typeof count !== 'number' || count <= 0) count = DEFAULT_PAGE_ENTRIES;
+
+    const totalPages = Math.ceil(auctionCount / count);
+
+    if (typeof page !== 'number' || page < 0) page = 0;
+    if (page >= totalPages) page = totalPages - 1;
+
+    const auctions = await db.Auction.find({ owner: user, isActive: true })
+      .skip(page * count)
+      .limit(count);
+    res.status(200).json({
+      page,
+      totalPages,
+      count,
+      auctions,
+    });
   })
   .post(passport.authenticate('jwt', { session: false }), async (req, res) => {
     const db = req.app.get('db');
@@ -166,9 +193,36 @@ router
   .route('/canvases')
   .get(passport.authenticate('jwt', { session: false }), async (req, res) => {
     const db = req.app.get('db');
-    const { user } = req;
-    const canvases = await db.Canvas.find({ owner: user });
-    res.status(200).json({ canvases });
+    const { user, body } = req;
+    let { page, count } = body;
+
+    const canvasCount = await db.Canvas.countDocuments({ owner: user });
+    if (canvasCount === 0) {
+      return res.status(200).json({
+        page: 0,
+        totalPages: 0,
+        count: 0,
+        canvases: [],
+      });
+    }
+
+    if (typeof count !== 'number' || count <= 0) count = DEFAULT_PAGE_ENTRIES;
+
+    const totalPages = Math.ceil(canvasCount / count);
+
+    if (typeof page !== 'number' || page < 0) page = 0;
+    if (page >= totalPages) page = totalPages - 1;
+
+    const canvases = await db.Canvas.find({ owner: user })
+      .skip(page * count)
+      .limit(count);
+
+    res.status(200).json({
+      page,
+      totalPages,
+      count,
+      canvases,
+    });
   });
 
 router

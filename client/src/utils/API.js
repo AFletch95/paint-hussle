@@ -22,11 +22,11 @@ export default {
     updateInfo({ username, portrait }) {
       return axios.put('/api/v1/account', { username, portrait });
     },
-    getCanvases() {
-      return axios.get('/api/v1/account/canvases');
+    getCanvases({ page, count }) {
+      return axios.get('/api/v1/account/canvases', { page, count });
     },
-    getAuctions() {
-      return axios.get('/api/v1/account/auctions');
+    getAuctions({ page, count }) {
+      return axios.get('/api/v1/account/auctions', { page, count });
     },
   },
 

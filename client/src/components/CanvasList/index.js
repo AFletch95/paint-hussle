@@ -1,19 +1,16 @@
-import React, { useState } from 'react';
-import CanvasSquare from '../CanvasSquare';
-import EditButton from '../Buttons/EditButton';
-import SellButton from '../Buttons/SellButton';
+import React from 'react';
 
 const CanvasList = props => {
-  const { canvases, loadMore, canLoadMore } = props;
-  const [loadMoreButtonDisabled, setLoadMoreButtonDisabled] = useState(true);
-  const renderLoadMoreButton = () => {
+  const { canvases, loadCanvases, canLoadMore } = props;
+
+  const renderLoadButton = () => {
     if (!canLoadMore) return null;
     return (
       <div className='d-flex justify-content-center'>
         <div
           className='btn btn-lg btn-primary mb-5'
           type='button'
-          onClick={loadMore}
+          onClick={loadCanvases}
         >
           Load More
         </div>
@@ -31,7 +28,7 @@ const CanvasList = props => {
           />
         ))}
       </div>
-      {renderLoadMoreButton()}
+      {renderLoadButton()}
     </div>
   );
 };
