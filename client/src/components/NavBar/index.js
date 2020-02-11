@@ -33,8 +33,7 @@ const activeLinkItem = {
 };
 
 export default props => {
-  const currency = props.currency || 350;
-  let currentUsername = sessionStorage.getItem('currentUsername');
+  const { user } = props;
 
   const handleLogOut = () => {
     sessionStorage.clear();
@@ -71,7 +70,7 @@ export default props => {
           <Nav>
             <Nav.Item style={linkItem}>
               <Nav.Link disabled={true} style={linkItem} className='align-top'>
-                {currency}🍪
+                {user.currency || 0}🍪
               </Nav.Link>
             </Nav.Item>
             <Dropdown as={Nav.Item}>
