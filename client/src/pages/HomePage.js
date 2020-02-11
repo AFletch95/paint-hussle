@@ -5,6 +5,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Image from 'react-bootstrap/Image';
 
+import NavBar from '../components/NavBar';
 import CanvasList from '../components/CanvasList';
 
 import api from '../utils/API';
@@ -111,8 +112,7 @@ const AccountPage = props => {
 
   return (
     <div>
-      {/* new navbar */}
-
+      <NavBar path='/' />
       <Container className='py-auto mx-auto' style={backgroundSyle}>
         <div className='text-center mx-3'>
           <Image
