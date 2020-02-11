@@ -1,89 +1,96 @@
-import React, { useState, useEffect } from 'react';
-import API from "../../utils/API";
+import React from 'react';
+import './style.css';
 
-const Navbar = props => {
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Navbar from 'react-bootstrap/Navbar';
+import Nav from 'react-bootstrap/Nav';
+import NavDropdown from 'react-bootstrap/NavDropdown';
+import Image from 'react-bootstrap/Image';
+
+import logo from '../../logo.svg';
+
+import API from '../../utils/API';
+
+export default props => {
   let currentUsername = sessionStorage.getItem('currentUsername');
-
-  useEffect(() => { });
-
-  const [isOpen, setIsOpen] = useState(false);
-  const menuClass = isOpen ? "show" : "";
-
-  const toggleIsOpen = (event) => {
-    setIsOpen(!isOpen)
-  }
 
   const handleLogOut = () => {
     sessionStorage.clear();
-    API.userLogOut()
+    API.account.logOut();
+  };
 
-  }
+  const changeLinkColorHover = event => {
+    event.target.style.color = 'lightgray';
+  };
 
-  const changeLinkColorHover = (event) => {
-    event.target.style.color = "lightgray"
-  }
-
-  const changeLinkColor = (event) => {
-    event.target.style.color = "white"
-  }
+  const changeLinkColor = event => {
+    event.target.style.color = 'white';
+  };
 
   const linkItem = {
-    color: "white",
-    fontSize: "1.2rem"
-
-  }
+    color: 'white',
+    fontSize: '1.2rem',
+  };
 
   const activeLinkItem = {
-    color: "white",
-    fontSize: "1.2rem",
-    textDecoration: "underline",
-
-  }
+    color: 'white',
+    fontSize: '1.2rem',
+    textDecoration: 'underline',
+  };
 
   return (
-
-    <ul className="nav justify-content-center" style={{ background: "rgba(32,32,32,0.85)" }}>
-      <li className="nav-item pr-5">
-        <a className="nav-link " href="/"
-          style={props.currentPage === "home" ? activeLinkItem : linkItem}
-          onMouseOut={changeLinkColor} onMouseOver={changeLinkColorHover}>PAINT HUSTLE</a>
-      </li>
-      <li className="nav-item">
-        <a className="nav-link" href="/auctionhouse"
-          style={props.currentPage === "auctionhouse" ? activeLinkItem : linkItem} onMouseOut={changeLinkColor} onMouseOver={changeLinkColorHover}
-        >Auction House</a>
-      </li>
-      <li className="nav-item">
-        <a className="nav-link" href="/artists"
-          style={props.currentPage === "artists" ? activeLinkItem : linkItem} onMouseOut={changeLinkColor} onMouseOver={changeLinkColorHover}
-        >Artists</a>
-      </li>
-      <li className="nav-item">
-        <a className="nav-link " href="/gallery"
-          style={props.currentPage === "gallery" ? activeLinkItem : linkItem} onMouseOut={changeLinkColor} onMouseOver={changeLinkColorHover}
-        >Gallery</a>
-      </li>
-      <li className="nav-item">
-        <a className="nav-link" href="/leaderboards"
-          style={props.currentPage === "" ? activeLinkItem : linkItem} onMouseOut={changeLinkColor} onMouseOver={changeLinkColorHover}
-        >Leaderboards</a>
-      </li>
-      <li className="nav-item dropdown " onClick={toggleIsOpen} >
-        <a className="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
-          aria-haspopup="true" aria-expanded="false" style={props.currentPage === "" ? activeLinkItem : linkItem}
-          onMouseOut={changeLinkColor} onMouseOver={changeLinkColorHover}>My Account</a>
-        <div className={"dropdown-menu" + menuClass}>
-          <a className="nav-link" href="#" style={props.currentPage === "" ? activeLinkItem : linkItem}
-            onMouseOut={changeLinkColor} onMouseOver={changeLinkColorHover}>Account Page</a>
-          <a className="nav-link disabled" href="#">Account Settings</a>
-          <div className="dropdown-divider"></div>
-          <a className="nav-link" href="/" onClick={handleLogOut} style={props.currentPage === "" ? activeLinkItem : linkItem}
-            onMouseOut={changeLinkColor} onMouseOver={changeLinkColorHover}>Log Out</a>
-        </div>
-      </li>
-    </ul>
-
-
+    <Navbar collapseOnSelect expand='lg' className='text-center'>
+      <Container>
+        <Navbar.Brand href='/' style={linkItem}>
+          <Image
+            className='d-inline-block align-top'
+            src={logo}
+            alt='Logo'
+            width='30'
+            height='30'
+          />{' '}
+          Paint Hustle
+        </Navbar.Brand>
+        <Navbar.Collapse id='nav-links'>
+          <Nav className='mr-auto'>
+            {[
+              ['Auction House', 'auctionhouse'],
+              ['Artists', 'artists'],
+              ['Gallery', 'gallery'],
+              ['Leaderboard', 'leaderboard'],
+            ].map(([label, path]) => (
+              <Nav.Link
+                href={`/${path}`}
+                style={props.path === path ? activeLinkItem : linkItem}
+                onMouseOut={changeLinkColor}
+                onMouseOver={changeLinkColorHover}
+                className='d-inline-block align-top'
+              >
+                {label}
+              </Nav.Link>
+            ))}
+          </Nav>
+          <Nav>
+            <NavDropdown
+              title='My Account'
+              style={linkItem}
+              onMouseOut={changeLinkColor}
+              onMouseOver={changeLinkColorHover}
+            >
+              <NavDropdown.Item href='#'>Home</NavDropdown.Item>
+              <NavDropdown.Item href='#'>Settings</NavDropdown.Item>
+              <NavDropdown.Divider />
+              <NavDropdown.Item href='/' onClick={handleLogOut}>
+                Logout
+              </NavDropdown.Item>
+            </NavDropdown>
+          </Nav>
+        </Navbar.Collapse>
+        <Navbar.Toggle aria-controls='nav-links' />
+      </Container>
+    </Navbar>
 
     // <nav className="navbar navbar-dark bg-dark">
     //   <a className="navbar-brand h1 mb-0" href="/">
@@ -98,5 +105,3 @@ const Navbar = props => {
     // </nav>
   );
 };
-
-export default Navbar;
