@@ -6,14 +6,34 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
-import NavDropdown from 'react-bootstrap/NavDropdown';
+import Dropdown from 'react-bootstrap/Dropdown';
 import Image from 'react-bootstrap/Image';
 
 import logo from '../../logo.svg';
 
 import API from '../../utils/API';
 
+const changeLinkColorHover = event => {
+  event.target.style.color = 'lightgray';
+};
+
+const changeLinkColor = event => {
+  event.target.style.color = 'white';
+};
+
+const linkItem = {
+  color: 'white',
+  fontSize: '1.2rem',
+};
+
+const activeLinkItem = {
+  color: 'white',
+  fontSize: '1.2rem',
+  textDecoration: 'underline',
+};
+
 export default props => {
+  const currency = props.currency || 350;
   let currentUsername = sessionStorage.getItem('currentUsername');
 
   const handleLogOut = () => {
@@ -21,38 +41,13 @@ export default props => {
     API.account.logOut();
   };
 
-  const changeLinkColorHover = event => {
-    event.target.style.color = 'lightgray';
-  };
-
-  const changeLinkColor = event => {
-    event.target.style.color = 'white';
-  };
-
-  const linkItem = {
-    color: 'white',
-    fontSize: '1.2rem',
-  };
-
-  const activeLinkItem = {
-    color: 'white',
-    fontSize: '1.2rem',
-    textDecoration: 'underline',
-  };
-
   return (
     <Navbar collapseOnSelect expand='lg' className='text-center'>
       <Container>
         <Navbar.Brand href='/' style={linkItem}>
-          <Image
-            className='d-inline-block align-top'
-            src={logo}
-            alt='Logo'
-            width='30'
-            height='30'
-          />{' '}
-          Paint Hustle
+          <Image className='d-inline-block align-top' src={logo} alt='Logo' width='30' height='30' /> Paint Hustle
         </Navbar.Brand>
+        <Navbar.Toggle aria-controls='nav-links' />
         <Navbar.Collapse id='nav-links'>
           <Nav className='mr-auto'>
             {[
@@ -62,33 +57,43 @@ export default props => {
               ['Leaderboard', 'leaderboard'],
             ].map(([label, path]) => (
               <Nav.Link
+                key={label}
                 href={`/${path}`}
                 style={props.path === path ? activeLinkItem : linkItem}
                 onMouseOut={changeLinkColor}
                 onMouseOver={changeLinkColorHover}
-                className='d-inline-block align-top'
+                className='align-top'
               >
                 {label}
               </Nav.Link>
             ))}
           </Nav>
           <Nav>
-            <NavDropdown
-              title='My Account'
-              style={linkItem}
-              onMouseOut={changeLinkColor}
-              onMouseOver={changeLinkColorHover}
-            >
-              <NavDropdown.Item href='#'>Home</NavDropdown.Item>
-              <NavDropdown.Item href='#'>Settings</NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href='/' onClick={handleLogOut}>
-                Logout
-              </NavDropdown.Item>
-            </NavDropdown>
+            <Nav.Item style={linkItem}>
+              <Nav.Link disabled={true} style={linkItem} className='align-top'>
+                {currency}🍪
+              </Nav.Link>
+            </Nav.Item>
+            <Dropdown as={Nav.Item}>
+              <Dropdown.Toggle
+                as={Nav.Link}
+                style={linkItem}
+                onMouseOut={changeLinkColor}
+                onMouseOver={changeLinkColorHover}
+              >
+                My Account
+              </Dropdown.Toggle>
+              <Dropdown.Menu>
+                <Dropdown.Item href='#'>Home</Dropdown.Item>
+                <Dropdown.Item href='#'>Settings</Dropdown.Item>
+                <Dropdown.Divider />
+                <Dropdown.Item href='/' onClick={handleLogOut}>
+                  Logout
+                </Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
           </Nav>
         </Navbar.Collapse>
-        <Navbar.Toggle aria-controls='nav-links' />
       </Container>
     </Navbar>
 
