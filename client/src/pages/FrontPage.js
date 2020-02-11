@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
 
+import Container from 'react-bootstrap/Container';
+import Form from 'react-bootstrap/Form';
+import Image from 'react-bootstrap/Image';
+
 import LoginPanel from '../components/LoginPanel';
 
 import api from '../utils/API';
@@ -30,15 +34,15 @@ function HomePage(props) {
     switch (loginError) {
       case 'invalid':
         return (
-          <small className='form-text text-danger'>
+          <Form.Text className='text-danger'>
             Username must be at least 3 characters
-          </small>
+          </Form.Text>
         );
       case 'taken':
         return (
-          <small className='form-text text-danger'>
+          <Form.Text className='text-danger'>
             Username is already taken
-          </small>
+          </Form.Text>
         );
       default:
         return null;
@@ -48,36 +52,32 @@ function HomePage(props) {
   const renderLogin = () => {
     if (!user) return <LoginPanel setUser={setUser} />;
     return (
-      <div className='d-flex justify-content-center'>
-        <form className='text-center m-5' onSubmit={submitUsername}>
-          <div className='form-group'>
-            <input
+      <Container className='justify-content-center'>
+        <Form className='text-center m-5' onSubmit={submitUsername}>
+          <Form.Group className='form-group'>
+            <Form.Control
               type='text'
-              className='form-control position-static'
+              className='position-static'
               aria-describedby='username'
               placeholder='Username'
               value={username}
               onChange={e => setUsername(e.target.value)}
             />
             {renderLoginError()}
-          </div>
-        </form>
-      </div>
+          </Form.Group>
+        </Form>
+      </Container>
     );
   };
 
   return (
-    <div className='container text-center p-auto'>
-      <img
-        className='img-fluid'
-        src='./images/logos/large.png'
-        alt='Paint Hustle'
-      />
+    <Container className='text-center p-auto'>
+      <Image src='./images/logos/large.png' alt='Paint Hustle' fluid />
       <h3 className='mb-5' style={{ fontSize: '3vw' }}>
         BUY SELL CREATE TRADE
       </h3>
       {renderLogin()}
-    </div>
+    </Container>
   );
 }
 

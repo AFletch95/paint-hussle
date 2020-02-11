@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import FilterDropdown from '../components/FilterDropdown';
+
+import Container from 'react-bootstrap/Container';
+import ListGroup from 'react-bootstrap/ListGroup';
+
 import AuctionPanel from '../components/AuctionPanel';
 import Pagination from '../components/Pagination';
 
@@ -27,31 +30,31 @@ export default () => {
     });
   });
   const getAuctions = () => {
-    if (pages.total === 0) return <div className="text-center">No Auctions</div>;
+    if (pages.total === 0)
+      return <div className='text-center'>No Auctions</div>;
     if (!pages.map.has(pages.current)) return null;
     const auctions = pages.map.get(pages.current);
     return (
-      <div className="list-group-flush">
+      <ListGroup variant='flush'>
         {auctions.map(auction => (
-          <AuctionPanel auction={auction} />
+          <ListGroup.Item>
+            <AuctionPanel auction={auction} />
+          </ListGroup.Item>
         ))}
-      </div>
+      </ListGroup>
     );
   };
 
   return (
-    <div className="container-fluid ">
-      <div className="row">
-        <FilterDropdown />
-      </div>
-      <div className="container mx-auto">
+    <Container fluid='true'>
+      <Container className='mx-auto'>
         {getAuctions()}
         <Pagination
           current={pages.current}
           total={pages.total}
           setPage={page => setPages({ ...pages, current: page })}
         />
-      </div>
-    </div>
+      </Container>
+    </Container>
   );
 };

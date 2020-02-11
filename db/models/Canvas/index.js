@@ -18,7 +18,7 @@ const CanvasSchema = new Schema(
     },
     visibility: {
       type: String,
-      default: 'private',
+      default: 'public',
       lowercase: true,
       trim: true,
       enum: ['public', 'unlisted', 'private'],

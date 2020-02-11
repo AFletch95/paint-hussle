@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+
 import { GoogleLogin } from 'react-google-login';
 
 import api from '../../utils/API';
@@ -7,34 +8,39 @@ import config from '../../config';
 
 function HomePage(props) {
   const { setUser } = props;
-  const [authError, setAuthError] = useState('');
+  const [authError, setAuthError] = useState({});
 
   const auth = {
     google: {
       onSuccess: async response => {
-        const res = await api.account.authenticate({
-          provider: 'google',
-          accessToken: response.accessToken,
-        });
-        if (res.statusText === 'OK') {
-          const {
-            data: { user },
-          } = res;
-          setUser(user);
-        } else setAuthError('google');
+        try {
+          const res = await api.account.authenticate({
+            provider: 'google',
+            accessToken: response.accessToken,
+          });
+          if (res.statusText === 'OK') {
+            const {
+              data: { user },
+            } = res;
+            setUser(user);
+          } else setAuthError({ provider: 'google' });
+        } catch (err) {
+          setAuthError({ provider: 'google' });
+        }
       },
       onFailure: error => {
         if (!error) return;
         if (error.error === 'popup_closed_by_user') return;
-        alert(JSON.stringify(error));
+        setAuthError({ provider: 'google', message: JSON.stringify(error) });
       },
     },
   };
 
   const renderAuthError = provider => {
     // TODO add error reporting
-    switch (authError) {
+    switch (authError.provider) {
       case 'google':
+        if (authError.message) alert(authError.message);
         break;
       default:
         return null;

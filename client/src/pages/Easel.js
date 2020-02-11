@@ -1,4 +1,11 @@
 import React, { useState } from 'react';
+
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
+
 import Canvas from '../components/Canvas';
 import CanvasSVG from '../components/CanvasSVG';
 
@@ -13,7 +20,8 @@ export default props => {
 
   const saveCanvas = () => {
     const svgString = lc.getSVGString();
-    const svg = new DOMParser().parseFromString(svgString, 'text/html').body.firstChild;
+    const svg = new DOMParser().parseFromString(svgString, 'text/html').body
+      .firstChild;
     const scale = {
       x: 1 / Number(svg.getAttribute('width')),
       y: 1 / Number(svg.getAttribute('height')),
@@ -35,64 +43,62 @@ export default props => {
   };
 
   const renderEditor = () => {
-    if (canvas && canvas.image) return <CanvasSVG svgString={canvas.image} width={800} height={1000} />;
+    if (canvas && canvas.image)
+      return <CanvasSVG svgString={canvas.image} width={800} height={1000} />;
     return (
-      <form className="text-left my-0">
-        <div className="form-group m-3">
-          <div className="row">
-            <div className="col-md-4">
-              <input
-                id="title"
-                className="form-control"
-                type="text"
-                placeholder="Title"
-                aria-describedby="title"
+      <Form className='text-left my-0' onSubmit={saveCanvas}>
+        <Form.Group className='m-3'>
+          <Row>
+            <Col md={4}>
+              <Form.Control
+                type='text'
+                aria-describedby='title'
+                placeholder='Title'
                 value={title}
                 onChange={e => setTitle(e.target.value)}
               />
-            </div>
-          </div>
-        </div>
+            </Col>
+          </Row>
+        </Form.Group>
         <Canvas setLC={setLC} />
-        <div className="form-group m-3">
-          <textarea
-            id="description"
-            className="form-control"
-            type="text"
-            rows="3"
-            placeholder="Description"
-            aria-describedby="description"
+        <Form.Group className='m-3'>
+          <Form.Control
+            as='textarea'
+            rows='3'
+            aria-describedby='description'
+            placeholder='Description'
             value={description}
             onChange={e => setDescription(e.target.value)}
             style={{ minHeight: '2.5rem' }}
           />
-        </div>
-        <div className="text-center">
-          <div type="submit" className="btn btn-success" onClick={saveCanvas}>
+        </Form.Group>
+        <div className='text-center'>
+          <Button variant='success' type='submit'>
             Save
-          </div>
+          </Button>
         </div>
-      </form>
+      </Form>
     );
   };
 
   return (
-    <div className="container pt-3">
-      <div className="row">
-        <div className="col-1">
-          <div
-            className="btn btn-primary btn-sm"
-            type="button"
-            onClick={() => (window.location.pathname = '/myaccount')}
+    <Container className='pt-3'>
+      <Row>
+        <Col xs={1}>
+          <Button
+            variant='primary'
+            size='sm'
+            type='button'
+            onClick={() => (window.location.pathname = '/')}
           >
             Back
-          </div>
-        </div>
-        <div className="col-11">
-          <h3 className="text-center"> Canvas Editor</h3>
-        </div>
-      </div>
+          </Button>
+        </Col>
+        <Col xs={11} className='text-center'>
+          <h3> Canvas Editor</h3>
+        </Col>
+      </Row>
       {renderEditor()}
-    </div>
+    </Container>
   );
 };
