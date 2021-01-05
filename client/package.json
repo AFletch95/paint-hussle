@@ -5,7 +5,7 @@
   "proxy": "http://localhost:3001",
   "dependencies": {
     "@material-ui/core": "^4.7.2",
-    "axios": "^0.19.0",
+    "axios": "^0.21.1",
     "bootstrap": "^4.4.1",
     "create-react-class": "^15.6.3",
     "literallycanvas": "^0.5.2",
